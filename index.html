@@ -11,7 +11,7 @@
     body { font-family: 'Quicksand', sans-serif; background: #e0e0e0; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; color: var(--text); }
     .app-container { width: 100%; max-width: 480px; background: var(--bg); min-height: 100vh; position: relative; padding-bottom: 100px; box-shadow: 0 0 25px rgba(0,0,0,0.1); }
     
-    /* Loading Overlay */
+    /* Loading */
     #loadingOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.5s; }
     .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -50,9 +50,36 @@
     .radio-row input { width: 20px; height: 20px; accent-color: var(--primary); }
     .opt-header { font-weight: 700; font-size: 14px; color: var(--primary); text-transform: uppercase; margin-bottom: 10px; display: block;}
     
+    /* === FIX LỖI GIAO DIỆN Ở ĐÂY === */
     .qr-box { text-align: center; background: white; padding: 20px; border-radius: 16px; border: 2px solid var(--primary); margin-top: 15px; display: none; }
     .qr-img { width: 200px; height: 200px; margin: 10px auto; display: block; }
-    .confirm-pay { display: flex; align-items: center; gap: 10px; margin-top: 15px; padding: 12px; background: #E8F5E9; border-radius: 12px; font-weight: bold; color: var(--primary); display:none; border: 1px solid #A5D6A7; }
+    
+    /* Nút xác nhận chuyển khoản được căn chỉnh lại bằng Flexbox */
+    .confirm-pay { 
+      display: flex; 
+      align-items: center; /* Căn giữa theo chiều dọc */
+      gap: 12px; 
+      margin-top: 15px; 
+      padding: 15px; 
+      background: #E8F5E9; 
+      border-radius: 12px; 
+      border: 1px solid #A5D6A7; 
+      cursor: pointer;
+    }
+    .confirm-pay input { 
+      width: 24px; 
+      height: 24px; 
+      margin: 0; 
+      flex-shrink: 0; /* Không cho checkbox bị bóp méo */
+    }
+    .confirm-pay label {
+      font-weight: bold; 
+      color: var(--primary); 
+      font-size: 15px;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+
     .bill-box { background: #fff; padding: 15px; border-radius: 10px; font-family: monospace; border: 1px dashed #999; margin: 20px 0; text-align: left; line-height: 1.5;}
   </style>
 </head>
@@ -62,7 +89,7 @@
 
 <div class="app-container">
   <div id="shopStatus" class="status-bar">⛔ QUÁN ĐANG NGHỈ</div>
-  <div class="header"><h2>🥑 SINH TỐ TÂM VY</h2></div>
+  <div class="header"><h2>🥑🍍🍓 SINH TỐ TÂM VY 📍 0775826565</h2></div>
   <div id="menu-list" class="menu-grid"></div>
   <div class="shop-footer" id="footerInfo"></div>
   <div class="float-cart" id="cartBtn" onclick="showCheckout()"><span>🛒 <span id="cartCount">0</span> món</span><span id="cartTotal">0đ</span></div>
@@ -97,12 +124,28 @@
   <select id="cPayment" onchange="togglePayment()"><option value="COD">💵 Tiền mặt</option><option value="CK">🏦 Chuyển khoản (QR)</option><option value="ZALO">💬 Gửi qua Zalo</option></select>
   
   <div class="qr-box" id="qrArea">
-    <div style="font-weight:bold; color:var(--primary);">QUÉT MÃ ĐỂ THANH TOÁN</div>
-    <div style="font-size:13px; margin:5px 0;">Nội dung: <strong id="qrContent"></strong></div>
+    <div style="font-weight:bold; color:var(--primary); font-size:16px;">QUÉT MÃ ĐỂ THANH TOÁN</div>
+    
+    <div style="font-size:13px; color:#666; margin:8px 0; background:#f5f5f5; padding:5px; border-radius:5px;">
+      💡 <strong>Mẹo:</strong> Nhấn giữ vào mã QR để lưu ảnh, sau đó mở App Ngân hàng chọn "Quét ảnh"
+    </div>
+
+    <div style="font-size:13px; margin-bottom:5px;">Nội dung: <strong id="qrContent"></strong></div>
+    
     <img src="" id="qrImage" class="qr-img">
-    <div style="font-size:15px; margin-top:10px;">Số tiền: <strong id="qrAmount" style="color:var(--red);"></strong></div>
+    
+    <div style="font-size:16px; margin-top:10px;">Số tiền: <strong id="qrAmount" style="color:var(--red);"></strong></div>
+    
+    <div style="margin-top:8px; border-top:1px dashed #ccc; padding-top:8px;">
+      <div style="font-size:12px; color:#555;">Chủ tài khoản:</div>
+      <div style="font-weight:bold; color:#000; font-size:14px; text-transform: uppercase;" id="bankOwnerName"></div>
+    </div>
   </div>
-  <div class="confirm-pay" id="confirmPayBox"><input type="checkbox" id="ckConfirm" onchange="checkConfirm()"><label for="ckConfirm">Đã chuyển khoản thành công</label></div>
+
+  <label class="confirm-pay" id="confirmPayBox">
+    <input type="checkbox" id="ckConfirm" onchange="checkConfirm()">
+    <span>Tôi đã chuyển khoản thành công</span>
+  </label>
 
   <div id="btnGroup"><button class="btn-main" id="btnOrder" onclick="submitOrder()">ĐẶT HÀNG NGAY</button></div>
   <div id="zaloGroup" style="display:none"><button class="btn-main btn-zalo" onclick="sendToZalo()">📋 SAO CHÉP & MỞ ZALO</button></div>
@@ -119,22 +162,20 @@
 
 <script>
   // === CẤU HÌNH (SỬA Ở ĐÂY) ===
-  // DÁN LINK GOOGLE SCRIPT MỚI CỦA LU VÀO ĐÂY:
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec"; 
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec"; // Dán link Script của Lu vào đây
   
-  const BANK_ID = "STB"; const BANK_ACC = "070112345678"; const BANK_NAME = "NGUYEN DINH LU"; const ZALO_PHONE = "0775826565";
+  const BANK_ID = "ACB"; // ACBbank
+  const BANK_ACC = "48031187"; // STK ngân hàng
+  const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; // Tên chủ TK
+  const ZALO_PHONE = "0775826565"; // Số Zalo
   // ============================
 
   let APP_DATA = {}, CART = [], currentItem = null, IS_OPEN = true, CURRENT_ORDER_ID = "";
 
-  // 1. GỌI API ĐỂ LẤY MENU (Thay vì dùng google.script.run)
   window.onload = function() {
     fetch(SCRIPT_URL + "?action=getMenu")
       .then(res => res.json())
-      .then(data => {
-        initApp(data);
-        document.getElementById('loadingOverlay').style.display = 'none';
-      })
+      .then(data => { initApp(data); document.getElementById('loadingOverlay').style.display = 'none'; })
       .catch(err => alert("Lỗi tải menu: " + err));
   };
 
@@ -153,7 +194,6 @@
 
   function renderFooter(cfg) { document.getElementById('footerInfo').innerHTML = `<p>🕒 Giờ mở: ${cfg.openHour}h - ${cfg.closeHour}h</p><p>📍 ${cfg.address}</p><p>🗺️ <a href="${cfg.mapLink}" target="_blank">Chỉ đường</a></p>`; }
 
-  // LOGIC CART & POPUP (Giữ nguyên)
   function openItem(id) {
     currentItem = APP_DATA.menu.find(i => i.id === id); document.getElementById('mName').innerText = currentItem.name;
     const sizeOpt = document.getElementById('sizeOptions'); sizeOpt.innerHTML = "";
@@ -183,7 +223,6 @@
     document.getElementById('cartBtn').style.display = CART.length ? 'flex' : 'none';
   }
 
-  // CHECKOUT
   function showCheckout() {
     if(!CART.length) return;
     CURRENT_ORDER_ID = "DH" + Math.floor(10000 + Math.random() * 90000);
@@ -194,25 +233,36 @@
   function closeCheckout() { document.getElementById('checkoutPage').style.display='none'; }
   function removeCart(idx) { CART.splice(idx,1); updateCartUI(); if(!CART.length) closeCheckout(); else showCheckout(); }
 
-  // PAYMENT LOGIC
   function togglePayment() {
     const m = document.getElementById('cPayment').value;
     const total = CART.reduce((sum,i)=>sum+i.final,0);
     const phone = document.getElementById('cPhone').value;
     document.getElementById('btnGroup').style.display = (m==='ZALO')?'none':'block';
     document.getElementById('zaloGroup').style.display = (m==='ZALO')?'block':'none';
+    
     if(m==='CK') {
-      document.getElementById('qrArea').style.display='block'; document.getElementById('confirmPayBox').style.display='flex';
+      document.getElementById('qrArea').style.display='block'; 
+      document.getElementById('confirmPayBox').style.display='flex';
       document.getElementById('qrAmount').innerText = fmt(total);
-      const content = "TT " + CURRENT_ORDER_ID + " " + phone; document.getElementById('qrContent').innerText = content;
+      
+      // Hiện tên chủ tài khoản
+      document.getElementById('bankOwnerName').innerText = BANK_NAME;
+
+      const content = "TT " + CURRENT_ORDER_ID + " " + phone; 
+      document.getElementById('qrContent').innerText = content;
       document.getElementById('qrImage').src = `https://img.vietqr.io/image/${BANK_ID}-${BANK_ACC}-compact.jpg?amount=${total}&addInfo=${encodeURIComponent(content)}&accountName=${encodeURIComponent(BANK_NAME)}`;
-      document.getElementById('btnOrder').disabled = true; document.getElementById('ckConfirm').checked = false;
-    } else { document.getElementById('qrArea').style.display='none'; document.getElementById('confirmPayBox').style.display='none'; document.getElementById('btnOrder').disabled = false; }
+      
+      document.getElementById('btnOrder').disabled = true; 
+      document.getElementById('ckConfirm').checked = false;
+    } else { 
+      document.getElementById('qrArea').style.display='none'; 
+      document.getElementById('confirmPayBox').style.display='none'; 
+      document.getElementById('btnOrder').disabled = false; 
+    }
   }
   document.getElementById('cPhone').addEventListener('input', togglePayment);
   function checkConfirm() { document.getElementById('btnOrder').disabled = !document.getElementById('ckConfirm').checked; }
 
-  // GỬI ĐƠN (QUA API)
   function submitOrder() {
     const name = document.getElementById('cName').value, phone = document.getElementById('cPhone').value, addr = document.getElementById('cAddress').value;
     if(!name || !phone || !addr) return alert("Thiếu thông tin!");
@@ -222,11 +272,7 @@
     const details = CART.map(i => `${i.name} [${i.size}, ${i.toppings.join(', ')}]`).join('\n');
     const orderData = { orderId: CURRENT_ORDER_ID, name: name, phone: phone, address: addr, note: document.getElementById('cNote').value, paymentMethod: document.getElementById('cPayment').value, details: details, total: total, honey: document.getElementById('honeypot').value };
 
-    // Gửi POST request sang Google Script (API)
-    fetch(SCRIPT_URL + "?action=submitOrder", {
-      method: "POST",
-      body: JSON.stringify(orderData)
-    })
+    fetch(SCRIPT_URL + "?action=submitOrder", { method: "POST", body: JSON.stringify(orderData) })
     .then(res => res.json())
     .then(res => {
       if(res.success) {
