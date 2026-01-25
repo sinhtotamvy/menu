@@ -21,28 +21,50 @@
     .header h2 { margin: 0; color: var(--primary); font-size: 22px; font-weight: 800; }
     .status-bar { background: var(--red); color: white; padding: 8px; text-align: center; font-weight: bold; font-size: 13px; display: none; }
     
-    /* Menu */
-    .menu-grid { padding: 15px; }
-    .item-card { background: var(--white); border-radius: 16px; padding: 12px; display: flex; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); align-items: center; }
-    .item-img { width: 85px; height: 85px; border-radius: 12px; object-fit: cover; background: #f0f0f0; flex-shrink: 0; }
-    .item-content { flex: 1; padding-left: 15px; display: flex; flex-direction: column; justify-content: center; height: 85px; }
-    .item-title { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
-    .item-desc { font-size: 12px; color: #78909C; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .item-price { color: var(--primary); font-weight: 800; font-size: 15px; margin-top: auto; }
-    .btn-plus { background: var(--primary); color: white; border: none; width: 32px; height: 32px; border-radius: 10px; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: auto; }
+    /* === MENU GROUP STYLE (MỚI) === */
+    .menu-container { padding: 15px; }
+    .menu-group { margin-bottom: 15px; background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    
+    .group-header {
+      padding: 15px;
+      background: #F1F8E9; /* Màu nền xanh nhạt cho tiêu đề nhóm */
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      border-bottom: 1px solid #E8F5E9;
+    }
+    .group-header .arrow { transition: transform 0.3s ease; font-size: 12px; opacity: 0.7; }
+    .group-header.active .arrow { transform: rotate(180deg); }
+    
+    .group-content { display: none; padding: 10px; animation: fadeIn 0.3s; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Item Card (Đã tinh chỉnh để nằm trong nhóm) */
+    .item-card { background: var(--white); border-radius: 12px; padding: 10px; display: flex; margin-bottom: 10px; border: 1px solid #f5f5f5; align-items: center; }
+    .item-card:last-child { margin-bottom: 0; }
+    .item-img { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; background: #f0f0f0; flex-shrink: 0; }
+    .item-content { flex: 1; padding-left: 12px; display: flex; flex-direction: column; justify-content: center; height: 80px; }
+    .item-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; color: var(--text); }
+    .item-desc { font-size: 12px; color: #78909C; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; }
+    .item-price { color: var(--primary); font-weight: 800; font-size: 14px; margin-top: auto; }
+    .btn-plus { background: var(--primary); color: white; border: none; width: 30px; height: 30px; border-radius: 8px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: auto; box-shadow: 0 2px 4px rgba(56, 142, 60, 0.2); }
 
     /* Footer & Cart */
     .shop-footer { text-align: center; padding: 30px 20px; color: #78909C; font-size: 13px; background: var(--white); border-top: 1px dashed #CFD8DC; }
     .float-cart { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px; background: var(--text); color: white; padding: 12px 20px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; box-shadow: 0 8px 25px rgba(0,0,0,0.25); z-index: 95; cursor: pointer; display: none; }
     
-    /* Modals */
+    /* Modals & Others */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(3px); z-index: 200; display: none; justify-content: center; align-items: flex-end; }
     .modal-overlay.active { display: flex; }
     .sheet-modal { background: var(--white); width: 100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 25px; max-height: 85vh; overflow-y: auto; animation: slideUp 0.3s; }
     .full-modal { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; height: 100%; background: var(--bg); z-index: 300; display: none; overflow-y: auto; padding: 20px; box-sizing: border-box; }
     @keyframes slideUp { from {transform: translateY(100%)} to {transform: translateY(0)}}
 
-    /* Form Elements */
     input, select, textarea { width: 100%; padding: 14px; border: 1px solid #CFD8DC; border-radius: 12px; margin-bottom: 15px; box-sizing: border-box; font-family: inherit; font-size: 15px; background: white; }
     .btn-main { width: 100%; padding: 16px; background: var(--primary); color: white; border: none; border-radius: 14px; font-weight: 700; font-size: 16px; margin-top: 10px; cursor: pointer; }
     .btn-zalo { background: #0068FF; }
@@ -50,36 +72,11 @@
     .radio-row input { width: 20px; height: 20px; accent-color: var(--primary); }
     .opt-header { font-weight: 700; font-size: 14px; color: var(--primary); text-transform: uppercase; margin-bottom: 10px; display: block;}
     
-    /* === FIX LỖI GIAO DIỆN Ở ĐÂY === */
     .qr-box { text-align: center; background: white; padding: 20px; border-radius: 16px; border: 2px solid var(--primary); margin-top: 15px; display: none; }
     .qr-img { width: 200px; height: 200px; margin: 10px auto; display: block; }
-    
-    /* Nút xác nhận chuyển khoản được căn chỉnh lại bằng Flexbox */
-    .confirm-pay { 
-      display: flex; 
-      align-items: center; /* Căn giữa theo chiều dọc */
-      gap: 12px; 
-      margin-top: 15px; 
-      padding: 15px; 
-      background: #E8F5E9; 
-      border-radius: 12px; 
-      border: 1px solid #A5D6A7; 
-      cursor: pointer;
-    }
-    .confirm-pay input { 
-      width: 24px; 
-      height: 24px; 
-      margin: 0; 
-      flex-shrink: 0; /* Không cho checkbox bị bóp méo */
-    }
-    .confirm-pay label {
-      font-weight: bold; 
-      color: var(--primary); 
-      font-size: 15px;
-      line-height: 1.4;
-      cursor: pointer;
-    }
-
+    .confirm-pay { display: flex; align-items: center; gap: 12px; margin-top: 15px; padding: 15px; background: #E8F5E9; border-radius: 12px; border: 1px solid #A5D6A7; cursor: pointer; }
+    .confirm-pay input { width: 24px; height: 24px; margin: 0; flex-shrink: 0; }
+    .confirm-pay span { font-weight: bold; color: var(--primary); font-size: 15px; }
     .bill-box { background: #fff; padding: 15px; border-radius: 10px; font-family: monospace; border: 1px dashed #999; margin: 20px 0; text-align: left; line-height: 1.5;}
   </style>
 </head>
@@ -89,8 +86,10 @@
 
 <div class="app-container">
   <div id="shopStatus" class="status-bar">⛔ QUÁN ĐANG NGHỈ</div>
-  <div class="header"><h2>🍍 MENU SINH TỐ TÂM VY</h2></div>
-  <div id="menu-list" class="menu-grid"></div>
+  <div class="header"><h2>🥥 MENU SINH TỐ TÂM VY</h2></div>
+  
+  <div id="menu-list" class="menu-container"></div>
+  
   <div class="shop-footer" id="footerInfo"></div>
   <div class="float-cart" id="cartBtn" onclick="showCheckout()"><span>🛒 <span id="cartCount">0</span> món</span><span id="cartTotal">0đ</span></div>
 </div>
@@ -125,27 +124,17 @@
   
   <div class="qr-box" id="qrArea">
     <div style="font-weight:bold; color:var(--primary); font-size:16px;">QUÉT MÃ ĐỂ THANH TOÁN</div>
-    
-    <div style="font-size:13px; color:#666; margin:8px 0; background:#f5f5f5; padding:5px; border-radius:5px;">
-      💡 <strong>Mẹo:</strong> Nhấn giữ vào mã QR để lưu ảnh, sau đó mở App Ngân hàng chọn "Quét ảnh"
-    </div>
-
+    <div style="font-size:13px; color:#666; margin:8px 0; background:#f5f5f5; padding:5px; border-radius:5px;">💡 Nhấn giữ QR để lưu ảnh & mở App Bank quét</div>
     <div style="font-size:13px; margin-bottom:5px;">Nội dung: <strong id="qrContent"></strong></div>
-    
     <img src="" id="qrImage" class="qr-img">
-    
     <div style="font-size:16px; margin-top:10px;">Số tiền: <strong id="qrAmount" style="color:var(--red);"></strong></div>
-    
     <div style="margin-top:8px; border-top:1px dashed #ccc; padding-top:8px;">
       <div style="font-size:12px; color:#555;">Chủ tài khoản:</div>
       <div style="font-weight:bold; color:#000; font-size:14px; text-transform: uppercase;" id="bankOwnerName"></div>
     </div>
   </div>
 
-  <label class="confirm-pay" id="confirmPayBox">
-    <input type="checkbox" id="ckConfirm" onchange="checkConfirm()">
-    <span>Tôi đã chuyển khoản thành công</span>
-  </label>
+  <label class="confirm-pay" id="confirmPayBox"><input type="checkbox" id="ckConfirm" onchange="checkConfirm()"><span>Tôi đã chuyển khoản thành công</span></label>
 
   <div id="btnGroup"><button class="btn-main" id="btnOrder" onclick="submitOrder()">ĐẶT HÀNG NGAY</button></div>
   <div id="zaloGroup" style="display:none"><button class="btn-main btn-zalo" onclick="sendToZalo()">📋 SAO CHÉP & MỞ ZALO</button></div>
@@ -161,13 +150,13 @@
 </div>
 
 <script>
-  // === CẤU HÌNH (SỬA Ở ĐÂY) ===
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec"; // Dán link Script của Lu vào đây
+  // === CẤU HÌNH CỦA LU (GIỮ NGUYÊN) ===
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec";
   
-  const BANK_ID = "ACB"; // ACBbank
-  const BANK_ACC = "48031187"; // STK ngân hàng
-  const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; // Tên chủ TK
-  const ZALO_PHONE = "0775826565"; // Số Zalo
+  const BANK_ID = "ACB";
+  const BANK_ACC = "48031187";
+  const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; 
+  const ZALO_PHONE = "0775826565";
   // ============================
 
   let APP_DATA = {}, CART = [], currentItem = null, IS_OPEN = true, CURRENT_ORDER_ID = "";
@@ -182,14 +171,70 @@
   function initApp(data) { APP_DATA = data; checkStatus(data.shopConfig); renderMenu(); renderFooter(data.shopConfig); }
   function checkStatus(cfg) { if(!cfg.isOpen){ IS_OPEN=false; document.getElementById('shopStatus').innerText="⛔ "+cfg.msg; document.getElementById('shopStatus').style.display='block'; } }
   
+  // === HÀM RENDER MENU THEO NHÓM (MỚI) ===
   function renderMenu() {
-    const list = document.getElementById('menu-list'); list.innerHTML = "";
-    APP_DATA.menu.forEach(item => {
-      let div = document.createElement('div'); div.className = 'item-card';
-      const btn = IS_OPEN ? `<button class="btn-plus" onclick="openItem('${item.id}')">+</button>` : ``;
-      div.innerHTML = `<img src="${item.img}" class="item-img" onerror="this.src='https://via.placeholder.com/90'"><div class="item-content"><div><div class="item-title">${item.name}</div><div class="item-desc">${item.desc||''}</div></div><div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto"><div class="item-price">${fmt(item.price)}</div>${btn}</div></div>`;
-      list.appendChild(div);
+    const container = document.getElementById('menu-list');
+    container.innerHTML = "";
+
+    // 1. Lấy danh sách nhóm duy nhất (Unique Groups)
+    const groups = [...new Set(APP_DATA.menu.map(item => item.group || 'Khác'))];
+
+    // 2. Tạo giao diện cho từng nhóm
+    groups.forEach((groupName, index) => {
+      // Lọc món trong nhóm này
+      const items = APP_DATA.menu.filter(item => (item.group || 'Khác') === groupName);
+      if(items.length === 0) return;
+
+      // Tạo khung nhóm
+      const groupDiv = document.createElement('div');
+      groupDiv.className = 'menu-group';
+      
+      // Tạo tiêu đề nhóm (Có sự kiện click)
+      // Mặc định nhóm đầu tiên (index 0) sẽ mở, các nhóm khác đóng
+      const isOpen = (index === 0);
+      
+      groupDiv.innerHTML = `
+        <div class="group-header ${isOpen ? 'active' : ''}" onclick="toggleGroup(this)">
+          <span>${groupName} (${items.length})</span>
+          <span class="arrow">▼</span>
+        </div>
+        <div class="group-content" style="display: ${isOpen ? 'block' : 'none'}">
+          </div>
+      `;
+      container.appendChild(groupDiv);
+
+      // Thêm các món vào group-content
+      const contentDiv = groupDiv.querySelector('.group-content');
+      items.forEach(item => {
+        let itemDiv = document.createElement('div');
+        itemDiv.className = 'item-card';
+        const btn = IS_OPEN ? `<button class="btn-plus" onclick="openItem('${item.id}')">+</button>` : ``;
+        itemDiv.innerHTML = `
+          <img src="${item.img}" class="item-img" onerror="this.src='https://via.placeholder.com/90'">
+          <div class="item-content">
+            <div><div class="item-title">${item.name}</div><div class="item-desc">${item.desc||''}</div></div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto">
+              <div class="item-price">${fmt(item.price)}</div>${btn}
+            </div>
+          </div>`;
+        contentDiv.appendChild(itemDiv);
+      });
     });
+  }
+
+  // Hàm xử lý đóng mở nhóm
+  function toggleGroup(header) {
+    const content = header.nextElementSibling;
+    const arrow = header.querySelector('.arrow');
+    
+    // Toggle hiển thị
+    if (content.style.display === 'none') {
+      content.style.display = 'block';
+      header.classList.add('active'); // Xoay mũi tên
+    } else {
+      content.style.display = 'none';
+      header.classList.remove('active'); // Xoay lại mũi tên
+    }
   }
 
   function renderFooter(cfg) { document.getElementById('footerInfo').innerHTML = `<p>🕒 Giờ mở: ${cfg.openHour}h - ${cfg.closeHour}h</p><p>📍 ${cfg.address}</p><p>🗺️ <a href="${cfg.mapLink}" target="_blank">Chỉ đường</a></p>`; }
@@ -245,7 +290,6 @@
       document.getElementById('confirmPayBox').style.display='flex';
       document.getElementById('qrAmount').innerText = fmt(total);
       
-      // Hiện tên chủ tài khoản
       document.getElementById('bankOwnerName').innerText = BANK_NAME;
 
       const content = "TT " + CURRENT_ORDER_ID + " " + phone; 
@@ -287,7 +331,7 @@
 
   function sendToZalo() {
     const total = CART.reduce((sum,i)=>sum+i.final,0);
-    let msg = `🥑 ĐƠN MỚI\n`; CART.forEach(i=>{msg+=`▪ ${i.name} (${i.size}) ${i.toppings}\n`}); msg+=`💰 ${fmt(total)}\n👤 ${document.getElementById('cName').value} - ${document.getElementById('cPhone').value}\n📍 ${document.getElementById('cAddress').value}`;
+    let msg = `🔥 ĐƠN MỚI\n`; CART.forEach(i=>{msg+=`▪ ${i.name} (${i.size}) ${i.toppings}\n`}); msg+=`💰 ${fmt(total)}\n👤 ${document.getElementById('cName').value} - ${document.getElementById('cPhone').value}\n📍 ${document.getElementById('cAddress').value}`;
     navigator.clipboard.writeText(msg).then(()=>window.open(`https://zalo.me/${ZALO_PHONE}`));
   }
   function fmt(n) { return n.toLocaleString('vi-VN') + 'đ'; }
