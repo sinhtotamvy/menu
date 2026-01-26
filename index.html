@@ -24,12 +24,12 @@
     .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #999; }
     .status-bar { background: #333; color: white; padding: 8px; text-align: center; font-weight: bold; font-size: 12px; display: none; margin-top: -15px; z-index: 80; }
     
-    /* Menu */
+    /* Menu & Group (MẶC ĐỊNH MỞ) */
     .menu-container { padding: 15px; padding-top: 10px; }
     .menu-group { margin-bottom: 15px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     .group-header { padding: 12px 15px; background: #fff; color: var(--primary-solid); font-weight: 800; font-size: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
     .group-header.active .arrow { transform: rotate(180deg); }
-    .group-content { display: block; padding: 5px; } /* Mặc định hiện (display: block) */
+    .group-content { display: block; padding: 5px; } /* Mặc định hiện (Block) */
     
     .item-card { background: #fff; border-radius: 12px; padding: 10px; display: flex; margin-bottom: 8px; border-bottom: 1px dashed #eee; align-items: center; }
     .item-card:last-child { border-bottom: none; margin-bottom: 0; }
@@ -40,10 +40,10 @@
     .item-price { color: var(--primary-solid); font-weight: 800; font-size: 15px; margin-top: auto; }
     .btn-plus { background: var(--primary-gradient); color: white; border: none; width: 30px; height: 30px; border-radius: 8px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: auto; }
 
-    /* Footer & Buttons */
-    .shop-footer { text-align: center; padding: 20px 20px 40px 20px; color: #999; font-size: 13px; }
-    .footer-btns { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
-    .f-btn { padding: 8px 15px; border-radius: 20px; font-weight: bold; text-decoration: none; font-size: 13px; display: flex; align-items: center; gap: 5px; transition: 0.2s; }
+    /* Footer Mới */
+    .shop-footer { text-align: center; padding: 20px 20px 40px 20px; color: #666; font-size: 13px; }
+    .footer-btns { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
+    .f-btn { padding: 10px 20px; border-radius: 25px; font-weight: bold; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 8px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     .fb-btn { background: #E3F2FD; color: var(--blue-fb); border: 1px solid #BBDEFB; }
     .map-btn { background: #E8F5E9; color: #2E7D32; border: 1px solid #C8E6C9; }
     
@@ -169,27 +169,34 @@
 </div>
 
 <script>
-  // === CẤU HÌNH (LU CHỈ CẦN THAY LINK FACEBOOK Ở ĐÂY) ===
+  // === CẤU HÌNH (LU DÁN LINK FACEBOOK VÀO DÒNG DƯỚI) ===
+  const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=100066925050922"; 
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec";
   const LOGO_URL = "https://storage.googleapis.com/menu-tamvy/IMG_0891.png"; 
-  const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=100035548658862"; // <-- DÁN LINK FB CỦA LU VÀO ĐÂY
-  
   const BANK_ID = "ACB"; const BANK_ACC = "48031187"; const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; const ZALO_PHONE = "0775826565";
   
-  // Các nhóm sẽ ẩn Đá
+  // Các nhóm ẩn Đá (Sinh tố/Đá xay)
   const BLENDED_GROUPS = ["Sinh tố", "Đá xay", "Sinh to", "Da xay", "Yogurt"]; 
-  // Các nhóm sẽ ẩn Đường/Đá/Topping và hiện Ghi chú (Món ăn)
-  const FOOD_GROUPS = ["Món ăn - Bánh", "Món ăn", "Bánh", "Ăn vặt"];
+  
+  // Các nhóm là Món Ăn (Ẩn hết đường đá, hiện ghi chú)
+  const FOOD_GROUPS = ["Món ăn - Bánh", "Món ăn", "Bánh", "Ăn vặt", "Mon an"];
+  
+  // TÊN BỘ NHỚ ĐỆM (ĐỔI TÊN ĐỂ FIX LỖI QUAY VÒNG CHO KHÁCH CŨ)
+  const CACHE_KEY = 'TAMVY_MENU_V16'; 
   // =================
 
   let APP_DATA = {}, CART = [], currentItem = null, IS_OPEN = true, CURRENT_ORDER_ID = "";
 
   window.onload = function() {
     if(LOGO_URL) document.getElementById('shopLogo').src = LOGO_URL;
-    const cached = localStorage.getItem('TAMVY_MENU');
+    
+    // Tải từ Cache mới
+    const cached = localStorage.getItem(CACHE_KEY);
     if (cached) { try { const data = JSON.parse(cached); initApp(data); document.getElementById('loadingOverlay').style.display = 'none'; } catch(e) {} }
+    
+    // Tải từ Server
     fetch(SCRIPT_URL + "?action=getMenu").then(res => res.json()).then(data => { 
-      localStorage.setItem('TAMVY_MENU', JSON.stringify(data));
+      localStorage.setItem(CACHE_KEY, JSON.stringify(data));
       if (!cached) { initApp(data); document.getElementById('loadingOverlay').style.display = 'none'; }
     }).catch(err => { if(!cached) alert("Lỗi mạng! Hãy tải lại trang."); });
   };
@@ -204,7 +211,7 @@
       const items = APP_DATA.menu.filter(item => (item.group || 'Khác') === groupName);
       if(items.length === 0) return;
       const groupDiv = document.createElement('div'); groupDiv.className = 'menu-group';
-      // MẶC ĐỊNH MỞ TẤT CẢ CÁC NHÓM (active)
+      // MẶC ĐỊNH MỞ HẾT (active & block)
       groupDiv.innerHTML = `<div class="group-header active" onclick="toggleGroup(this)"><span>${groupName} (${items.length})</span><span class="arrow">▼</span></div><div class="group-content" style="display: block;"></div>`;
       container.appendChild(groupDiv);
       const contentDiv = groupDiv.querySelector('.group-content');
@@ -230,14 +237,14 @@
   function removeAccents(str) { return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D'); }
   function toggleGroup(header) { const content = header.nextElementSibling; if (content.style.display === 'none') { content.style.display = 'block'; header.classList.add('active'); } else { content.style.display = 'none'; header.classList.remove('active'); } }
   
-  // === FOOTER CÓ NÚT FACEBOOK & MAP ===
+  // === FOOTER MỚI (FB + MAP) ===
   function renderFooter(cfg) { 
     document.getElementById('footerInfo').innerHTML = `
       <div style="margin-bottom:10px; font-weight:bold">${cfg.address}</div>
       <div style="margin-bottom:15px">🕒 ${cfg.openHour}h - ${cfg.closeHour}h</div>
       <div class="footer-btns">
-        <a href="${https://www.facebook.com/sinhtotamvy}" target="_blank" class="f-btn fb-btn">🔵 Facebook</a>
-        <a href="${https://share.google/rZMFVnoiv7WCV3l4L}" target="_blank" class="f-btn map-btn">📍 Chỉ đường</a>
+        <a href="${FACEBOOK_URL}" target="_blank" class="f-btn fb-btn">🔵 Facebook</a>
+        <a href="${cfg.mapLink}" target="_blank" class="f-btn map-btn">📍 Google Map</a>
       </div>
     `; 
   }
@@ -257,19 +264,19 @@
     const foodNoteSection = document.getElementById('foodNoteSection');
     const iceArea = document.getElementById('iceArea');
 
-    // === LOGIC KIỂM TRA MÓN ĂN / THỨC UỐNG ===
+    // === LOGIC PHÂN LOẠI MÓN ĂN / NƯỚC UỐNG ===
     const isFood = FOOD_GROUPS.some(g => groupName.toLowerCase().includes(g.toLowerCase()));
     
     if (isFood) {
-      // Nếu là Món ăn: Ẩn Đường/Đá/Topping, Hiện Ghi chú
+      // Là Món ăn: Ẩn Options, Hiện Note
       drinkOptions.style.display = 'none';
       foodNoteSection.style.display = 'block';
     } else {
-      // Nếu là Nước: Hiện Đường/Đá/Topping, Ẩn Ghi chú
+      // Là Nước: Hiện Options, Ẩn Note
       drinkOptions.style.display = 'block';
       foodNoteSection.style.display = 'none';
 
-      // Logic ẩn Đá cho Sinh tố/Đá xay
+      // Ẩn Đá cho Sinh tố
       if (BLENDED_GROUPS.some(g => groupName.toLowerCase().includes(g.toLowerCase()))) { 
         iceArea.style.display = 'none'; 
       } else { 
@@ -300,10 +307,8 @@
     const isFood = FOOD_GROUPS.some(g => groupName.toLowerCase().includes(g.toLowerCase()));
 
     if (isFood) {
-      // Nếu là món ăn -> Lấy ghi chú
-      itemNote = document.getElementById('mItemNote').value;
+      itemNote = document.getElementById('mItemNote').value; // Lấy ghi chú món ăn
     } else {
-      // Nếu là nước -> Lấy đường đá topping
       document.querySelectorAll('.tp-check:checked').forEach(c => toppings.push(APP_DATA.toppings[c.value].name));
       iceVal = document.getElementById('iceArea').style.display === 'none' ? "" : document.getElementById('mIce').value;
       sugarVal = document.getElementById('mSugar').value;
@@ -311,7 +316,7 @@
 
     CART.push({ 
       name: currentItem.name, final: calcPrice(), size: sizeVal[0], 
-      sugar: sugarVal, ice: iceVal, toppings: toppings, note: itemNote // Thêm note vào giỏ
+      sugar: sugarVal, ice: iceVal, toppings: toppings, note: itemNote 
     });
     updateCartUI(); closeModal();
   }
@@ -331,7 +336,7 @@
         
         // Hiển thị khác nhau tuỳ là Món hay Nước
         if (item.note) {
-           opts.push(`"${item.note}"`); // Nếu có ghi chú (Món ăn)
+           opts.push(`"${item.note}"`);
         } else {
            if(item.sugar) opts.push(item.sugar);
            if(item.ice) opts.push(item.ice);
