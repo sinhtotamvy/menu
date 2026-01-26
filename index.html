@@ -9,78 +9,72 @@
     /* === THEME SHOPEE FOOD === */
     :root { 
       --primary-gradient: linear-gradient(135deg, #ff4b2b 0%, #ff9068 100%);
-      --primary-solid: #ff5722; --accent: #ffca28; --bg: #f5f5f5; --white: #ffffff; --text: #333333; --red: #d32f2f;
+      --primary-solid: #ff5722; --bg: #f5f5f5; --white: #ffffff; --text: #333; --red: #d32f2f;
     }
-    body { font-family: 'Quicksand', sans-serif; background: #eee; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; color: var(--text); }
+    body { font-family: 'Quicksand', sans-serif; background: #eee; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; color: var(--text); -webkit-tap-highlight-color: transparent; }
     .app-container { width: 100%; max-width: 480px; background: var(--bg); min-height: 100vh; position: relative; padding-bottom: 100px; box-shadow: 0 0 25px rgba(0,0,0,0.1); }
     
-    /* HEADER */
+    /* Header & Search */
     .header-wrapper { background: var(--primary-gradient); padding: 15px 15px 20px 15px; position: sticky; top: 0; z-index: 90; box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3); border-radius: 0 0 20px 20px; }
     .header-top { display: flex; align-items: center; margin-bottom: 15px; }
     .shop-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid white; object-fit: cover; margin-right: 12px; background: white; }
-    .header-title { color: white; margin: 0; font-size: 20px; font-weight: 800; text-shadow: 0 1px 2px rgba(0,0,0,0.1); flex: 1; }
+    .header-title { color: white; margin: 0; font-size: 20px; font-weight: 800; flex: 1; }
     .search-box { position: relative; width: 100%; }
-    .search-input { width: 100%; padding: 12px 15px 12px 40px; border: none; border-radius: 25px; font-family: inherit; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); outline: none; }
-    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #999; font-size: 16px; }
-    .status-bar { background: var(--text); color: white; padding: 8px; text-align: center; font-weight: bold; font-size: 12px; display: none; margin-top: -15px; z-index: 80; }
+    .search-input { width: 100%; padding: 12px 15px 12px 40px; border: none; border-radius: 25px; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); outline: none; }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #999; }
+    .status-bar { background: #333; color: white; padding: 8px; text-align: center; font-weight: bold; font-size: 12px; display: none; margin-top: -15px; z-index: 80; }
     
-    /* MENU */
+    /* Menu & Items */
     .menu-container { padding: 15px; padding-top: 10px; }
-    .menu-group { margin-bottom: 15px; background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.03); border: 1px solid white; }
+    .menu-group { margin-bottom: 15px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     .group-header { padding: 12px 15px; background: #fff; color: var(--primary-solid); font-weight: 800; font-size: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
-    .group-header.active .arrow { transform: rotate(180deg); color: var(--primary-solid); }
-    .group-content { display: none; padding: 10px; animation: fadeIn 0.3s; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-    .item-card { background: var(--white); border-radius: 12px; padding: 10px; display: flex; margin-bottom: 10px; border-bottom: 1px dashed #eee; align-items: center; }
+    .group-header.active .arrow { transform: rotate(180deg); }
+    .group-content { display: none; padding: 5px; }
+    
+    .item-card { background: #fff; border-radius: 12px; padding: 10px; display: flex; margin-bottom: 8px; border-bottom: 1px dashed #eee; align-items: center; }
     .item-card:last-child { border-bottom: none; margin-bottom: 0; }
     .item-img { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; background: #f0f0f0; flex-shrink: 0; }
     .item-content { flex: 1; padding-left: 12px; display: flex; flex-direction: column; justify-content: center; min-height: 80px; }
-    .item-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; color: var(--text); }
-    .item-desc { font-size: 12px; color: #888; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; }
+    .item-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+    .item-desc { font-size: 12px; color: #888; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .item-price { color: var(--primary-solid); font-weight: 800; font-size: 15px; margin-top: auto; }
-    .btn-plus { background: var(--primary-gradient); color: white; border: none; width: 30px; height: 30px; border-radius: 8px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: auto; box-shadow: 0 3px 6px rgba(255, 87, 34, 0.3); }
+    .btn-plus { background: var(--primary-gradient); color: white; border: none; width: 30px; height: 30px; border-radius: 8px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: auto; }
 
-    /* FOOTER & CART */
-    .shop-footer { text-align: center; padding: 30px 20px; color: #999; font-size: 13px; background: transparent; }
+    /* Footer & UI */
+    .shop-footer { text-align: center; padding: 30px 20px; color: #999; font-size: 13px; }
     .shop-footer a { color: var(--primary-solid); text-decoration: none; font-weight: bold;}
-    .float-cart { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px; background: var(--text); color: white; padding: 12px 20px; border-radius: 50px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 95; cursor: pointer; display: none; }
+    .float-cart { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px; background: #333; color: white; padding: 12px 20px; border-radius: 50px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 95; cursor: pointer; display: none; }
     
-    /* MODALS */
+    /* Modals */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(2px); z-index: 200; display: none; justify-content: center; align-items: flex-end; }
     .modal-overlay.active { display: flex; }
-    .sheet-modal { background: var(--white); width: 100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 25px; max-height: 85vh; overflow-y: auto; animation: slideUp 0.3s; }
+    .sheet-modal { background: #fff; width: 100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 25px; max-height: 85vh; overflow-y: auto; animation: slideUp 0.3s; }
     .full-modal { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; height: 100%; background: #fff; z-index: 300; display: none; overflow-y: auto; padding: 20px; box-sizing: border-box; }
     @keyframes slideUp { from {transform: translateY(100%)} to {transform: translateY(0)}}
 
     input, select, textarea { width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 15px; box-sizing: border-box; font-family: inherit; font-size: 15px; background: #f9f9f9; outline: none; }
     input:focus, textarea:focus { border-color: var(--primary-solid); background: #fff; }
-    .btn-main { width: 100%; padding: 16px; background: var(--primary-gradient); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; margin-top: 10px; cursor: pointer; box-shadow: 0 4px 10px rgba(255, 87, 34, 0.3); }
-    .btn-zalo { background: #0068FF; box-shadow: 0 4px 10px rgba(0, 104, 255, 0.3); }
+    .btn-main { width: 100%; padding: 16px; background: var(--primary-gradient); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; margin-top: 10px; cursor: pointer; }
+    .btn-zalo { background: #0068FF; margin-bottom: 5px; }
     .radio-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed #eee; cursor: pointer; }
     .radio-row input { width: 20px; height: 20px; accent-color: var(--primary-solid); }
     .opt-header { font-weight: 700; font-size: 14px; color: var(--primary-solid); text-transform: uppercase; margin-bottom: 10px; display: block;}
     
-    /* QR & Bill */
     .qr-box { text-align: center; background: #FFF3E0; padding: 20px; border-radius: 16px; border: 2px solid var(--primary-solid); margin-top: 15px; display: none; }
     .qr-img { width: 200px; height: 200px; margin: 10px auto; display: block; mix-blend-mode: multiply; }
     .confirm-pay { display: flex; align-items: center; gap: 12px; margin-top: 15px; padding: 15px; background: #fff; border-radius: 12px; border: 1px solid #ddd; cursor: pointer; }
     .confirm-pay input { width: 24px; height: 24px; margin: 0; flex-shrink: 0; }
-    .confirm-pay span { font-weight: bold; color: var(--primary-solid); font-size: 15px; }
     .bill-box { background: #f9f9f9; padding: 15px; border-radius: 10px; font-family: monospace; border: 1px dashed #ccc; margin: 20px 0; text-align: left; line-height: 1.5;}
-    #loadingOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.5s; }
+    
+    /* Loading */
+    #loadingOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.3s; }
     .spinner { width: 40px; height: 40px; border: 4px solid #eee; border-top: 4px solid var(--primary-solid); border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    
-    /* HƯỚNG DẪN ZALO (MỚI) */
-    .zalo-guide-box { background: #E3F2FD; border: 1px dashed #0D47A1; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; }
-    .zalo-guide-box h4 { margin: 0 0 10px 0; color: #0D47A1; }
-    .zalo-guide-box p { margin: 5px 0; font-size: 14px; color: #333; }
   </style>
 </head>
 <body>
 
-<div id="loadingOverlay"><div class="spinner"></div><p style="margin-top:10px; color:#555">Đang tải thực đơn...</p></div>
+<div id="loadingOverlay"><div class="spinner"></div><p style="margin-top:10px; color:#555; font-size:12px">Đang tải...</p></div>
 
 <div class="app-container">
   <div id="shopStatus" class="status-bar">⛔ QUÁN ĐANG NGHỈ</div>
@@ -91,18 +85,18 @@
     </div>
     <div class="search-box">
       <span class="search-icon">🔍</span>
-      <input type="text" id="searchKey" class="search-input" placeholder="Bạn muốn ăn gì hôm nay?" onkeyup="filterMenu()">
+      <input type="text" id="searchKey" class="search-input" placeholder="Bạn muốn ăn gì?" onkeyup="filterMenu()">
     </div>
   </div>
   <div id="menu-list" class="menu-container"></div>
   <div class="shop-footer" id="footerInfo"></div>
-  <div class="float-cart" id="cartBtn" onclick="showCheckout()"><span>🛒 <span id="cartCount">0</span> món</span><span id="cartTotal">0đ</span></div>
+  <div class="float-cart" id="cartBtn" onclick="showCheckout()"><span>🛒 <span id="cartCount">0</span></span><span id="cartTotal">0đ</span></div>
 </div>
 
 <div class="modal-overlay" id="productModal">
   <div class="sheet-modal">
     <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
-      <h3 id="mName" style="margin:0; font-size:20px; color:var(--text)">Tên món</h3><span onclick="closeModal()" style="font-size:28px; cursor:pointer; color:#999;">&times;</span>
+      <h3 id="mName" style="margin:0; font-size:20px;">Tên món</h3><span onclick="closeModal()" style="font-size:28px; cursor:pointer; color:#999;">&times;</span>
     </div>
     <div class="opt-section" id="sizeSection" style="display:none; margin-bottom:20px;"><label class="opt-header">Chọn Size</label><div id="sizeOptions"></div></div>
     
@@ -114,41 +108,26 @@
         <select id="mIce"><option value="">Bình thường</option><option value="Ít đá">Ít đá</option><option value="Đá riêng">Đá riêng</option></select>
       </div>
     </div>
-
     <div class="opt-section" style="margin-bottom:20px;"><label class="opt-header">Topping</label><div id="toppingList"></div></div>
     <button class="btn-main" onclick="addToCart()">Thêm vào giỏ - <span id="mPriceBtn">0đ</span></button>
   </div>
 </div>
 
-<div class="modal-overlay" id="zaloModal">
-  <div class="sheet-modal" style="text-align:center">
-    <div style="font-size:50px; margin-bottom:10px">✅</div>
-    <h3 style="color:var(--primary-solid); margin:0 0 20px 0">ĐÃ SAO CHÉP ĐƠN!</h3>
-    
-    <div class="zalo-guide-box">
-      <h4>👇 Làm theo bước sau:</h4>
-      <p>1️⃣ Bấm nút <b>"Mở Zalo ngay"</b> bên dưới.</p>
-      <p>2️⃣ Tại ô chat Zalo, <b>nhấn giữ ngón tay</b>.</p>
-      <p>3️⃣ Chọn <b>"Dán" (Paste)</b> rồi Gửi.</p>
-    </div>
-
-    <button class="btn-main btn-zalo" onclick="openZaloApp()">🚀 ĐÃ HIỂU, MỞ ZALO NGAY</button>
-    <button class="btn-main" style="background:#eee; color:#333; margin-top:10px" onclick="document.getElementById('zaloModal').classList.remove('active')">Đóng lại</button>
-  </div>
-</div>
-
 <div class="full-modal" id="checkoutPage">
   <div style="padding:10px 0 20px 0; display:flex; justify-content:space-between; align-items:center;">
-    <h3 style="margin:0; color:var(--text)">📦 Xác nhận đơn</h3><span onclick="closeCheckout()" style="font-size:28px; cursor:pointer; color:#999;">&times;</span>
+    <h3 style="margin:0;">📦 Xác nhận</h3><span onclick="closeCheckout()" style="font-size:28px; cursor:pointer; color:#999;">&times;</span>
   </div>
   <div id="cartItemsList" style="background:#f9f9f9; padding:15px; border-radius:12px; border:1px solid #eee;"></div>
-  <h4 style="margin:20px 0 10px 5px; color:#555;">Thông tin nhận hàng</h4>
+  
+  <h4 style="margin:20px 0 10px 5px; color:#555;">Thông tin</h4>
   <input type="text" id="cName" placeholder="Tên của bạn"><input type="tel" id="cPhone" placeholder="Số điện thoại"><input type="text" id="cAddress" placeholder="Địa chỉ giao hàng"><textarea id="cNote" rows="2" placeholder="Ghi chú..."></textarea><input type="text" id="honeypot" style="display:none">
+  
   <h4 style="margin:10px 0 10px 5px; color:#555;">Thanh toán</h4>
   <select id="cPayment" onchange="togglePayment()"><option value="COD">💵 Tiền mặt</option><option value="CK">🏦 Chuyển khoản (QR)</option><option value="ZALO">💬 Gửi qua Zalo</option></select>
+  
   <div class="qr-box" id="qrArea">
-    <div style="font-weight:bold; color:var(--primary-solid); font-size:16px;">QUÉT MÃ ĐỂ THANH TOÁN</div>
-    <div style="font-size:13px; color:#666; margin:8px 0; background:#fff; padding:5px; border-radius:5px;">💡 Nhấn giữ QR để lưu ảnh & mở App Bank quét</div>
+    <div style="font-weight:bold; color:var(--primary-solid); font-size:16px;">QUÉT MÃ QR</div>
+    <div style="font-size:13px; color:#666; margin:8px 0; background:#fff; padding:5px; border-radius:5px;">💡 Nhấn giữ QR để lưu ảnh</div>
     <div style="font-size:13px; margin-bottom:5px;">Nội dung: <strong id="qrContent"></strong></div>
     <img src="" id="qrImage" class="qr-img">
     <div style="font-size:16px; margin-top:10px;">Số tiền: <strong id="qrAmount" style="color:var(--red);"></strong></div>
@@ -157,9 +136,18 @@
       <div style="font-weight:bold; color:#000; font-size:14px; text-transform: uppercase;" id="bankOwnerName"></div>
     </div>
   </div>
+
   <label class="confirm-pay" id="confirmPayBox"><input type="checkbox" id="ckConfirm" onchange="checkConfirm()"><span>Tôi đã chuyển khoản thành công</span></label>
+
   <div id="btnGroup"><button class="btn-main" id="btnOrder" onclick="submitOrder()">ĐẶT HÀNG NGAY</button></div>
-  <div id="zaloGroup" style="display:none"><button class="btn-main btn-zalo" onclick="sendToZalo()">📋 SAO CHÉP & MỞ ZALO</button></div><div style="height:50px;"></div>
+  
+  <div id="zaloGroup" style="display:none; text-align:center">
+    <button class="btn-main btn-zalo" onclick="sendToZalo()">📋 SAO CHÉP & MỞ ZALO</button>
+    <div style="font-size:13px; color:#0068FF; margin-top:5px;">
+      (Bấm nút trên để Copy đơn, sau đó <b>DÁN</b> vào ô chat Zalo)
+    </div>
+  </div>
+  <div style="height:50px;"></div>
 </div>
 
 <div class="full-modal" id="successPage" style="background:white; text-align:center;">
@@ -171,21 +159,40 @@
 </div>
 
 <script>
-  // === CẤU HÌNH QUÁN ===
+  // === CẤU HÌNH ===
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec";
   const LOGO_URL = "https://storage.googleapis.com/menu-tamvy/IMG_0891.png"; 
-  const BANK_ID = "ACB"; 
-  const BANK_ACC = "48031187"; 
-  const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; 
-  const ZALO_PHONE = "0775826565";
+  const BANK_ID = "ACB"; const BANK_ACC = "48031187"; const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; const ZALO_PHONE = "0775826565";
   const BLENDED_GROUPS = ["Sinh tố", "Đá xay", "Sinh to", "Da xay"]; 
-  // ============================
+  // =================
 
   let APP_DATA = {}, CART = [], currentItem = null, IS_OPEN = true, CURRENT_ORDER_ID = "";
 
   window.onload = function() {
-    if(LOGO_URL && LOGO_URL.startsWith('http')) document.getElementById('shopLogo').src = LOGO_URL;
-    fetch(SCRIPT_URL + "?action=getMenu").then(res => res.json()).then(data => { initApp(data); document.getElementById('loadingOverlay').style.display = 'none'; }).catch(err => alert("Lỗi tải menu: " + err));
+    if(LOGO_URL) document.getElementById('shopLogo').src = LOGO_URL;
+    
+    // 1. TẢI TỪ BỘ NHỚ ĐỆM TRƯỚC (CACHE) -> ĐỂ WEB HIỆN NGAY LẬP TỨC
+    const cached = localStorage.getItem('TAMVY_MENU');
+    if (cached) {
+      try {
+        const data = JSON.parse(cached);
+        initApp(data);
+        document.getElementById('loadingOverlay').style.display = 'none'; // Ẩn Loading ngay
+      } catch(e) {}
+    }
+
+    // 2. TẢI DỮ LIỆU MỚI TỪ GOOGLE (NGẦM)
+    fetch(SCRIPT_URL + "?action=getMenu").then(res => res.json()).then(data => { 
+      // Cập nhật bộ nhớ đệm cho lần sau
+      localStorage.setItem('TAMVY_MENU', JSON.stringify(data));
+      // Nếu chưa có cache thì mới init, còn có rồi thì thôi để tránh giật màn hình
+      if (!cached) { 
+        initApp(data); 
+        document.getElementById('loadingOverlay').style.display = 'none'; 
+      }
+    }).catch(err => {
+        if(!cached) alert("Lỗi mạng! Hãy tải lại trang.");
+    });
   };
 
   function initApp(data) { APP_DATA = data; checkStatus(data.shopConfig); renderMenu(); renderFooter(data.shopConfig); }
@@ -223,7 +230,7 @@
   }
   function removeAccents(str) { return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D'); }
   function toggleGroup(header) { const content = header.nextElementSibling; if (content.style.display === 'none') { content.style.display = 'block'; header.classList.add('active'); } else { content.style.display = 'none'; header.classList.remove('active'); } }
-  function renderFooter(cfg) { document.getElementById('footerInfo').innerHTML = `<p>🕒 Giờ mở: ${cfg.openHour}h - ${cfg.closeHour}h</p><p>📍 ${cfg.address}</p><p>🗺️ <a href="${cfg.mapLink}" target="_blank">Chỉ đường</a></p>`; }
+  function renderFooter(cfg) { document.getElementById('footerInfo').innerHTML = `<p>🕒 ${cfg.openHour}h - ${cfg.closeHour}h</p><p>📍 ${cfg.address}</p>`; }
 
   function openItem(id) {
     currentItem = APP_DATA.menu.find(i => i.id === id); document.getElementById('mName').innerText = currentItem.name;
@@ -264,11 +271,7 @@
     CURRENT_ORDER_ID = "DH" + Math.floor(10000 + Math.random() * 90000);
     const list = document.getElementById('cartItemsList'); list.innerHTML = "";
     CART.forEach((item,idx) => {
-        let opts = [];
-        if(item.size && !item.size.includes('Chuẩn')) opts.push(item.size);
-        if(item.sugar) opts.push(item.sugar);
-        if(item.ice) opts.push(item.ice);
-        if(item.toppings.length) opts.push(item.toppings.join('+'));
+        let opts = []; if(item.size && !item.size.includes('Chuẩn')) opts.push(item.size); if(item.sugar) opts.push(item.sugar); if(item.ice) opts.push(item.ice); if(item.toppings.length) opts.push(item.toppings.join('+'));
         let optString = opts.length ? `(${opts.join(', ')})` : '';
         list.innerHTML += `<div style="display:flex;justify-content:space-between;margin-bottom:10px;border-bottom:1px dashed #eee;padding-bottom:5px"><div><b>${item.name}</b> <small>${optString}</small></div><div style="text-align:right"><div>${fmt(item.final)}</div><a href="#" onclick="removeCart(${idx})" style="color:red;font-size:12px">Xóa</a></div></div>`;
     });
@@ -310,7 +313,6 @@
     }).catch(err => { alert("Lỗi mạng! Vui lòng thử lại."); document.getElementById('btnOrder').disabled=false; });
   }
 
-  // === CHỨC NĂNG COPY ZALO CÓ HƯỚNG DẪN ===
   function sendToZalo() {
     const total = CART.reduce((sum,i)=>sum+i.final,0); let msg = `🥑 ĐƠN MỚI\n`; 
     CART.forEach(i=>{
@@ -319,15 +321,11 @@
     }); 
     msg+=`💰 ${fmt(total)}\n👤 ${document.getElementById('cName').value} - ${document.getElementById('cPhone').value}\n📍 ${document.getElementById('cAddress').value}`;
     
-    // Copy và hiện hướng dẫn
+    // Copy nhanh và mở Zalo ngay lập tức
     navigator.clipboard.writeText(msg).then(() => {
-      document.getElementById('zaloModal').classList.add('active');
-    }).catch(() => alert("Lỗi copy. Vui lòng thử lại!"));
-  }
-
-  function openZaloApp() {
-    window.open(`https://zalo.me/${ZALO_PHONE}`);
-    document.getElementById('zaloModal').classList.remove('active');
+        alert("Đã COPY đơn hàng! Đang mở Zalo...");
+        window.open(`https://zalo.me/${ZALO_PHONE}`);
+    }).catch(() => alert("Lỗi copy. Vui lòng thử lại"));
   }
 
   function fmt(n) { return n.toLocaleString('vi-VN') + 'đ'; }
