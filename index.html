@@ -6,17 +6,11 @@
   <title>Sinh Tố Tâm Vy</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    /* === THEME SHOPEE FOOD (CAM ĐỎ - VÀNG) === */
+    /* === THEME SHOPEE FOOD === */
     :root { 
       --primary-gradient: linear-gradient(135deg, #ff4b2b 0%, #ff9068 100%);
-      --primary-solid: #ff5722; 
-      --accent: #ffca28;        
-      --bg: #f5f5f5;            
-      --white: #ffffff;
-      --text: #333333;
-      --red: #d32f2f;
+      --primary-solid: #ff5722; --accent: #ffca28; --bg: #f5f5f5; --white: #ffffff; --text: #333333; --red: #d32f2f;
     }
-    
     body { font-family: 'Quicksand', sans-serif; background: #eee; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; color: var(--text); }
     .app-container { width: 100%; max-width: 480px; background: var(--bg); min-height: 100vh; position: relative; padding-bottom: 100px; box-shadow: 0 0 25px rgba(0,0,0,0.1); }
     
@@ -77,6 +71,11 @@
     #loadingOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.5s; }
     .spinner { width: 40px; height: 40px; border: 4px solid #eee; border-top: 4px solid var(--primary-solid); border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    
+    /* HƯỚNG DẪN ZALO (MỚI) */
+    .zalo-guide-box { background: #E3F2FD; border: 1px dashed #0D47A1; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; }
+    .zalo-guide-box h4 { margin: 0 0 10px 0; color: #0D47A1; }
+    .zalo-guide-box p { margin: 5px 0; font-size: 14px; color: #333; }
   </style>
 </head>
 <body>
@@ -109,19 +108,10 @@
     
     <div class="opt-section" style="margin-bottom:20px;">
       <label class="opt-header">Độ ngọt</label>
-      <select id="mSugar">
-        <option value="">Bình thường</option>
-        <option value="Ít ngọt">Ít ngọt</option>
-        <option value="Không ngọt">Không ngọt</option>
-      </select>
-      
+      <select id="mSugar"><option value="">Bình thường</option><option value="Ít ngọt">Ít ngọt</option><option value="Không ngọt">Không ngọt</option></select>
       <div id="iceArea" style="margin-top:15px">
         <label class="opt-header">Lượng đá</label>
-        <select id="mIce">
-          <option value="">Bình thường</option>
-          <option value="Ít đá">Ít đá</option>
-          <option value="Đá riêng">Đá riêng</option>
-        </select>
+        <select id="mIce"><option value="">Bình thường</option><option value="Ít đá">Ít đá</option><option value="Đá riêng">Đá riêng</option></select>
       </div>
     </div>
 
@@ -130,19 +120,32 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="zaloModal">
+  <div class="sheet-modal" style="text-align:center">
+    <div style="font-size:50px; margin-bottom:10px">✅</div>
+    <h3 style="color:var(--primary-solid); margin:0 0 20px 0">ĐÃ SAO CHÉP ĐƠN!</h3>
+    
+    <div class="zalo-guide-box">
+      <h4>👇 Làm theo bước sau:</h4>
+      <p>1️⃣ Bấm nút <b>"Mở Zalo ngay"</b> bên dưới.</p>
+      <p>2️⃣ Tại ô chat Zalo, <b>nhấn giữ ngón tay</b>.</p>
+      <p>3️⃣ Chọn <b>"Dán" (Paste)</b> rồi Gửi.</p>
+    </div>
+
+    <button class="btn-main btn-zalo" onclick="openZaloApp()">🚀 ĐÃ HIỂU, MỞ ZALO NGAY</button>
+    <button class="btn-main" style="background:#eee; color:#333; margin-top:10px" onclick="document.getElementById('zaloModal').classList.remove('active')">Đóng lại</button>
+  </div>
+</div>
+
 <div class="full-modal" id="checkoutPage">
   <div style="padding:10px 0 20px 0; display:flex; justify-content:space-between; align-items:center;">
     <h3 style="margin:0; color:var(--text)">📦 Xác nhận đơn</h3><span onclick="closeCheckout()" style="font-size:28px; cursor:pointer; color:#999;">&times;</span>
   </div>
   <div id="cartItemsList" style="background:#f9f9f9; padding:15px; border-radius:12px; border:1px solid #eee;"></div>
-  
   <h4 style="margin:20px 0 10px 5px; color:#555;">Thông tin nhận hàng</h4>
-  <input type="text" id="cName" placeholder="Tên của bạn"><input type="tel" id="cPhone" placeholder="Số điện thoại"><input type="text" id="cAddress" placeholder="Địa chỉ giao hàng"><textarea id="cNote" rows="2" placeholder="Ghi chú..."></textarea>
-  <input type="text" id="honeypot" style="display:none">
-
+  <input type="text" id="cName" placeholder="Tên của bạn"><input type="tel" id="cPhone" placeholder="Số điện thoại"><input type="text" id="cAddress" placeholder="Địa chỉ giao hàng"><textarea id="cNote" rows="2" placeholder="Ghi chú..."></textarea><input type="text" id="honeypot" style="display:none">
   <h4 style="margin:10px 0 10px 5px; color:#555;">Thanh toán</h4>
   <select id="cPayment" onchange="togglePayment()"><option value="COD">💵 Tiền mặt</option><option value="CK">🏦 Chuyển khoản (QR)</option><option value="ZALO">💬 Gửi qua Zalo</option></select>
-  
   <div class="qr-box" id="qrArea">
     <div style="font-weight:bold; color:var(--primary-solid); font-size:16px;">QUÉT MÃ ĐỂ THANH TOÁN</div>
     <div style="font-size:13px; color:#666; margin:8px 0; background:#fff; padding:5px; border-radius:5px;">💡 Nhấn giữ QR để lưu ảnh & mở App Bank quét</div>
@@ -154,12 +157,9 @@
       <div style="font-weight:bold; color:#000; font-size:14px; text-transform: uppercase;" id="bankOwnerName"></div>
     </div>
   </div>
-
   <label class="confirm-pay" id="confirmPayBox"><input type="checkbox" id="ckConfirm" onchange="checkConfirm()"><span>Tôi đã chuyển khoản thành công</span></label>
-
   <div id="btnGroup"><button class="btn-main" id="btnOrder" onclick="submitOrder()">ĐẶT HÀNG NGAY</button></div>
-  <div id="zaloGroup" style="display:none"><button class="btn-main btn-zalo" onclick="sendToZalo()">📋 SAO CHÉP & MỞ ZALO</button></div>
-  <div style="height:50px;"></div>
+  <div id="zaloGroup" style="display:none"><button class="btn-main btn-zalo" onclick="sendToZalo()">📋 SAO CHÉP & MỞ ZALO</button></div><div style="height:50px;"></div>
 </div>
 
 <div class="full-modal" id="successPage" style="background:white; text-align:center;">
@@ -171,17 +171,13 @@
 </div>
 
 <script>
-  // === CẤU HÌNH QUÁN (ĐÃ CẬP NHẬT) ===
+  // === CẤU HÌNH QUÁN ===
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec";
   const LOGO_URL = "https://storage.googleapis.com/menu-tamvy/IMG_0891.png"; 
-  
-  // === NGÂN HÀNG ACB ===
   const BANK_ID = "ACB"; 
   const BANK_ACC = "48031187"; 
   const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; 
   const ZALO_PHONE = "0775826565";
-  
-  // === DANH SÁCH NHÓM KHÔNG CHO CHỌN ĐÁ (ẨN ĐÁ) ===
   const BLENDED_GROUPS = ["Sinh tố", "Đá xay", "Sinh to", "Da xay"]; 
   // ============================
 
@@ -229,26 +225,15 @@
   function toggleGroup(header) { const content = header.nextElementSibling; if (content.style.display === 'none') { content.style.display = 'block'; header.classList.add('active'); } else { content.style.display = 'none'; header.classList.remove('active'); } }
   function renderFooter(cfg) { document.getElementById('footerInfo').innerHTML = `<p>🕒 Giờ mở: ${cfg.openHour}h - ${cfg.closeHour}h</p><p>📍 ${cfg.address}</p><p>🗺️ <a href="${cfg.mapLink}" target="_blank">Chỉ đường</a></p>`; }
 
-  // === XỬ LÝ ẨN HIỆN ĐÁ ===
   function openItem(id) {
     currentItem = APP_DATA.menu.find(i => i.id === id); document.getElementById('mName').innerText = currentItem.name;
     const sizeOpt = document.getElementById('sizeOptions'); sizeOpt.innerHTML = "";
     let html = `<label class="radio-row"><span><input type="radio" name="size" value="Size Chuẩn|0" checked onchange="calcPrice()"> Size Chuẩn</span> <span>+0đ</span></label>`;
     if(currentItem.sizes?.length) { document.getElementById('sizeSection').style.display='block'; currentItem.sizes.forEach(s => html += `<label class="radio-row"><span><input type="radio" name="size" value="${s.name}|${s.priceAdd}" onchange="calcPrice()"> ${s.name}</span> <span>+${fmt(s.priceAdd)}</span></label>`); } else { document.getElementById('sizeSection').style.display='none'; }
     sizeOpt.innerHTML = html;
-    
-    document.getElementById('mSugar').value = "";
-    document.getElementById('mIce').value = "";
-    
-    // KIỂM TRA NHÓM ĐỂ ẨN ĐÁ
-    const iceArea = document.getElementById('iceArea');
-    const groupName = currentItem.group || "";
-    if (BLENDED_GROUPS.some(g => groupName.toLowerCase().includes(g.toLowerCase()))) {
-      iceArea.style.display = 'none';
-    } else {
-      iceArea.style.display = 'block';
-    }
-    
+    document.getElementById('mSugar').value = ""; document.getElementById('mIce').value = "";
+    const iceArea = document.getElementById('iceArea'); const groupName = currentItem.group || "";
+    if (BLENDED_GROUPS.some(g => groupName.toLowerCase().includes(g.toLowerCase()))) { iceArea.style.display = 'none'; } else { iceArea.style.display = 'block'; }
     const topList = document.getElementById('toppingList'); topList.innerHTML = "";
     APP_DATA.toppings.forEach((tp,idx) => topList.innerHTML += `<label class="radio-row"><span><input type="checkbox" class="tp-check" value="${idx}" onchange="calcPrice()"> ${tp.name}</span> <span>+${fmt(tp.price)}</span></label>`);
     calcPrice(); document.getElementById('productModal').classList.add('active');
@@ -264,16 +249,8 @@
   function addToCart() {
     const sizeVal = document.querySelector('input[name="size"]:checked').value.split('|');
     let toppings = []; document.querySelectorAll('.tp-check:checked').forEach(c => toppings.push(APP_DATA.toppings[c.value].name));
-    
-    // Nếu khung đá bị ẩn thì coi như không chọn đá
     let iceVal = document.getElementById('iceArea').style.display === 'none' ? "" : document.getElementById('mIce').value;
-
-    CART.push({ 
-      name: currentItem.name, final: calcPrice(), size: sizeVal[0], 
-      sugar: document.getElementById('mSugar').value, 
-      ice: iceVal, 
-      toppings: toppings 
-    });
+    CART.push({ name: currentItem.name, final: calcPrice(), size: sizeVal[0], sugar: document.getElementById('mSugar').value, ice: iceVal, toppings: toppings });
     updateCartUI(); closeModal();
   }
   function updateCartUI() {
@@ -320,11 +297,7 @@
     document.getElementById('btnOrder').innerText = "ĐANG GỬI..."; document.getElementById('btnOrder').disabled = true;
     const total = CART.reduce((sum,i)=>sum+i.final,0);
     const details = CART.map(i => {
-        let opts = [];
-        if(i.size && !i.size.includes('Chuẩn')) opts.push(i.size);
-        if(i.sugar) opts.push(i.sugar);
-        if(i.ice) opts.push(i.ice);
-        if(i.toppings.length) opts.push(i.toppings.join('+'));
+        let opts = []; if(i.size && !i.size.includes('Chuẩn')) opts.push(i.size); if(i.sugar) opts.push(i.sugar); if(i.ice) opts.push(i.ice); if(i.toppings.length) opts.push(i.toppings.join('+'));
         return `- ${i.name} (${opts.join(', ')})`;
     }).join('\n');
     const orderData = { orderId: CURRENT_ORDER_ID, name: name, phone: phone, address: addr, note: document.getElementById('cNote').value, paymentMethod: document.getElementById('cPayment').value, details: details, total: total, honey: document.getElementById('honeypot').value };
@@ -337,6 +310,7 @@
     }).catch(err => { alert("Lỗi mạng! Vui lòng thử lại."); document.getElementById('btnOrder').disabled=false; });
   }
 
+  // === CHỨC NĂNG COPY ZALO CÓ HƯỚNG DẪN ===
   function sendToZalo() {
     const total = CART.reduce((sum,i)=>sum+i.final,0); let msg = `🥑 ĐƠN MỚI\n`; 
     CART.forEach(i=>{
@@ -344,8 +318,18 @@
         msg+=`▪ ${i.name} (${opts.join(', ')})\n`;
     }); 
     msg+=`💰 ${fmt(total)}\n👤 ${document.getElementById('cName').value} - ${document.getElementById('cPhone').value}\n📍 ${document.getElementById('cAddress').value}`;
-    navigator.clipboard.writeText(msg).then(()=>window.open(`https://zalo.me/${ZALO_PHONE}`));
+    
+    // Copy và hiện hướng dẫn
+    navigator.clipboard.writeText(msg).then(() => {
+      document.getElementById('zaloModal').classList.add('active');
+    }).catch(() => alert("Lỗi copy. Vui lòng thử lại!"));
   }
+
+  function openZaloApp() {
+    window.open(`https://zalo.me/${ZALO_PHONE}`);
+    document.getElementById('zaloModal').classList.remove('active');
+  }
+
   function fmt(n) { return n.toLocaleString('vi-VN') + 'đ'; }
 </script>
 </body>
