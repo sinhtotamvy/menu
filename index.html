@@ -24,12 +24,12 @@
     .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #999; }
     .status-bar { background: #333; color: white; padding: 8px; text-align: center; font-weight: bold; font-size: 12px; display: none; margin-top: -15px; z-index: 80; }
     
-    /* Menu & Group (MẶC ĐỊNH MỞ) */
+    /* Menu */
     .menu-container { padding: 15px; padding-top: 10px; }
     .menu-group { margin-bottom: 15px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     .group-header { padding: 12px 15px; background: #fff; color: var(--primary-solid); font-weight: 800; font-size: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
     .group-header.active .arrow { transform: rotate(180deg); }
-    .group-content { display: block; padding: 5px; } /* Mặc định hiện (Block) */
+    .group-content { display: block; padding: 5px; } 
     
     .item-card { background: #fff; border-radius: 12px; padding: 10px; display: flex; margin-bottom: 8px; border-bottom: 1px dashed #eee; align-items: center; }
     .item-card:last-child { border-bottom: none; margin-bottom: 0; }
@@ -40,13 +40,12 @@
     .item-price { color: var(--primary-solid); font-weight: 800; font-size: 15px; margin-top: auto; }
     .btn-plus { background: var(--primary-gradient); color: white; border: none; width: 30px; height: 30px; border-radius: 8px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: auto; }
 
-    /* Footer Mới */
+    /* Footer */
     .shop-footer { text-align: center; padding: 20px 20px 40px 20px; color: #666; font-size: 13px; }
     .footer-btns { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
     .f-btn { padding: 10px 20px; border-radius: 25px; font-weight: bold; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 8px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     .fb-btn { background: #E3F2FD; color: var(--blue-fb); border: 1px solid #BBDEFB; }
     .map-btn { background: #E8F5E9; color: #2E7D32; border: 1px solid #C8E6C9; }
-    
     .float-cart { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px; background: #333; color: white; padding: 12px 20px; border-radius: 50px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 95; cursor: pointer; display: none; }
     
     /* Modals */
@@ -69,7 +68,6 @@
     .confirm-pay { display: flex; align-items: center; gap: 12px; margin-top: 15px; padding: 15px; background: #fff; border-radius: 12px; border: 1px solid #ddd; cursor: pointer; }
     .confirm-pay input { width: 24px; height: 24px; margin: 0; flex-shrink: 0; }
     .bill-box { background: #f9f9f9; padding: 15px; border-radius: 10px; font-family: monospace; border: 1px dashed #ccc; margin: 20px 0; text-align: left; line-height: 1.5;}
-    
     #loadingOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.3s; }
     .spinner { width: 40px; height: 40px; border: 4px solid #eee; border-top: 4px solid var(--primary-solid); border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -92,9 +90,7 @@
     </div>
   </div>
   <div id="menu-list" class="menu-container"></div>
-  
   <div class="shop-footer" id="footerInfo"></div>
-  
   <div class="float-cart" id="cartBtn" onclick="showCheckout()"><span>🛒 <span id="cartCount">0</span></span><span id="cartTotal">0đ</span></div>
 </div>
 
@@ -169,32 +165,25 @@
 </div>
 
 <script>
-  // === CẤU HÌNH (LU DÁN LINK FACEBOOK VÀO DÒNG DƯỚI) ===
-  const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=100066925050922"; 
+  // === CẤU HÌNH ===
+  const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=100035548658862"; 
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec";
   const LOGO_URL = "https://storage.googleapis.com/menu-tamvy/IMG_0891.png"; 
   const BANK_ID = "ACB"; const BANK_ACC = "48031187"; const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; const ZALO_PHONE = "0775826565";
+  const CACHE_KEY = 'TAMVY_MENU_V17'; 
   
-  // Các nhóm ẩn Đá (Sinh tố/Đá xay)
-  const BLENDED_GROUPS = ["Sinh tố", "Đá xay", "Sinh to", "Da xay", "Yogurt"]; 
+  // === LOGIC PHÂN LOẠI MÓN ===
+  // 1. Nhóm Ẩn Đá (Sinh tố, Đá xay, Nóng)
+  const NO_ICE_GROUPS = ["sinh tố", "đá xay", "đồ uống nóng", "nóng", "sinh to", "da xay"];
+  // 2. Nhóm Món Ăn (Ẩn hết, hiện Note)
+  const FOOD_GROUPS = ["món ăn", "bánh", "ăn vặt", "đồ ăn", "mon an", "banh"];
   
-  // Các nhóm là Món Ăn (Ẩn hết đường đá, hiện ghi chú)
-  const FOOD_GROUPS = ["Món ăn - Bánh", "Món ăn", "Bánh", "Ăn vặt", "Mon an"];
-  
-  // TÊN BỘ NHỚ ĐỆM (ĐỔI TÊN ĐỂ FIX LỖI QUAY VÒNG CHO KHÁCH CŨ)
-  const CACHE_KEY = 'TAMVY_MENU_V16'; 
-  // =================
-
   let APP_DATA = {}, CART = [], currentItem = null, IS_OPEN = true, CURRENT_ORDER_ID = "";
 
   window.onload = function() {
     if(LOGO_URL) document.getElementById('shopLogo').src = LOGO_URL;
-    
-    // Tải từ Cache mới
     const cached = localStorage.getItem(CACHE_KEY);
     if (cached) { try { const data = JSON.parse(cached); initApp(data); document.getElementById('loadingOverlay').style.display = 'none'; } catch(e) {} }
-    
-    // Tải từ Server
     fetch(SCRIPT_URL + "?action=getMenu").then(res => res.json()).then(data => { 
       localStorage.setItem(CACHE_KEY, JSON.stringify(data));
       if (!cached) { initApp(data); document.getElementById('loadingOverlay').style.display = 'none'; }
@@ -211,13 +200,13 @@
       const items = APP_DATA.menu.filter(item => (item.group || 'Khác') === groupName);
       if(items.length === 0) return;
       const groupDiv = document.createElement('div'); groupDiv.className = 'menu-group';
-      // MẶC ĐỊNH MỞ HẾT (active & block)
+      // MẶC ĐỊNH SỔ MÓN (active)
       groupDiv.innerHTML = `<div class="group-header active" onclick="toggleGroup(this)"><span>${groupName} (${items.length})</span><span class="arrow">▼</span></div><div class="group-content" style="display: block;"></div>`;
       container.appendChild(groupDiv);
       const contentDiv = groupDiv.querySelector('.group-content');
-      items.forEach(item => {
+      items.forEach((item, idx) => { // Dùng Index để tránh trùng ID
         let itemDiv = document.createElement('div'); itemDiv.className = 'item-card'; itemDiv.setAttribute('data-name', removeAccents(item.name.toLowerCase()));
-        const btn = IS_OPEN ? `<button class="btn-plus" onclick="openItem('${item.id}')">+</button>` : ``;
+        const btn = IS_OPEN ? `<button class="btn-plus" onclick="openItemByObj(this)" data-id="${item.id}">+</button>` : ``;
         itemDiv.innerHTML = `<img src="${item.img}" class="item-img" onerror="this.src='https://via.placeholder.com/90'"><div class="item-content"><div><div class="item-title">${item.name}</div><div class="item-desc">${item.desc||''}</div></div><div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto"><div class="item-price">${fmt(item.price)}</div>${btn}</div></div>`;
         contentDiv.appendChild(itemDiv);
       });
@@ -237,51 +226,58 @@
   function removeAccents(str) { return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D'); }
   function toggleGroup(header) { const content = header.nextElementSibling; if (content.style.display === 'none') { content.style.display = 'block'; header.classList.add('active'); } else { content.style.display = 'none'; header.classList.remove('active'); } }
   
-  // === FOOTER MỚI (FB + MAP) ===
   function renderFooter(cfg) { 
     document.getElementById('footerInfo').innerHTML = `
       <div style="margin-bottom:10px; font-weight:bold">${cfg.address}</div>
       <div style="margin-bottom:15px">🕒 ${cfg.openHour}h - ${cfg.closeHour}h</div>
       <div class="footer-btns">
         <a href="${FACEBOOK_URL}" target="_blank" class="f-btn fb-btn">🔵 Facebook</a>
-        <a href="${cfg.mapLink}" target="_blank" class="f-btn map-btn">📍 Google Map</a>
-      </div>
-    `; 
+        <a href="${cfg.mapLink}" target="_blank" class="f-btn map-btn">📍 Chỉ đường</a>
+      </div>`; 
   }
 
-  function openItem(id) {
-    currentItem = APP_DATA.menu.find(i => i.id === id); document.getElementById('mName').innerText = currentItem.name;
+  // === HÀM MỞ MÓN (FIX LỖI TRÙNG ID) ===
+  function openItemByObj(btn) {
+    const id = btn.getAttribute('data-id');
+    // Tìm món đầu tiên khớp ID (Nếu file Sheet bị trùng ID thì code này vẫn lấy món đầu tiên). 
+    // KHUYẾN CÁO: Lu nên sửa lại Sheet để ID không trùng nhau.
+    currentItem = APP_DATA.menu.find(i => i.id == id); 
+    
+    // Nếu không tìm thấy hoặc lỗi, thử tìm bằng tên (dự phòng)
+    if (!currentItem) return alert("Lỗi dữ liệu món!");
+
+    document.getElementById('mName').innerText = currentItem.name;
+    
+    // Reset form
+    document.getElementById('mSugar').value = ""; 
+    document.getElementById('mIce').value = ""; 
+    document.getElementById('mItemNote').value = "";
+    
+    // Render Size
     const sizeOpt = document.getElementById('sizeOptions'); sizeOpt.innerHTML = "";
     let html = `<label class="radio-row"><span><input type="radio" name="size" value="Size Chuẩn|0" checked onchange="calcPrice()"> Size Chuẩn</span> <span>+0đ</span></label>`;
     if(currentItem.sizes?.length) { document.getElementById('sizeSection').style.display='block'; currentItem.sizes.forEach(s => html += `<label class="radio-row"><span><input type="radio" name="size" value="${s.name}|${s.priceAdd}" onchange="calcPrice()"> ${s.name}</span> <span>+${fmt(s.priceAdd)}</span></label>`); } else { document.getElementById('sizeSection').style.display='none'; }
     sizeOpt.innerHTML = html;
-    
-    // Reset inputs
-    document.getElementById('mSugar').value = ""; document.getElementById('mIce').value = ""; document.getElementById('mItemNote').value = "";
 
-    const groupName = currentItem.group || "";
+    // === PHÂN LOẠI HIỂN THỊ (QUAN TRỌNG) ===
+    const groupName = (currentItem.group || "").toLowerCase();
     const drinkOptions = document.getElementById('drinkOptions');
     const foodNoteSection = document.getElementById('foodNoteSection');
     const iceArea = document.getElementById('iceArea');
 
-    // === LOGIC PHÂN LOẠI MÓN ĂN / NƯỚC UỐNG ===
-    const isFood = FOOD_GROUPS.some(g => groupName.toLowerCase().includes(g.toLowerCase()));
+    // 1. Kiểm tra Món Ăn
+    const isFood = FOOD_GROUPS.some(g => groupName.includes(g));
     
     if (isFood) {
-      // Là Món ăn: Ẩn Options, Hiện Note
       drinkOptions.style.display = 'none';
       foodNoteSection.style.display = 'block';
     } else {
-      // Là Nước: Hiện Options, Ẩn Note
       drinkOptions.style.display = 'block';
       foodNoteSection.style.display = 'none';
-
-      // Ẩn Đá cho Sinh tố
-      if (BLENDED_GROUPS.some(g => groupName.toLowerCase().includes(g.toLowerCase()))) { 
-        iceArea.style.display = 'none'; 
-      } else { 
-        iceArea.style.display = 'block'; 
-      }
+      
+      // 2. Kiểm tra Nhóm Ẩn Đá (Sinh tố, Đá xay, Nóng)
+      const isNoIce = NO_ICE_GROUPS.some(g => groupName.includes(g));
+      iceArea.style.display = isNoIce ? 'none' : 'block';
     }
     
     const topList = document.getElementById('toppingList'); topList.innerHTML = "";
@@ -298,26 +294,21 @@
   
   function addToCart() {
     const sizeVal = document.querySelector('input[name="size"]:checked').value.split('|');
-    let toppings = []; 
-    let iceVal = ""; 
-    let sugarVal = "";
-    let itemNote = "";
-
-    const groupName = currentItem.group || "";
-    const isFood = FOOD_GROUPS.some(g => groupName.toLowerCase().includes(g.toLowerCase()));
+    let toppings = []; let iceVal = ""; let sugarVal = ""; let itemNote = "";
+    
+    const groupName = (currentItem.group || "").toLowerCase();
+    const isFood = FOOD_GROUPS.some(g => groupName.includes(g));
 
     if (isFood) {
-      itemNote = document.getElementById('mItemNote').value; // Lấy ghi chú món ăn
+      itemNote = document.getElementById('mItemNote').value;
     } else {
       document.querySelectorAll('.tp-check:checked').forEach(c => toppings.push(APP_DATA.toppings[c.value].name));
-      iceVal = document.getElementById('iceArea').style.display === 'none' ? "" : document.getElementById('mIce').value;
+      const isNoIce = NO_ICE_GROUPS.some(g => groupName.includes(g));
+      if (!isNoIce) iceVal = document.getElementById('mIce').value; // Chỉ lấy đá nếu không bị ẩn
       sugarVal = document.getElementById('mSugar').value;
     }
 
-    CART.push({ 
-      name: currentItem.name, final: calcPrice(), size: sizeVal[0], 
-      sugar: sugarVal, ice: iceVal, toppings: toppings, note: itemNote 
-    });
+    CART.push({ name: currentItem.name, final: calcPrice(), size: sizeVal[0], sugar: sugarVal, ice: iceVal, toppings: toppings, note: itemNote });
     updateCartUI(); closeModal();
   }
   function updateCartUI() {
@@ -333,16 +324,12 @@
     CART.forEach((item,idx) => {
         let opts = []; 
         if(item.size && !item.size.includes('Chuẩn')) opts.push(item.size);
-        
-        // Hiển thị khác nhau tuỳ là Món hay Nước
-        if (item.note) {
-           opts.push(`"${item.note}"`);
-        } else {
+        if (item.note) { opts.push(`"${item.note}"`); } 
+        else {
            if(item.sugar) opts.push(item.sugar);
            if(item.ice) opts.push(item.ice);
            if(item.toppings.length) opts.push(item.toppings.join('+'));
         }
-        
         let optString = opts.length ? `(${opts.join(', ')})` : '';
         list.innerHTML += `<div style="display:flex;justify-content:space-between;margin-bottom:10px;border-bottom:1px dashed #eee;padding-bottom:5px"><div><b>${item.name}</b> <small>${optString}</small></div><div style="text-align:right"><div>${fmt(item.final)}</div><a href="#" onclick="removeCart(${idx})" style="color:red;font-size:12px">Xóa</a></div></div>`;
     });
@@ -371,15 +358,8 @@
     document.getElementById('btnOrder').innerText = "ĐANG GỬI..."; document.getElementById('btnOrder').disabled = true;
     const total = CART.reduce((sum,i)=>sum+i.final,0);
     const details = CART.map(i => {
-        let opts = []; 
-        if(i.size && !i.size.includes('Chuẩn')) opts.push(i.size);
-        if (i.note) {
-           opts.push(`"${i.note}"`);
-        } else {
-           if(i.sugar) opts.push(i.sugar);
-           if(i.ice) opts.push(i.ice);
-           if(i.toppings.length) opts.push(i.toppings.join('+'));
-        }
+        let opts = []; if(i.size && !i.size.includes('Chuẩn')) opts.push(i.size);
+        if (i.note) { opts.push(`"${i.note}"`); } else { if(i.sugar) opts.push(i.sugar); if(i.ice) opts.push(i.ice); if(i.toppings.length) opts.push(i.toppings.join('+')); }
         return `- ${i.name} (${opts.join(', ')})`;
     }).join('\n');
     const orderData = { orderId: CURRENT_ORDER_ID, name: name, phone: phone, address: addr, note: document.getElementById('cNote').value, paymentMethod: document.getElementById('cPayment').value, details: details, total: total, honey: document.getElementById('honeypot').value };
@@ -395,21 +375,13 @@
   function sendToZalo() {
     const total = CART.reduce((sum,i)=>sum+i.final,0); let msg = `🥑 ĐƠN MỚI\n`; 
     CART.forEach(i=>{
-        let opts = []; 
-        if(i.size && !i.size.includes('Chuẩn')) opts.push(i.size);
-        if (i.note) {
-           opts.push(`"${i.note}"`);
-        } else {
-           if(i.sugar) opts.push(i.sugar);
-           if(i.ice) opts.push(i.ice);
-           if(i.toppings.length) opts.push(i.toppings.join('+'));
-        }
+        let opts = []; if(i.size && !i.size.includes('Chuẩn')) opts.push(i.size);
+        if (i.note) { opts.push(`"${i.note}"`); } else { if(i.sugar) opts.push(i.sugar); if(i.ice) opts.push(i.ice); if(i.toppings.length) opts.push(i.toppings.join('+')); }
         msg+=`▪ ${i.name} (${opts.join(', ')})\n`;
     }); 
     msg+=`💰 ${fmt(total)}\n👤 ${document.getElementById('cName').value} - ${document.getElementById('cPhone').value}\n📍 ${document.getElementById('cAddress').value}`;
     navigator.clipboard.writeText(msg).then(() => { alert("Đã COPY! Đang mở Zalo..."); window.open(`https://zalo.me/${ZALO_PHONE}`); }).catch(() => alert("Lỗi copy."));
   }
-
   function fmt(n) { return n.toLocaleString('vi-VN') + 'đ'; }
 </script>
 </body>
