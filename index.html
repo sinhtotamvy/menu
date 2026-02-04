@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-  <title>Sinh Tố Tâm Vy</title>
+  <title>Menu Sinh Tố Tâm Vy</title>
+  
+  <meta property="og:title" content="Menu Sinh Tố Tâm Vy" />
+  <meta property="og:description" content="Xem menu và đặt món online ngay tại đây! Freeship nội ô Cao Lãnh." />
+  <meta property="og:image" content="https://storage.googleapis.com/menu-tamvy/THUMNAIL%20T%C3%82M%20VY.png" />
+  <meta property="og:url" content="https://sinhtotamvy.github.io/menu/" />
+  <meta property="og:type" content="website" />
+  <meta name="zalo:image" content="https://storage.googleapis.com/menu-tamvy/THUMNAIL%20T%C3%82M%20VY.png">
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
   <style>
     /* === THEME SHOPEE FOOD === */
@@ -68,6 +75,7 @@
     .confirm-pay { display: flex; align-items: center; gap: 12px; margin-top: 15px; padding: 15px; background: #fff; border-radius: 12px; border: 1px solid #ddd; cursor: pointer; }
     .confirm-pay input { width: 24px; height: 24px; margin: 0; flex-shrink: 0; }
     .bill-box { background: #f9f9f9; padding: 15px; border-radius: 10px; font-family: monospace; border: 1px dashed #ccc; margin: 20px 0; text-align: left; line-height: 1.5;}
+    
     #loadingOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.3s; }
     .spinner { width: 40px; height: 40px; border: 4px solid #eee; border-top: 4px solid var(--primary-solid); border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -166,16 +174,14 @@
 
 <script>
   // === CẤU HÌNH ===
-  const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=100035548658862"; 
+  const FACEBOOK_URL = "https://www.facebook.com/sinhtotamvy"; 
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec";
   const LOGO_URL = "https://storage.googleapis.com/menu-tamvy/IMG_0891.png"; 
   const BANK_ID = "ACB"; const BANK_ACC = "48031187"; const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; const ZALO_PHONE = "0775826565";
   const CACHE_KEY = 'TAMVY_MENU_V17'; 
   
   // === LOGIC PHÂN LOẠI MÓN ===
-  // 1. Nhóm Ẩn Đá (Sinh tố, Đá xay, Nóng)
   const NO_ICE_GROUPS = ["sinh tố", "đá xay", "đồ uống nóng", "nóng", "sinh to", "da xay"];
-  // 2. Nhóm Món Ăn (Ẩn hết, hiện Note)
   const FOOD_GROUPS = ["món ăn", "bánh", "ăn vặt", "đồ ăn", "mon an", "banh"];
   
   let APP_DATA = {}, CART = [], currentItem = null, IS_OPEN = true, CURRENT_ORDER_ID = "";
@@ -200,11 +206,10 @@
       const items = APP_DATA.menu.filter(item => (item.group || 'Khác') === groupName);
       if(items.length === 0) return;
       const groupDiv = document.createElement('div'); groupDiv.className = 'menu-group';
-      // MẶC ĐỊNH SỔ MÓN (active)
       groupDiv.innerHTML = `<div class="group-header active" onclick="toggleGroup(this)"><span>${groupName} (${items.length})</span><span class="arrow">▼</span></div><div class="group-content" style="display: block;"></div>`;
       container.appendChild(groupDiv);
       const contentDiv = groupDiv.querySelector('.group-content');
-      items.forEach((item, idx) => { // Dùng Index để tránh trùng ID
+      items.forEach((item, idx) => { 
         let itemDiv = document.createElement('div'); itemDiv.className = 'item-card'; itemDiv.setAttribute('data-name', removeAccents(item.name.toLowerCase()));
         const btn = IS_OPEN ? `<button class="btn-plus" onclick="openItemByObj(this)" data-id="${item.id}">+</button>` : ``;
         itemDiv.innerHTML = `<img src="${item.img}" class="item-img" onerror="this.src='https://via.placeholder.com/90'"><div class="item-content"><div><div class="item-title">${item.name}</div><div class="item-desc">${item.desc||''}</div></div><div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto"><div class="item-price">${fmt(item.price)}</div>${btn}</div></div>`;
@@ -228,44 +233,34 @@
   
   function renderFooter(cfg) { 
     document.getElementById('footerInfo').innerHTML = `
-      <div style="margin-bottom:10px; font-weight:bold">${cfg.address}</div>
-      <div style="margin-bottom:15px">🕒 ${cfg.openHour}h - ${cfg.closeHour}h</div>
+      <div style="margin-bottom:12px; font-weight:bold">${cfg.address}</div>
+      <div style="margin-bottom:18px">🕒 ${cfg.openHour}h - ${cfg.closeHour}h</div>
       <div class="footer-btns">
-        <a href="${FACEBOOK_URL}" target="_blank" class="f-btn fb-btn">🔵 Facebook</a>
-        <a href="${cfg.mapLink}" target="_blank" class="f-btn map-btn">📍 Chỉ đường</a>
+        <a href="${https://www.facebook.com/sinhtotamvy/}" target="_blank" class="f-btn fb-btn">🔵 Facebook</a>
+        <a href="${https://maps.app.goo.gl/FvSGhRkCVLhHhR2o8}" target="_blank" class="f-btn map-btn">📍 Chỉ đường</a>
       </div>`; 
   }
 
-  // === HÀM MỞ MÓN (FIX LỖI TRÙNG ID) ===
   function openItemByObj(btn) {
     const id = btn.getAttribute('data-id');
-    // Tìm món đầu tiên khớp ID (Nếu file Sheet bị trùng ID thì code này vẫn lấy món đầu tiên). 
-    // KHUYẾN CÁO: Lu nên sửa lại Sheet để ID không trùng nhau.
     currentItem = APP_DATA.menu.find(i => i.id == id); 
-    
-    // Nếu không tìm thấy hoặc lỗi, thử tìm bằng tên (dự phòng)
     if (!currentItem) return alert("Lỗi dữ liệu món!");
 
     document.getElementById('mName').innerText = currentItem.name;
-    
-    // Reset form
     document.getElementById('mSugar').value = ""; 
     document.getElementById('mIce').value = ""; 
     document.getElementById('mItemNote').value = "";
     
-    // Render Size
     const sizeOpt = document.getElementById('sizeOptions'); sizeOpt.innerHTML = "";
     let html = `<label class="radio-row"><span><input type="radio" name="size" value="Size Chuẩn|0" checked onchange="calcPrice()"> Size Chuẩn</span> <span>+0đ</span></label>`;
     if(currentItem.sizes?.length) { document.getElementById('sizeSection').style.display='block'; currentItem.sizes.forEach(s => html += `<label class="radio-row"><span><input type="radio" name="size" value="${s.name}|${s.priceAdd}" onchange="calcPrice()"> ${s.name}</span> <span>+${fmt(s.priceAdd)}</span></label>`); } else { document.getElementById('sizeSection').style.display='none'; }
     sizeOpt.innerHTML = html;
 
-    // === PHÂN LOẠI HIỂN THỊ (QUAN TRỌNG) ===
     const groupName = (currentItem.group || "").toLowerCase();
     const drinkOptions = document.getElementById('drinkOptions');
     const foodNoteSection = document.getElementById('foodNoteSection');
     const iceArea = document.getElementById('iceArea');
 
-    // 1. Kiểm tra Món Ăn
     const isFood = FOOD_GROUPS.some(g => groupName.includes(g));
     
     if (isFood) {
@@ -274,8 +269,6 @@
     } else {
       drinkOptions.style.display = 'block';
       foodNoteSection.style.display = 'none';
-      
-      // 2. Kiểm tra Nhóm Ẩn Đá (Sinh tố, Đá xay, Nóng)
       const isNoIce = NO_ICE_GROUPS.some(g => groupName.includes(g));
       iceArea.style.display = isNoIce ? 'none' : 'block';
     }
@@ -295,7 +288,6 @@
   function addToCart() {
     const sizeVal = document.querySelector('input[name="size"]:checked').value.split('|');
     let toppings = []; let iceVal = ""; let sugarVal = ""; let itemNote = "";
-    
     const groupName = (currentItem.group || "").toLowerCase();
     const isFood = FOOD_GROUPS.some(g => groupName.includes(g));
 
@@ -304,7 +296,7 @@
     } else {
       document.querySelectorAll('.tp-check:checked').forEach(c => toppings.push(APP_DATA.toppings[c.value].name));
       const isNoIce = NO_ICE_GROUPS.some(g => groupName.includes(g));
-      if (!isNoIce) iceVal = document.getElementById('mIce').value; // Chỉ lấy đá nếu không bị ẩn
+      if (!isNoIce) iceVal = document.getElementById('mIce').value; 
       sugarVal = document.getElementById('mSugar').value;
     }
 
