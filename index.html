@@ -6,7 +6,7 @@
   <title>Menu Sinh Tố Tâm Vy</title>
   
   <meta property="og:title" content="Menu Sinh Tố Tâm Vy" />
-  <meta property="og:description" content="Xem menu và đặt món online ngay tại đây! Freeship nội ô Cao Lãnh." />
+  <meta property="og:description" content="Menu trực tuyến - Giao hàng tận nơi - Freeship nội ô Cao Lãnh" />
   <meta property="og:image" content="https://storage.googleapis.com/menu-tamvy/THUMNAIL%20T%C3%82M%20VY.png" />
   <meta property="og:url" content="https://sinhtotamvy.github.io/menu/" />
   <meta property="og:type" content="website" />
@@ -173,14 +173,13 @@
 </div>
 
 <script>
-  // === CẤU HÌNH ===
+  // === CẤU HÌNH (QUAN TRỌNG: LU NHỚ DÁN LINK CỦA LU VÀO DÒNG DƯỚI) ===
   const FACEBOOK_URL = "https://www.facebook.com/sinhtotamvy"; 
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec";
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec"; 
   const LOGO_URL = "https://storage.googleapis.com/menu-tamvy/IMG_0891.png"; 
   const BANK_ID = "ACB"; const BANK_ACC = "48031187"; const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; const ZALO_PHONE = "0775826565";
-  const CACHE_KEY = 'TAMVY_MENU_V17'; 
+  const CACHE_KEY = 'TAMVY_MENU_V18'; // Đổi cache key để load lại từ đầu
   
-  // === LOGIC PHÂN LOẠI MÓN ===
   const NO_ICE_GROUPS = ["sinh tố", "đá xay", "đồ uống nóng", "nóng", "sinh to", "da xay"];
   const FOOD_GROUPS = ["món ăn", "bánh", "ăn vặt", "đồ ăn", "mon an", "banh"];
   
@@ -190,10 +189,17 @@
     if(LOGO_URL) document.getElementById('shopLogo').src = LOGO_URL;
     const cached = localStorage.getItem(CACHE_KEY);
     if (cached) { try { const data = JSON.parse(cached); initApp(data); document.getElementById('loadingOverlay').style.display = 'none'; } catch(e) {} }
+    
+    // Nếu SCRIPT_URL vẫn là mẫu thì báo lỗi
+    if (SCRIPT_URL.includes("HÃY_DÁN_LINK")) {
+        alert("Lỗi: Bạn chưa dán Link Google Script vào code!");
+        return;
+    }
+
     fetch(SCRIPT_URL + "?action=getMenu").then(res => res.json()).then(data => { 
       localStorage.setItem(CACHE_KEY, JSON.stringify(data));
       if (!cached) { initApp(data); document.getElementById('loadingOverlay').style.display = 'none'; }
-    }).catch(err => { if(!cached) alert("Lỗi mạng! Hãy tải lại trang."); });
+    }).catch(err => { if(!cached) alert("Lỗi mạng hoặc Link Script sai! Hãy kiểm tra lại."); });
   };
 
   function initApp(data) { APP_DATA = data; checkStatus(data.shopConfig); renderMenu(); renderFooter(data.shopConfig); }
@@ -233,11 +239,11 @@
   
   function renderFooter(cfg) { 
     document.getElementById('footerInfo').innerHTML = `
-      <div style="margin-bottom:12px; font-weight:bold">${cfg.address}</div>
-      <div style="margin-bottom:18px">🕒 ${cfg.openHour}h - ${cfg.closeHour}h</div>
+      <div style="margin-bottom:10px; font-weight:bold">${cfg.address}</div>
+      <div style="margin-bottom:15px">🕒 ${cfg.openHour}h - ${cfg.closeHour}h</div>
       <div class="footer-btns">
-        <a href="${https://www.facebook.com/sinhtotamvy/}" target="_blank" class="f-btn fb-btn">🔵 Facebook</a>
-        <a href="${https://maps.app.goo.gl/FvSGhRkCVLhHhR2o8}" target="_blank" class="f-btn map-btn">📍 Chỉ đường</a>
+        <a href="${FACEBOOK_URL}" target="_blank" class="f-btn fb-btn">🔵 Facebook</a>
+        <a href="${cfg.mapLink}" target="_blank" class="f-btn map-btn">📍 Chỉ đường</a>
       </div>`; 
   }
 
