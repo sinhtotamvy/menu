@@ -11,24 +11,33 @@
   <meta property="og:url" content="https://sinhtotamvy.github.io/menu/" />
   <meta property="og:type" content="website" />
   <meta name="zalo:image" content="https://storage.googleapis.com/menu-tamvy/THUMNAIL%20T%C3%82M%20VY.png">
+
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    /* === THEME SHOPEE FOOD === */
+    /* === THEME === */
     :root { 
       --primary-gradient: linear-gradient(135deg, #ff4b2b 0%, #ff9068 100%);
-      --primary-solid: #ff5722; --bg: #f5f5f5; --white: #ffffff; --text: #333; --red: #d32f2f; --blue-fb: #1877F2;
+      --primary-solid: #ff5722; --bg: #f5f5f5; --white: #ffffff; --text: #333; 
     }
     body { font-family: 'Quicksand', sans-serif; background: #eee; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; color: var(--text); -webkit-tap-highlight-color: transparent; }
     .app-container { width: 100%; max-width: 480px; background: var(--bg); min-height: 100vh; position: relative; padding-bottom: 100px; box-shadow: 0 0 25px rgba(0,0,0,0.1); }
     
-    /* Header */
+    /* Header & Search Mới */
     .header-wrapper { background: var(--primary-gradient); padding: 15px 15px 20px 15px; position: sticky; top: 0; z-index: 90; box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3); border-radius: 0 0 20px 20px; }
     .header-top { display: flex; align-items: center; margin-bottom: 15px; }
     .shop-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid white; object-fit: cover; margin-right: 12px; background: white; }
     .header-title { color: white; margin: 0; font-size: 20px; font-weight: 800; flex: 1; }
+    
+    /* Search Bar Tinh Tế */
     .search-box { position: relative; width: 100%; }
-    .search-input { width: 100%; padding: 12px 15px 12px 40px; border: none; border-radius: 25px; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); outline: none; }
-    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #999; }
+    .search-input { 
+        width: 100%; padding: 12px 15px 12px 45px; border: none; border-radius: 25px; 
+        font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); outline: none; background: white;
+    }
+    .search-icon-svg { 
+        position: absolute; left: 15px; top: 50%; transform: translateY(-50%); 
+        width: 18px; height: 18px; fill: #999; 
+    }
     .status-bar { background: #333; color: white; padding: 8px; text-align: center; font-weight: bold; font-size: 12px; display: none; margin-top: -15px; z-index: 80; }
     
     /* Menu */
@@ -47,15 +56,15 @@
     .item-price { color: var(--primary-solid); font-weight: 800; font-size: 15px; margin-top: auto; }
     .btn-plus { background: var(--primary-gradient); color: white; border: none; width: 30px; height: 30px; border-radius: 8px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: auto; }
 
-    /* Footer */
-    .shop-footer { text-align: center; padding: 20px 20px 40px 20px; color: #666; font-size: 13px; }
-    .footer-btns { display: flex; gap: 10px; justify-content: center; margin-top: 15px; }
-    .f-btn { padding: 10px 20px; border-radius: 25px; font-weight: bold; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 8px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .fb-btn { background: #E3F2FD; color: var(--blue-fb); border: 1px solid #BBDEFB; }
-    .map-btn { background: #E8F5E9; color: #2E7D32; border: 1px solid #C8E6C9; }
+    /* Footer & Social Icons */
+    .shop-footer { text-align: center; padding: 20px 20px 50px 20px; color: #666; font-size: 13px; }
+    .social-icons { display: flex; gap: 25px; justify-content: center; margin-top: 15px; }
+    .social-link svg { width: 32px; height: 32px; fill: #555; transition: 0.2s; }
+    .social-link:hover svg { fill: var(--primary-solid); transform: scale(1.1); }
+    
     .float-cart { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px; background: #333; color: white; padding: 12px 20px; border-radius: 50px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 95; cursor: pointer; display: none; }
     
-    /* Modals */
+    /* Modals & UI */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(2px); z-index: 200; display: none; justify-content: center; align-items: flex-end; }
     .modal-overlay.active { display: flex; }
     .sheet-modal { background: #fff; width: 100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 25px; max-height: 85vh; overflow-y: auto; animation: slideUp 0.3s; }
@@ -63,7 +72,6 @@
     @keyframes slideUp { from {transform: translateY(100%)} to {transform: translateY(0)}}
 
     input, select, textarea { width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 15px; box-sizing: border-box; font-family: inherit; font-size: 15px; background: #f9f9f9; outline: none; }
-    input:focus, textarea:focus { border-color: var(--primary-solid); background: #fff; }
     .btn-main { width: 100%; padding: 16px; background: var(--primary-gradient); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; margin-top: 10px; cursor: pointer; }
     .btn-zalo { background: #0068FF; margin-bottom: 5px; }
     .radio-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed #eee; cursor: pointer; }
@@ -74,7 +82,6 @@
     .qr-img { width: 200px; height: 200px; margin: 10px auto; display: block; mix-blend-mode: multiply; }
     .confirm-pay { display: flex; align-items: center; gap: 12px; margin-top: 15px; padding: 15px; background: #fff; border-radius: 12px; border: 1px solid #ddd; cursor: pointer; }
     .confirm-pay input { width: 24px; height: 24px; margin: 0; flex-shrink: 0; }
-    .bill-box { background: #f9f9f9; padding: 15px; border-radius: 10px; font-family: monospace; border: 1px dashed #ccc; margin: 20px 0; text-align: left; line-height: 1.5;}
     
     #loadingOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.3s; }
     .spinner { width: 40px; height: 40px; border: 4px solid #eee; border-top: 4px solid var(--primary-solid); border-radius: 50%; animation: spin 1s linear infinite; }
@@ -93,12 +100,14 @@
       <h2 class="header-title">SINH TỐ TÂM VY</h2>
     </div>
     <div class="search-box">
-      <span class="search-icon">🔍</span>
+      <svg class="search-icon-svg" viewBox="0 0 24 24"><path d="M21.71 20.29l-5.01-5.01C17.54 13.68 18 11.91 18 10c0-4.41-3.59-8-8-8S2 5.59 2 10s3.59 8 8 8c1.91 0 3.68-.46 5.28-1.3l5.01 5.01c.39.39 1.02.39 1.41 0 .39-.39.39-1.03 0-1.42zM4 10c0-3.31 2.69-6 6-6s6 2.69 6 6-2.69 6-6 6-6-2.69-6-6z"/></svg>
       <input type="text" id="searchKey" class="search-input" placeholder="Bạn muốn ăn gì?" onkeyup="filterMenu()">
     </div>
   </div>
   <div id="menu-list" class="menu-container"></div>
+  
   <div class="shop-footer" id="footerInfo"></div>
+  
   <div class="float-cart" id="cartBtn" onclick="showCheckout()"><span>🛒 <span id="cartCount">0</span></span><span id="cartTotal">0đ</span></div>
 </div>
 
@@ -113,19 +122,15 @@
       <div class="opt-section" style="margin-bottom:20px;">
         <label class="opt-header">Độ ngọt</label>
         <select id="mSugar"><option value="">Bình thường</option><option value="Ít ngọt">Ít ngọt</option><option value="Không ngọt">Không ngọt</option></select>
-        <div id="iceArea" style="margin-top:15px">
-          <label class="opt-header">Lượng đá</label>
-          <select id="mIce"><option value="">Bình thường</option><option value="Ít đá">Ít đá</option><option value="Đá riêng">Đá riêng</option></select>
-        </div>
+        <div id="iceArea" style="margin-top:15px"><label class="opt-header">Lượng đá</label><select id="mIce"><option value="">Bình thường</option><option value="Ít đá">Ít đá</option><option value="Đá riêng">Đá riêng</option></select></div>
       </div>
       <div class="opt-section" style="margin-bottom:20px;" id="toppingSection"><label class="opt-header">Topping</label><div id="toppingList"></div></div>
     </div>
 
     <div id="foodNoteSection" style="display:none; margin-bottom:20px;">
       <label class="opt-header">Ghi chú cho món này</label>
-      <textarea id="mItemNote" rows="2" placeholder="VD: Lấy nhiều tương ớt, không hành..."></textarea>
+      <textarea id="mItemNote" rows="2" placeholder="VD: Lấy nhiều tương ớt..."></textarea>
     </div>
-
     <button class="btn-main" onclick="addToCart()">Thêm vào giỏ - <span id="mPriceBtn">0đ</span></button>
   </div>
 </div>
@@ -135,50 +140,37 @@
     <h3 style="margin:0;">📦 Xác nhận</h3><span onclick="closeCheckout()" style="font-size:28px; cursor:pointer; color:#999;">&times;</span>
   </div>
   <div id="cartItemsList" style="background:#f9f9f9; padding:15px; border-radius:12px; border:1px solid #eee;"></div>
-  
   <h4 style="margin:20px 0 10px 5px; color:#555;">Thông tin</h4>
-  <input type="text" id="cName" placeholder="Tên của bạn"><input type="tel" id="cPhone" placeholder="Số điện thoại"><input type="text" id="cAddress" placeholder="Địa chỉ giao hàng"><textarea id="cNote" rows="2" placeholder="Lời nhắn chung cho đơn hàng..."></textarea><input type="text" id="honeypot" style="display:none">
-  
+  <input type="text" id="cName" placeholder="Tên của bạn"><input type="tel" id="cPhone" placeholder="Số điện thoại"><input type="text" id="cAddress" placeholder="Địa chỉ giao hàng"><textarea id="cNote" rows="2" placeholder="Lời nhắn chung..."></textarea><input type="text" id="honeypot" style="display:none">
   <h4 style="margin:10px 0 10px 5px; color:#555;">Thanh toán</h4>
   <select id="cPayment" onchange="togglePayment()"><option value="COD">💵 Tiền mặt</option><option value="CK">🏦 Chuyển khoản (QR)</option><option value="ZALO">💬 Gửi qua Zalo</option></select>
-  
   <div class="qr-box" id="qrArea">
     <div style="font-weight:bold; color:var(--primary-solid); font-size:16px;">QUÉT MÃ QR</div>
-    <div style="font-size:13px; color:#666; margin:8px 0; background:#fff; padding:5px; border-radius:5px;">💡 Nhấn giữ QR để lưu ảnh</div>
     <div style="font-size:13px; margin-bottom:5px;">Nội dung: <strong id="qrContent"></strong></div>
     <img src="" id="qrImage" class="qr-img">
     <div style="font-size:16px; margin-top:10px;">Số tiền: <strong id="qrAmount" style="color:var(--red);"></strong></div>
-    <div style="margin-top:8px; border-top:1px dashed #ccc; padding-top:8px;">
-      <div style="font-size:12px; color:#555;">Chủ tài khoản:</div>
-      <div style="font-weight:bold; color:#000; font-size:14px; text-transform: uppercase;" id="bankOwnerName"></div>
-    </div>
+    <div style="margin-top:8px; border-top:1px dashed #ccc; padding-top:8px;"><div style="font-size:12px;">Chủ tài khoản:</div><div style="font-weight:bold; font-size:14px; text-transform: uppercase;" id="bankOwnerName"></div></div>
   </div>
-
   <label class="confirm-pay" id="confirmPayBox"><input type="checkbox" id="ckConfirm" onchange="checkConfirm()"><span>Tôi đã chuyển khoản thành công</span></label>
-
   <div id="btnGroup"><button class="btn-main" id="btnOrder" onclick="submitOrder()">ĐẶT HÀNG NGAY</button></div>
-  <div id="zaloGroup" style="display:none; text-align:center">
-    <button class="btn-main btn-zalo" onclick="sendToZalo()">📋 SAO CHÉP & MỞ ZALO</button>
-    <div style="font-size:13px; color:#0068FF; margin-top:5px;">(Bấm nút trên để Copy, sau đó <b>DÁN</b> vào ô chat Zalo)</div>
-  </div>
-  <div style="height:50px;"></div>
+  <div id="zaloGroup" style="display:none; text-align:center"><button class="btn-main btn-zalo" onclick="sendToZalo()">📋 SAO CHÉP & MỞ ZALO</button><div style="font-size:13px; color:#0068FF; margin-top:5px;">(Bấm nút trên để Copy, sau đó <b>DÁN</b> vào ô chat Zalo)</div></div><div style="height:50px;"></div>
 </div>
 
 <div class="full-modal" id="successPage" style="background:white; text-align:center;">
-  <div style="padding-top:40px;">
-    <div style="font-size:60px;">✅</div><h2 style="color:var(--primary-solid); margin:0;">THÀNH CÔNG!</h2>
-    <div class="bill-box" id="billContent"></div>
-    <button class="btn-main" onclick="location.reload()">VỀ TRANG CHỦ</button>
-  </div>
+  <div style="padding-top:40px;"><div style="font-size:60px;">✅</div><h2 style="color:var(--primary-solid); margin:0;">THÀNH CÔNG!</h2><div class="bill-box" id="billContent" style="background:#f9f9f9; padding:15px; border-radius:10px; margin:20px 0; text-align:left;"></div><button class="btn-main" onclick="location.reload()">VỀ TRANG CHỦ</button></div>
 </div>
 
 <script>
-  // === CẤU HÌNH (QUAN TRỌNG: LU NHỚ DÁN LINK CỦA LU VÀO DÒNG DƯỚI) ===
-  const FACEBOOK_URL = "https://www.facebook.com/sinhtotamvy"; 
+  // === CẤU HÌNH (DÁN LINK CỦA LU VÀO DƯỚI) ===
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec"; 
   const LOGO_URL = "https://storage.googleapis.com/menu-tamvy/IMG_0891.png"; 
   const BANK_ID = "ACB"; const BANK_ACC = "48031187"; const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; const ZALO_PHONE = "0775826565";
-  const CACHE_KEY = 'TAMVY_MENU_V18'; // Đổi cache key để load lại từ đầu
+  const SOCIAL_LINKS = {
+    fb: "https://www.facebook.com/sinhtotamvy",
+    insta: "https://www.instagram.com/sinhtotamvy",
+    tiktok: "https://www.tiktok.com/@sinhtotamvyy"
+  };
+  const CACHE_KEY = 'TAMVY_MENU_V19'; // Đổi key để load lại cache mới
   
   const NO_ICE_GROUPS = ["sinh tố", "đá xay", "đồ uống nóng", "nóng", "sinh to", "da xay"];
   const FOOD_GROUPS = ["món ăn", "bánh", "ăn vặt", "đồ ăn", "mon an", "banh"];
@@ -187,19 +179,15 @@
 
   window.onload = function() {
     if(LOGO_URL) document.getElementById('shopLogo').src = LOGO_URL;
+    if(SCRIPT_URL.includes("HÃY_DÁN")) alert("⚠️ Lu ơi, nhớ dán link Google Script vào code nha!");
+    
     const cached = localStorage.getItem(CACHE_KEY);
     if (cached) { try { const data = JSON.parse(cached); initApp(data); document.getElementById('loadingOverlay').style.display = 'none'; } catch(e) {} }
     
-    // Nếu SCRIPT_URL vẫn là mẫu thì báo lỗi
-    if (SCRIPT_URL.includes("HÃY_DÁN_LINK")) {
-        alert("Lỗi: Bạn chưa dán Link Google Script vào code!");
-        return;
-    }
-
     fetch(SCRIPT_URL + "?action=getMenu").then(res => res.json()).then(data => { 
       localStorage.setItem(CACHE_KEY, JSON.stringify(data));
       if (!cached) { initApp(data); document.getElementById('loadingOverlay').style.display = 'none'; }
-    }).catch(err => { if(!cached) alert("Lỗi mạng hoặc Link Script sai! Hãy kiểm tra lại."); });
+    }).catch(err => { if(!cached) alert("Lỗi mạng! Hãy tải lại trang."); });
   };
 
   function initApp(data) { APP_DATA = data; checkStatus(data.shopConfig); renderMenu(); renderFooter(data.shopConfig); }
@@ -208,20 +196,31 @@
   function renderMenu() {
     const container = document.getElementById('menu-list'); container.innerHTML = "";
     const groups = [...new Set(APP_DATA.menu.map(item => item.group || 'Khác'))];
-    groups.forEach((groupName, index) => {
+    groups.forEach(groupName => {
       const items = APP_DATA.menu.filter(item => (item.group || 'Khác') === groupName);
       if(items.length === 0) return;
       const groupDiv = document.createElement('div'); groupDiv.className = 'menu-group';
       groupDiv.innerHTML = `<div class="group-header active" onclick="toggleGroup(this)"><span>${groupName} (${items.length})</span><span class="arrow">▼</span></div><div class="group-content" style="display: block;"></div>`;
       container.appendChild(groupDiv);
       const contentDiv = groupDiv.querySelector('.group-content');
-      items.forEach((item, idx) => { 
+      items.forEach(item => { 
         let itemDiv = document.createElement('div'); itemDiv.className = 'item-card'; itemDiv.setAttribute('data-name', removeAccents(item.name.toLowerCase()));
         const btn = IS_OPEN ? `<button class="btn-plus" onclick="openItemByObj(this)" data-id="${item.id}">+</button>` : ``;
         itemDiv.innerHTML = `<img src="${item.img}" class="item-img" onerror="this.src='https://via.placeholder.com/90'"><div class="item-content"><div><div class="item-title">${item.name}</div><div class="item-desc">${item.desc||''}</div></div><div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto"><div class="item-price">${fmt(item.price)}</div>${btn}</div></div>`;
         contentDiv.appendChild(itemDiv);
       });
     });
+  }
+
+  function renderFooter(cfg) { 
+    document.getElementById('footerInfo').innerHTML = `
+      <div style="margin-bottom:10px; font-weight:bold">${cfg.address}</div>
+      <div style="margin-bottom:15px">🕒 ${cfg.openHour}h - ${cfg.closeHour}h</div>
+      <div class="social-icons">
+        <a href="${SOCIAL_LINKS.fb}" target="_blank" class="social-link" title="Facebook"><svg viewBox="0 0 24 24"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg></a>
+        <a href="${SOCIAL_LINKS.insta}" target="_blank" class="social-link" title="Instagram"><svg viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"/></svg></a>
+        <a href="${SOCIAL_LINKS.tiktok}" target="_blank" class="social-link" title="TikTok"><svg viewBox="0 0 24 24"><path d="M12.53,2C12.53,2 12.53,4.85 12.53,4.85C14.07,4.85 15.53,5.36 16.69,6.23C16.69,6.23 16.69,8.87 16.69,8.87C15.6,8.21 14.28,7.77 12.87,7.74V15.54C12.87,17.47 11.29,19.04 9.35,19.04C7.41,19.04 5.84,17.47 5.84,15.53C5.84,13.6 7.41,12.03 9.35,12.03C9.59,12.03 9.83,12.06 10.05,12.11V9.22C9.83,9.19 9.59,9.17 9.35,9.17C5.84,9.17 3,12.02 3,15.53C3,19.05 5.84,21.89 9.35,21.89C12.86,21.89 15.71,19.05 15.71,15.54V9.69C17.61,11.05 18.91,13.15 19.16,15.62H22V15.62C21.72,11.97 19.79,8.77 16.92,6.72C16.92,6.72 16.92,2 16.92,2H12.53Z"/></svg></a>
+      </div>`; 
   }
 
   function filterMenu() {
@@ -237,25 +236,13 @@
   function removeAccents(str) { return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D'); }
   function toggleGroup(header) { const content = header.nextElementSibling; if (content.style.display === 'none') { content.style.display = 'block'; header.classList.add('active'); } else { content.style.display = 'none'; header.classList.remove('active'); } }
   
-  function renderFooter(cfg) { 
-    document.getElementById('footerInfo').innerHTML = `
-      <div style="margin-bottom:10px; font-weight:bold">${cfg.address}</div>
-      <div style="margin-bottom:15px">🕒 ${cfg.openHour}h - ${cfg.closeHour}h</div>
-      <div class="footer-btns">
-        <a href="${FACEBOOK_URL}" target="_blank" class="f-btn fb-btn">🔵 Facebook</a>
-        <a href="${cfg.mapLink}" target="_blank" class="f-btn map-btn">📍 Chỉ đường</a>
-      </div>`; 
-  }
-
+  // LOGIC OPEN ITEM (GIỮ NGUYÊN)
   function openItemByObj(btn) {
     const id = btn.getAttribute('data-id');
     currentItem = APP_DATA.menu.find(i => i.id == id); 
     if (!currentItem) return alert("Lỗi dữ liệu món!");
-
     document.getElementById('mName').innerText = currentItem.name;
-    document.getElementById('mSugar').value = ""; 
-    document.getElementById('mIce').value = ""; 
-    document.getElementById('mItemNote').value = "";
+    document.getElementById('mSugar').value = ""; document.getElementById('mIce').value = ""; document.getElementById('mItemNote').value = "";
     
     const sizeOpt = document.getElementById('sizeOptions'); sizeOpt.innerHTML = "";
     let html = `<label class="radio-row"><span><input type="radio" name="size" value="Size Chuẩn|0" checked onchange="calcPrice()"> Size Chuẩn</span> <span>+0đ</span></label>`;
@@ -266,19 +253,14 @@
     const drinkOptions = document.getElementById('drinkOptions');
     const foodNoteSection = document.getElementById('foodNoteSection');
     const iceArea = document.getElementById('iceArea');
-
     const isFood = FOOD_GROUPS.some(g => groupName.includes(g));
     
-    if (isFood) {
-      drinkOptions.style.display = 'none';
-      foodNoteSection.style.display = 'block';
-    } else {
-      drinkOptions.style.display = 'block';
-      foodNoteSection.style.display = 'none';
+    if (isFood) { drinkOptions.style.display = 'none'; foodNoteSection.style.display = 'block'; } 
+    else {
+      drinkOptions.style.display = 'block'; foodNoteSection.style.display = 'none';
       const isNoIce = NO_ICE_GROUPS.some(g => groupName.includes(g));
       iceArea.style.display = isNoIce ? 'none' : 'block';
     }
-    
     const topList = document.getElementById('toppingList'); topList.innerHTML = "";
     APP_DATA.toppings.forEach((tp,idx) => topList.innerHTML += `<label class="radio-row"><span><input type="checkbox" class="tp-check" value="${idx}" onchange="calcPrice()"> ${tp.name}</span> <span>+${fmt(tp.price)}</span></label>`);
     calcPrice(); document.getElementById('productModal').classList.add('active');
@@ -296,16 +278,13 @@
     let toppings = []; let iceVal = ""; let sugarVal = ""; let itemNote = "";
     const groupName = (currentItem.group || "").toLowerCase();
     const isFood = FOOD_GROUPS.some(g => groupName.includes(g));
-
-    if (isFood) {
-      itemNote = document.getElementById('mItemNote').value;
-    } else {
+    if (isFood) { itemNote = document.getElementById('mItemNote').value; } 
+    else {
       document.querySelectorAll('.tp-check:checked').forEach(c => toppings.push(APP_DATA.toppings[c.value].name));
       const isNoIce = NO_ICE_GROUPS.some(g => groupName.includes(g));
       if (!isNoIce) iceVal = document.getElementById('mIce').value; 
       sugarVal = document.getElementById('mSugar').value;
     }
-
     CART.push({ name: currentItem.name, final: calcPrice(), size: sizeVal[0], sugar: sugarVal, ice: iceVal, toppings: toppings, note: itemNote });
     updateCartUI(); closeModal();
   }
@@ -320,14 +299,8 @@
     CURRENT_ORDER_ID = "DH" + Math.floor(10000 + Math.random() * 90000);
     const list = document.getElementById('cartItemsList'); list.innerHTML = "";
     CART.forEach((item,idx) => {
-        let opts = []; 
-        if(item.size && !item.size.includes('Chuẩn')) opts.push(item.size);
-        if (item.note) { opts.push(`"${item.note}"`); } 
-        else {
-           if(item.sugar) opts.push(item.sugar);
-           if(item.ice) opts.push(item.ice);
-           if(item.toppings.length) opts.push(item.toppings.join('+'));
-        }
+        let opts = []; if(item.size && !item.size.includes('Chuẩn')) opts.push(item.size);
+        if (item.note) { opts.push(`"${item.note}"`); } else { if(item.sugar) opts.push(item.sugar); if(item.ice) opts.push(item.ice); if(item.toppings.length) opts.push(item.toppings.join('+')); }
         let optString = opts.length ? `(${opts.join(', ')})` : '';
         list.innerHTML += `<div style="display:flex;justify-content:space-between;margin-bottom:10px;border-bottom:1px dashed #eee;padding-bottom:5px"><div><b>${item.name}</b> <small>${optString}</small></div><div style="text-align:right"><div>${fmt(item.final)}</div><a href="#" onclick="removeCart(${idx})" style="color:red;font-size:12px">Xóa</a></div></div>`;
     });
