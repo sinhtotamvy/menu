@@ -11,37 +11,26 @@
   <meta property="og:url" content="https://sinhtotamvy.github.io/menu/" />
   <meta property="og:type" content="website" />
   <meta name="zalo:image" content="https://storage.googleapis.com/menu-tamvy/THUMNAIL%20T%C3%82M%20VY.png">
+
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
   <style>
-    /* === THEME SHOPEE FOOD === */
     :root { 
       --primary-gradient: linear-gradient(135deg, #ff4b2b 0%, #ff9068 100%);
-      --primary-solid: #ff5722; --bg: #f5f5f5; --white: #ffffff; --text: #333; --red: #d32f2f;
+      --primary-solid: #ff5722; --bg: #f5f5f5; --white: #ffffff; --text: #333; --red: #d32f2f; --blue-fb: #1877F2;
     }
     body { font-family: 'Quicksand', sans-serif; background: #eee; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; color: var(--text); -webkit-tap-highlight-color: transparent; }
     .app-container { width: 100%; max-width: 480px; background: var(--bg); min-height: 100vh; position: relative; padding-bottom: 100px; box-shadow: 0 0 25px rgba(0,0,0,0.1); }
     
-    /* Header */
     .header-wrapper { background: var(--primary-gradient); padding: 15px 15px 20px 15px; position: sticky; top: 0; z-index: 90; box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3); border-radius: 0 0 20px 20px; }
     .header-top { display: flex; align-items: center; margin-bottom: 15px; }
     .shop-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid white; object-fit: cover; margin-right: 12px; background: white; }
     .header-title { color: white; margin: 0; font-size: 20px; font-weight: 800; flex: 1; }
     
-    /* SEARCH BOX MỚI (TINH TẾ HƠN) */
     .search-box { position: relative; width: 100%; }
-    .search-input { 
-      width: 100%; padding: 12px 15px 12px 45px; /* Chừa chỗ cho icon */
-      border: none; border-radius: 25px; font-size: 14px; 
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15); outline: none; 
-      background: white; color: #333;
-    }
-    .search-icon-svg { 
-      position: absolute; left: 15px; top: 50%; transform: translateY(-50%); 
-      width: 18px; height: 18px; fill: #999; 
-    }
+    .search-input { width: 100%; padding: 12px 15px 12px 45px; border: none; border-radius: 25px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); outline: none; background: white; color: #333; }
+    .search-icon-svg { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; fill: none; stroke: #999; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .status-bar { background: #333; color: white; padding: 8px; text-align: center; font-weight: bold; font-size: 12px; display: none; margin-top: -15px; z-index: 80; }
     
-    /* Menu */
     .menu-container { padding: 15px; padding-top: 10px; }
     .menu-group { margin-bottom: 15px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
     .group-header { padding: 12px 15px; background: #fff; color: var(--primary-solid); font-weight: 800; font-size: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-bottom: 1px solid #f0f0f0; }
@@ -57,25 +46,14 @@
     .item-price { color: var(--primary-solid); font-weight: 800; font-size: 15px; margin-top: auto; }
     .btn-plus { background: var(--primary-gradient); color: white; border: none; width: 30px; height: 30px; border-radius: 8px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; margin-left: auto; }
 
-    /* FOOTER MỚI (ICON SOCIAL) */
     .shop-footer { text-align: center; padding: 20px 20px 50px 20px; color: #666; font-size: 13px; background: white; margin-top: 15px; border-radius: 20px 20px 0 0; }
     .social-row { display: flex; gap: 20px; justify-content: center; margin-top: 15px; margin-bottom: 20px; }
-    .social-icon { 
-      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
-      border: 1px solid #ddd; border-radius: 10px; color: #333; text-decoration: none; transition: 0.2s;
-    }
-    .social-icon svg { width: 20px; height: 20px; fill: currentColor; }
-    .social-icon:hover { background: #f0f0f0; border-color: #999; }
-    
-    .map-btn-full {
-      display: inline-block; padding: 10px 25px; border-radius: 30px;
-      background: #f0f0f0; color: #333; font-weight: bold; text-decoration: none;
-      font-size: 14px; display: inline-flex; align-items: center; gap: 8px;
-    }
+    .social-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd; border-radius: 10px; color: #333; text-decoration: none; transition: 0.2s; }
+    .social-icon svg { width: 20px; height: 20px; }
+    .map-btn-full { display: inline-flex; padding: 10px 25px; border-radius: 30px; background: #f0f0f0; color: #333; font-weight: bold; text-decoration: none; font-size: 14px; align-items: center; gap: 8px; }
 
     .float-cart { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px; background: #333; color: white; padding: 12px 20px; border-radius: 50px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 95; cursor: pointer; display: none; }
     
-    /* Modals */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(2px); z-index: 200; display: none; justify-content: center; align-items: flex-end; }
     .modal-overlay.active { display: flex; }
     .sheet-modal { background: #fff; width: 100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 25px; max-height: 85vh; overflow-y: auto; animation: slideUp 0.3s; }
@@ -94,7 +72,9 @@
     .qr-img { width: 200px; height: 200px; margin: 10px auto; display: block; mix-blend-mode: multiply; }
     .confirm-pay { display: flex; align-items: center; gap: 12px; margin-top: 15px; padding: 15px; background: #fff; border-radius: 12px; border: 1px solid #ddd; cursor: pointer; }
     .confirm-pay input { width: 24px; height: 24px; margin: 0; flex-shrink: 0; }
-    .bill-box { background: #f9f9f9; padding: 15px; border-radius: 10px; font-family: monospace; border: 1px dashed #ccc; margin: 20px 0; text-align: left; line-height: 1.5;}
+    
+    /* FIX FONT LỖI Ở ĐÂY */
+    .bill-box { background: #f9f9f9; padding: 15px; border-radius: 10px; font-family: 'Quicksand', sans-serif; border: 1px dashed #ccc; margin: 20px 0; text-align: left; line-height: 1.6; font-size: 14px; color: #333; }
     
     #loadingOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.3s; }
     .spinner { width: 40px; height: 40px; border: 4px solid #eee; border-top: 4px solid var(--primary-solid); border-radius: 50%; animation: spin 1s linear infinite; }
@@ -113,21 +93,19 @@
       <h2 class="header-title">SINH TỐ TÂM VY</h2>
     </div>
     <div class="search-box">
-  <svg class="search-icon-svg" style="width:18px;height:18px;fill:none;stroke:#999;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;position:absolute;left:15px;top:50%;transform:translateY(-50%)" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-  <input type="text" id="searchKey" class="search-input" placeholder="Bạn muốn ăn và uống gì?" onkeyup="filterMenu()">
-</div>
+      <svg class="search-icon-svg" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" id="searchKey" class="search-input" placeholder="Bạn muốn ăn gì?" onkeyup="filterMenu()">
+    </div>
   </div>
   <div id="menu-list" class="menu-container"></div>
-  
   <div class="shop-footer" id="footerInfo"></div>
-  
   <div class="float-cart" id="cartBtn" onclick="showCheckout()"><span>🛒 <span id="cartCount">0</span></span><span id="cartTotal">0đ</span></div>
 </div>
 
 <div class="modal-overlay" id="productModal">
   <div class="sheet-modal">
     <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
-      <h3 id="mName" style="margin:0; font-size:20px;">Tên món</h3><span onclick="closeModal()" style="font-size:28px; cursor:pointer; color:#999;">&times;</span>
+      <h3 id="mName" style="margin:0; font-size:20px;">Tên món</h3><span onclick="closeModal()" style="font-size:28px; cursor:pointer; color:#999;">×</span>
     </div>
     <div class="opt-section" id="sizeSection" style="display:none; margin-bottom:20px;"><label class="opt-header">Chọn Size</label><div id="sizeOptions"></div></div>
     
@@ -154,7 +132,7 @@
 
 <div class="full-modal" id="checkoutPage">
   <div style="padding:10px 0 20px 0; display:flex; justify-content:space-between; align-items:center;">
-    <h3 style="margin:0;">📦 Xác nhận</h3><span onclick="closeCheckout()" style="font-size:28px; cursor:pointer; color:#999;">&times;</span>
+    <h3 style="margin:0;">📦 Xác nhận</h3><span onclick="closeCheckout()" style="font-size:28px; cursor:pointer; color:#999;">×</span>
   </div>
   <div id="cartItemsList" style="background:#f9f9f9; padding:15px; border-radius:12px; border:1px solid #eee;"></div>
   
@@ -195,20 +173,16 @@
 </div>
 
 <script>
-  // === CẤU HÌNH (QUAN TRỌNG: LU NHỚ DÁN LINK SCRIPT CỦA LU VÀO DÒNG DƯỚI) ===
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec"; 
-  const LOGO_URL = "https://storage.googleapis.com/menu-tamvy/IMG_0891.png"; 
-  
-  // Link mạng xã hội
-  const LINK_FB = "https://www.facebook.com/sinhtotamvy";
+  // === CẤU HÌNH (LU NHỚ DÁN LINK SCRIPT VÀO ĐÂY) ===
+  const FACEBOOK_URL = "https://www.facebook.com/sinhtotamvy";
   const LINK_INS = "https://www.instagram.com/sinhtotamvy";
   const LINK_TIK = "https://www.tiktok.com/@sinhtotamvyy";
   const LINK_MAP = "https://maps.app.goo.gl/yNun6CBDUosHE1HT8";
-
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec"; 
+  const LOGO_URL = "https://storage.googleapis.com/menu-tamvy/IMG_0891.png"; 
   const BANK_ID = "ACB"; const BANK_ACC = "48031187"; const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; const ZALO_PHONE = "0775826565";
-  const CACHE_KEY = 'TAMVY_MENU_V19'; // Đổi Cache Key để load bản mới nhất
+  const CACHE_KEY = 'TAMVY_MENU_V20'; 
   
-  // Phân loại nhóm
   const NO_ICE_GROUPS = ["sinh tố", "đá xay", "đồ uống nóng", "nóng", "sinh to", "da xay"];
   const FOOD_GROUPS = ["món ăn", "bánh", "ăn vặt", "đồ ăn", "mon an", "banh"];
   
@@ -219,7 +193,7 @@
     const cached = localStorage.getItem(CACHE_KEY);
     if (cached) { try { const data = JSON.parse(cached); initApp(data); document.getElementById('loadingOverlay').style.display = 'none'; } catch(e) {} }
     
-    if (SCRIPT_URL.includes("HÃY_DÁN_LINK")) { alert("Lỗi: Chưa dán Link Script vào code!"); return; }
+    if (SCRIPT_URL.includes("HÃY_DÁN_LINK")) { alert("Lỗi: Chưa dán Link Script!"); return; }
 
     fetch(SCRIPT_URL + "?action=getMenu").then(res => res.json()).then(data => { 
       localStorage.setItem(CACHE_KEY, JSON.stringify(data));
@@ -262,7 +236,6 @@
   function removeAccents(str) { return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D'); }
   function toggleGroup(header) { const content = header.nextElementSibling; if (content.style.display === 'none') { content.style.display = 'block'; header.classList.add('active'); } else { content.style.display = 'none'; header.classList.remove('active'); } }
   
-// === RENDER FOOTER (ĐÃ SỬA ICON IG & TIKTOK KHÔNG BỊ LỖI) ===
   function renderFooter(cfg) { 
     document.getElementById('footerInfo').innerHTML = `
       <div style="font-weight:bold; font-size:16px; margin-bottom:5px">SINH TỐ TÂM VY</div>
@@ -270,22 +243,13 @@
       <div style="margin-bottom:15px">🕒 ${cfg.openHour}h - ${cfg.closeHour}h</div>
       
       <div class="social-row">
-        <a href="${LINK_FB}" target="_blank" class="social-icon">
-          <svg viewBox="0 0 24 24" style="fill:currentColor; width:20px; height:20px;"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-        </a>
-        <a href="${LINK_INS}" target="_blank" class="social-icon">
-          <svg viewBox="0 0 24 24" style="fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; width:20px; height:20px;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-        </a>
-        <a href="${LINK_TIK}" target="_blank" class="social-icon">
-          <svg viewBox="0 0 24 24" style="fill:currentColor; width:20px; height:20px;"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>
-        </a>
+        <a href="${FACEBOOK_URL}" target="_blank" class="social-icon"><svg viewBox="0 0 24 24" style="fill:currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+        <a href="${LINK_INS}" target="_blank" class="social-icon"><svg viewBox="0 0 24 24" style="fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+        <a href="${LINK_TIK}" target="_blank" class="social-icon"><svg viewBox="0 0 24 24" style="fill:currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
       </div>
-
       <a href="${LINK_MAP}" target="_blank" class="map-btn-full">
-        <svg style="width:18px;height:18px;fill:var(--primary-solid);margin-right:5px" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
-        Chỉ đường đến quán
-      </a>
-    `; 
+        <svg style="width:18px;height:18px;fill:var(--primary-solid);margin-right:5px" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg> Chỉ đường đến quán
+      </a>`; 
   }
 
   function openItemByObj(btn) {
@@ -327,6 +291,7 @@
   }
   function closeModal() { document.getElementById('productModal').classList.remove('active'); }
   
+  // === LOGIC GỘP MÓN VÀ SỐ LƯỢNG (UPDATE) ===
   function addToCart() {
     const sizeVal = document.querySelector('input[name="size"]:checked').value.split('|');
     let toppings = []; let iceVal = ""; let sugarVal = ""; let itemNote = "";
@@ -340,13 +305,36 @@
       if (!isNoIce) iceVal = document.getElementById('mIce').value; 
       sugarVal = document.getElementById('mSugar').value;
     }
-    CART.push({ name: currentItem.name, final: calcPrice(), size: sizeVal[0], sugar: sugarVal, ice: iceVal, toppings: toppings, note: itemNote });
+
+    // Kiểm tra món trùng
+    let existingItem = CART.find(i => 
+      i.name === currentItem.name && 
+      i.size === sizeVal[0] &&
+      i.sugar === sugarVal &&
+      i.ice === iceVal &&
+      i.note === itemNote &&
+      JSON.stringify(i.toppings.sort()) === JSON.stringify(toppings.sort())
+    );
+
+    if (existingItem) {
+      existingItem.qty += 1;
+      existingItem.final += calcPrice(); // Cộng dồn giá
+    } else {
+      CART.push({ 
+        name: currentItem.name, final: calcPrice(), size: sizeVal[0], 
+        sugar: sugarVal, ice: iceVal, toppings: toppings, note: itemNote, qty: 1 
+      });
+    }
+    
     updateCartUI(); closeModal();
   }
+
   function updateCartUI() {
-    const total = CART.reduce((sum,i)=>sum+i.final,0);
-    document.getElementById('cartCount').innerText = CART.length; document.getElementById('cartTotal').innerText = fmt(total);
-    document.getElementById('cartBtn').style.display = CART.length ? 'flex' : 'none';
+    const totalQty = CART.reduce((sum,i)=>sum+i.qty,0);
+    const totalPrice = CART.reduce((sum,i)=>sum+i.final,0);
+    document.getElementById('cartCount').innerText = totalQty; 
+    document.getElementById('cartTotal').innerText = fmt(totalPrice);
+    document.getElementById('cartBtn').style.display = totalQty ? 'flex' : 'none';
   }
 
   function showCheckout() {
@@ -354,13 +342,17 @@
     CURRENT_ORDER_ID = "DH" + Math.floor(10000 + Math.random() * 90000);
     const list = document.getElementById('cartItemsList'); list.innerHTML = "";
     CART.forEach((item,idx) => {
-        let opts = []; if(item.size && !item.size.includes('Chuẩn')) opts.push(item.size);
+        let opts = []; 
+        if(item.size && !item.size.includes('Chuẩn')) opts.push(item.size);
         if (item.note) { opts.push(`"${item.note}"`); } 
         else {
-           if(item.sugar) opts.push(item.sugar); if(item.ice) opts.push(item.ice); if(item.toppings.length) opts.push(item.toppings.join('+'));
+           if(item.sugar) opts.push(item.sugar);
+           if(item.ice) opts.push(item.ice);
+           if(item.toppings.length) opts.push(item.toppings.join('+'));
         }
         let optString = opts.length ? `(${opts.join(', ')})` : '';
-        list.innerHTML += `<div style="display:flex;justify-content:space-between;margin-bottom:10px;border-bottom:1px dashed #eee;padding-bottom:5px"><div><b>${item.name}</b> <small>${optString}</small></div><div style="text-align:right"><div>${fmt(item.final)}</div><a href="#" onclick="removeCart(${idx})" style="color:red;font-size:12px">Xóa</a></div></div>`;
+        // HIỆN SỐ LƯỢNG x TÊN MÓN
+        list.innerHTML += `<div style="display:flex;justify-content:space-between;margin-bottom:10px;border-bottom:1px dashed #eee;padding-bottom:5px"><div><b>${item.qty} x ${item.name}</b> <small>${optString}</small></div><div style="text-align:right"><div>${fmt(item.final)}</div><a href="#" onclick="removeCart(${idx})" style="color:red;font-size:12px">Xóa</a></div></div>`;
     });
     document.getElementById('checkoutPage').style.display='block'; togglePayment();
   }
@@ -368,7 +360,9 @@
   function removeCart(idx) { CART.splice(idx,1); updateCartUI(); if(!CART.length) closeCheckout(); else showCheckout(); }
 
   function togglePayment() {
-    const m = document.getElementById('cPayment').value; const total = CART.reduce((sum,i)=>sum+i.final,0); const phone = document.getElementById('cPhone').value;
+    const m = document.getElementById('cPayment').value; 
+    const total = CART.reduce((sum,i)=>sum+i.final,0);
+    const phone = document.getElementById('cPhone').value;
     document.getElementById('btnGroup').style.display = (m==='ZALO')?'none':'block'; document.getElementById('zaloGroup').style.display = (m==='ZALO')?'block':'none';
     if(m==='CK') {
       document.getElementById('qrArea').style.display='block'; document.getElementById('confirmPayBox').style.display='flex';
@@ -381,34 +375,48 @@
   document.getElementById('cPhone').addEventListener('input', togglePayment);
   function checkConfirm() { document.getElementById('btnOrder').disabled = !document.getElementById('ckConfirm').checked; }
 
+  // === HÀM TẠO NỘI DUNG ĐƠN (CHUNG CHO API VÀ ZALO) ===
+  function generateBillDetails() {
+    let details = "";
+    CART.forEach(i => {
+        let opts = []; 
+        if(i.size && !i.size.includes('Chuẩn')) opts.push(i.size);
+        if (i.note) { opts.push(`"${i.note}"`); } 
+        else {
+           if(i.sugar) opts.push(i.sugar); if(i.ice) opts.push(i.ice); if(i.toppings.length) opts.push(i.toppings.join('+'));
+        }
+        details += `- ${i.qty} ${i.name} (${opts.join(', ')})\n`;
+    });
+    // Thêm tổng món
+    const totalQty = CART.reduce((sum,i)=>sum+i.qty,0);
+    details += `------------------\nTỔNG CỘNG: ${totalQty} MÓN`;
+    return details;
+  }
+
   function submitOrder() {
     const name = document.getElementById('cName').value, phone = document.getElementById('cPhone').value, addr = document.getElementById('cAddress').value;
     if(!name || !phone || !addr) return alert("Thiếu thông tin!");
     document.getElementById('btnOrder').innerText = "ĐANG GỬI..."; document.getElementById('btnOrder').disabled = true;
+    
     const total = CART.reduce((sum,i)=>sum+i.final,0);
-    const details = CART.map(i => {
-        let opts = []; if(i.size && !i.size.includes('Chuẩn')) opts.push(i.size);
-        if (i.note) { opts.push(`"${i.note}"`); } else { if(i.sugar) opts.push(i.sugar); if(i.ice) opts.push(i.ice); if(i.toppings.length) opts.push(i.toppings.join('+')); }
-        return `- ${i.name} (${opts.join(', ')})`;
-    }).join('\n');
+    const details = generateBillDetails(); // Dùng hàm chung
+
     const orderData = { orderId: CURRENT_ORDER_ID, name: name, phone: phone, address: addr, note: document.getElementById('cNote').value, paymentMethod: document.getElementById('cPayment').value, details: details, total: total, honey: document.getElementById('honeypot').value };
     fetch(SCRIPT_URL + "?action=submitOrder", { method: "POST", body: JSON.stringify(orderData) }).then(res => res.json()).then(res => {
       if(res.success) {
         document.getElementById('checkoutPage').style.display = 'none'; document.getElementById('successPage').style.display = 'block';
-        document.getElementById('billContent').innerHTML = `MÃ: ${CURRENT_ORDER_ID}<br>KH: ${name}<br>Đ/C: ${addr}<br>----------------<br>${details.replace(/\n/g,'<br>')}<br>----------------<br>TỔNG: ${fmt(total)}`;
+        // Hiển thị bill đẹp
+        document.getElementById('billContent').innerHTML = `MÃ: ${CURRENT_ORDER_ID}<br>KH: ${name}<br>Đ/C: ${addr}<br>----------------<br>${details.replace(/\n/g,'<br>')}<br>----------------<br>TỔNG TIỀN: ${fmt(total)}`;
         CART=[];
       } else { alert("Lỗi: "+res.msg); document.getElementById('btnOrder').disabled=false; }
     }).catch(err => { alert("Lỗi mạng! Vui lòng thử lại."); document.getElementById('btnOrder').disabled=false; });
   }
 
   function sendToZalo() {
-    const total = CART.reduce((sum,i)=>sum+i.final,0); let msg = `🥑 ĐƠN MỚI\n`; 
-    CART.forEach(i=>{
-        let opts = []; if(i.size && !i.size.includes('Chuẩn')) opts.push(i.size);
-        if (i.note) { opts.push(`"${i.note}"`); } else { if(i.sugar) opts.push(i.sugar); if(i.ice) opts.push(i.ice); if(i.toppings.length) opts.push(i.toppings.join('+')); }
-        msg+=`▪ ${i.name} (${opts.join(', ')})\n`;
-    }); 
-    msg+=`💰 ${fmt(total)}\n👤 ${document.getElementById('cName').value} - ${document.getElementById('cPhone').value}\n📍 ${document.getElementById('cAddress').value}`;
+    const total = CART.reduce((sum,i)=>sum+i.final,0); 
+    let msg = `🥑 ĐƠN MỚI\n`; 
+    msg += generateBillDetails(); // Dùng hàm chung
+    msg += `\n💰 ${fmt(total)}\n👤 ${document.getElementById('cName').value} - ${document.getElementById('cPhone').value}\n📍 ${document.getElementById('cAddress').value}`;
     navigator.clipboard.writeText(msg).then(() => { alert("Đã COPY! Đang mở Zalo..."); window.open(`https://zalo.me/${ZALO_PHONE}`); }).catch(() => alert("Lỗi copy."));
   }
   function fmt(n) { return n.toLocaleString('vi-VN') + 'đ'; }
