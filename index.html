@@ -16,7 +16,7 @@
   <style>
     :root { 
       --primary-gradient: linear-gradient(135deg, #ff4b2b 0%, #ff9068 100%);
-      --primary-solid: #ff5722; --bg: #f5f5f5; --white: #ffffff; --text: #333; --red: #d32f2f; --green: #4CAF50;
+      --primary-solid: #ff5722; --bg: #f5f5f5; --white: #ffffff; --text: #333; --red: #d32f2f; --green: #4CAF50; --blue-fb: #1877F2;
     }
     body { font-family: 'Quicksand', sans-serif; background: #eee; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; color: var(--text); -webkit-tap-highlight-color: transparent; }
     .app-container { width: 100%; max-width: 480px; background: var(--bg); min-height: 100vh; position: relative; padding-bottom: 100px; box-shadow: 0 0 25px rgba(0,0,0,0.1); }
@@ -68,7 +68,6 @@
     .radio-row input { width: 20px; height: 20px; accent-color: var(--primary-solid); }
     .opt-header { font-weight: 700; font-size: 14px; color: var(--primary-solid); text-transform: uppercase; margin-bottom: 10px; display: block;}
     
-    /* BỘ CHỌN SỐ LƯỢNG MỚI */
     .qty-control { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 20px; margin-top: 10px; }
     .qty-btn { width: 35px; height: 35px; border-radius: 50%; border: 1px solid #ddd; background: white; font-size: 20px; font-weight: bold; color: var(--primary-solid); display: flex; align-items: center; justify-content: center; cursor: pointer; }
     .qty-num { font-size: 18px; font-weight: bold; width: 30px; text-align: center; }
@@ -110,7 +109,8 @@
     <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
       <h3 id="mName" style="margin:0; font-size:20px;">Tên món</h3><span onclick="closeModal()" style="font-size:28px; cursor:pointer; color:#999;">×</span>
     </div>
-    <div class="opt-section" id="sizeSection" style="display:none; margin-bottom:20px;"><label class="opt-header">Chọn Size</label><div id="sizeOptions"></div></div>
+    
+    <div class="opt-section" id="sizeSection" style="display:none; margin-bottom:20px;"><label class="opt-header">Tùy Chọn (Size / Thêm)</label><div id="sizeOptions"></div></div>
     
     <div id="drinkOptions">
       <div class="opt-section" style="margin-bottom:20px;">
@@ -126,7 +126,7 @@
 
     <div id="foodNoteSection" style="display:none; margin-bottom:20px;">
       <label class="opt-header">Ghi chú cho món này</label>
-      <textarea id="mItemNote" rows="2" placeholder="VD: Thêm lời chúc cho flan wave, đá riêng..."></textarea>
+      <textarea id="mItemNote" rows="2" placeholder="VD: Lấy nhiều tương ớt, không hành..."></textarea>
     </div>
 
     <div style="text-align:center; margin-bottom:5px; font-weight:bold; color:#666; font-size:13px;">Số lượng</div>
@@ -184,21 +184,22 @@
 </div>
 
 <script>
-  // === CẤU HÌNH (QUAN TRỌNG: LU NHỚ DÁN LINK CỦA LU VÀO DÒNG DƯỚI) ===
+  // === CẤU HÌNH ===
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec"; 
+  
   const FACEBOOK_URL = "https://www.facebook.com/sinhtotamvy";
   const LINK_INS = "https://www.instagram.com/sinhtotamvy";
   const LINK_TIK = "https://www.tiktok.com/@sinhtotamvyy";
   const LINK_MAP = "https://maps.app.goo.gl/yNun6CBDUosHE1HT8";
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec"; 
   const LOGO_URL = "https://storage.googleapis.com/menu-tamvy/IMG_0891.png"; 
   const BANK_ID = "ACB"; const BANK_ACC = "48031187"; const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; const ZALO_PHONE = "0775826565";
-  const CACHE_KEY = 'TAMVY_MENU_V21'; 
   
+  const CACHE_KEY = 'TAMVY_MENU_V22'; // Cập nhật Cache
   const NO_ICE_GROUPS = ["sinh tố", "đá xay", "đồ uống nóng", "nóng", "sinh to", "da xay"];
   const FOOD_GROUPS = ["món ăn", "bánh", "ăn vặt", "đồ ăn", "mon an", "banh"];
   
   let APP_DATA = {}, CART = [], currentItem = null, IS_OPEN = true, CURRENT_ORDER_ID = "";
-  let modalQty = 1; // Biến theo dõi số lượng trong popup
+  let modalQty = 1; 
 
   window.onload = function() {
     if(LOGO_URL) document.getElementById('shopLogo').src = LOGO_URL;
@@ -271,13 +272,17 @@
     document.getElementById('mName').innerText = currentItem.name;
     document.getElementById('mSugar').value = ""; document.getElementById('mIce').value = ""; document.getElementById('mItemNote').value = "";
     
-    // RESET SỐ LƯỢNG VỀ 1
-    modalQty = 1;
-    updateModalQtyUI();
+    modalQty = 1; updateModalQtyUI();
 
+    // DÙNG CHỮ "MẶC ĐỊNH" CHO CẢ SIZE VÀ HƯƠNG VỊ
     const sizeOpt = document.getElementById('sizeOptions'); sizeOpt.innerHTML = "";
-    let html = `<label class="radio-row"><span><input type="radio" name="size" value="Size Chuẩn|0" checked onchange="calcPrice()"> Size Chuẩn</span> <span>+0đ</span></label>`;
-    if(currentItem.sizes?.length) { document.getElementById('sizeSection').style.display='block'; currentItem.sizes.forEach(s => html += `<label class="radio-row"><span><input type="radio" name="size" value="${s.name}|${s.priceAdd}" onchange="calcPrice()"> ${s.name}</span> <span>+${fmt(s.priceAdd)}</span></label>`); } else { document.getElementById('sizeSection').style.display='none'; }
+    let html = `<label class="radio-row"><span><input type="radio" name="size" value="Mặc định|0" checked onchange="calcPrice()"> Mặc định</span> <span>+0đ</span></label>`;
+    if(currentItem.sizes?.length) { 
+      document.getElementById('sizeSection').style.display='block'; 
+      currentItem.sizes.forEach(s => html += `<label class="radio-row"><span><input type="radio" name="size" value="${s.name}|${s.priceAdd}" onchange="calcPrice()"> ${s.name}</span> <span>+${fmt(s.priceAdd)}</span></label>`); 
+    } else { 
+      document.getElementById('sizeSection').style.display='none'; 
+    }
     sizeOpt.innerHTML = html;
 
     const groupName = (currentItem.group || "").toLowerCase();
@@ -299,30 +304,16 @@
     calcPrice(); document.getElementById('productModal').classList.add('active');
   }
 
-  // === HÀM CHỈNH SỐ LƯỢNG TRONG MODAL ===
-  function adjustQty(delta) {
-    modalQty += delta;
-    if (modalQty < 1) modalQty = 1;
-    updateModalQtyUI();
-    calcPrice(); // Tính lại giá tổng
-  }
-
-  function updateModalQtyUI() {
-    document.getElementById('modalQty').innerText = modalQty;
-  }
+  function adjustQty(delta) { modalQty += delta; if (modalQty < 1) modalQty = 1; updateModalQtyUI(); calcPrice(); }
+  function updateModalQtyUI() { document.getElementById('modalQty').innerText = modalQty; }
 
   function calcPrice() {
     let base = currentItem.price + parseInt(document.querySelector('input[name="size"]:checked').value.split('|')[1]);
     document.querySelectorAll('.tp-check:checked').forEach(c => base += APP_DATA.toppings[c.value].price);
-    // NHÂN VỚI SỐ LƯỢNG
-    let total = base * modalQty;
-    document.getElementById('mPriceBtn').innerText = fmt(total); 
-    return base; // Trả về đơn giá để dùng chỗ khác
+    let total = base * modalQty; document.getElementById('mPriceBtn').innerText = fmt(total); return base; 
   }
-
   function closeModal() { document.getElementById('productModal').classList.remove('active'); }
   
-  // === UPDATE ADD TO CART (GỘP MÓN) ===
   function addToCart() {
     const sizeVal = document.querySelector('input[name="size"]:checked').value.split('|');
     let toppings = []; let iceVal = ""; let sugarVal = ""; let itemNote = "";
@@ -337,48 +328,25 @@
       sugarVal = document.getElementById('mSugar').value;
     }
 
-    // TÍNH ĐƠN GIÁ (1 ly)
-    let unitPrice = currentItem.price + parseInt(sizeVal[1]);
-    toppings.forEach(t => { 
-        // Tìm giá topping (hơi thủ công nhưng chính xác)
-        let tObj = APP_DATA.toppings.find(x => x.name === t);
-        if(tObj) unitPrice += tObj.price;
-    });
+    let unitPrice = calcPrice() / modalQty; 
 
-    // KIỂM TRA TRÙNG MÓN ĐỂ GỘP
     let existingItem = CART.find(i => 
-      i.name === currentItem.name && 
-      i.size === sizeVal[0] && 
-      i.sugar === sugarVal && 
-      i.ice === iceVal && 
-      JSON.stringify(i.toppings) === JSON.stringify(toppings) &&
-      i.note === itemNote
+      i.name === currentItem.name && i.size === sizeVal[0] && i.sugar === sugarVal && i.ice === iceVal && 
+      JSON.stringify(i.toppings) === JSON.stringify(toppings) && i.note === itemNote
     );
 
     if (existingItem) {
-      existingItem.qty += modalQty; // Cộng dồn số lượng
-      existingItem.final += unitPrice * modalQty; // Cộng dồn tiền
+      existingItem.qty += modalQty; existingItem.final += unitPrice * modalQty; 
     } else {
-      CART.push({ 
-        name: currentItem.name, 
-        final: unitPrice * modalQty, 
-        size: sizeVal[0], 
-        sugar: sugarVal, 
-        ice: iceVal, 
-        toppings: toppings, 
-        note: itemNote,
-        qty: modalQty // Lưu số lượng
-      });
+      CART.push({ name: currentItem.name, final: unitPrice * modalQty, size: sizeVal[0], sugar: sugarVal, ice: iceVal, toppings: toppings, note: itemNote, qty: modalQty });
     }
-
     updateCartUI(); closeModal();
   }
 
   function updateCartUI() {
-    const totalQty = CART.reduce((sum,i)=>sum+i.qty,0); // Tổng số lượng
+    const totalQty = CART.reduce((sum,i)=>sum+i.qty,0); 
     const totalPrice = CART.reduce((sum,i)=>sum+i.final,0);
-    document.getElementById('cartCount').innerText = totalQty; 
-    document.getElementById('cartTotal').innerText = fmt(totalPrice);
+    document.getElementById('cartCount').innerText = totalQty; document.getElementById('cartTotal').innerText = fmt(totalPrice);
     document.getElementById('cartBtn').style.display = totalQty ? 'flex' : 'none';
   }
 
@@ -388,7 +356,8 @@
     const list = document.getElementById('cartItemsList'); list.innerHTML = "";
     CART.forEach((item,idx) => {
         let opts = []; 
-        if(item.size && !item.size.includes('Chuẩn')) opts.push(item.size);
+        // Bỏ chữ mặc định đi cho gọn bill
+        if(item.size && !item.size.includes('Mặc định') && !item.size.includes('Chuẩn')) opts.push(item.size);
         if (item.note) { opts.push(`"${item.note}"`); } 
         else {
            if(item.sugar) opts.push(item.sugar);
@@ -396,7 +365,6 @@
            if(item.toppings.length) opts.push(item.toppings.join('+'));
         }
         let optString = opts.length ? `(${opts.join(', ')})` : '';
-        // HIỆN: SỐ LƯỢNG x TÊN MÓN
         list.innerHTML += `<div style="display:flex;justify-content:space-between;margin-bottom:10px;border-bottom:1px dashed #eee;padding-bottom:5px"><div><b>${item.qty} x ${item.name}</b> <small>${optString}</small></div><div style="text-align:right"><div>${fmt(item.final)}</div><a href="#" onclick="removeCart(${idx})" style="color:red;font-size:12px">Xóa</a></div></div>`;
     });
     document.getElementById('checkoutPage').style.display='block'; togglePayment();
@@ -418,17 +386,16 @@
   document.getElementById('cPhone').addEventListener('input', togglePayment);
   function checkConfirm() { document.getElementById('btnOrder').disabled = !document.getElementById('ckConfirm').checked; }
 
-  // === HÀM TẠO BILL CHI TIẾT ===
   function generateBillDetails() {
     let details = "";
     CART.forEach(i => {
         let opts = []; 
-        if(i.size && !i.size.includes('Chuẩn')) opts.push(i.size);
+        if(i.size && !i.size.includes('Mặc định') && !i.size.includes('Chuẩn')) opts.push(i.size);
         if (i.note) { opts.push(`"${i.note}"`); } 
         else {
-           if(i.sugar) opts.push(i.sugar); if(i.ice) opts.push(i.ice); if(i.toppings.length) opts.push(i.toppings.join('+'));
+           if(i.sugar) opts.push(i.sugar); if(i.ice) opts.push(i.ice); 
+           if(i.toppings.length) opts.push(i.toppings.join('+'));
         }
-        // Format: - 2 x Sinh tố bơ (...)
         details += `- ${i.qty} x ${i.name} (${opts.join(', ')})\n`;
     });
     const totalQty = CART.reduce((sum,i)=>sum+i.qty,0);
