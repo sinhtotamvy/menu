@@ -328,7 +328,7 @@
       sugarVal = document.getElementById('mSugar').value;
     }
 
-    let unitPrice = calcPrice() / modalQty; 
+    let unitPrice = calcPrice(); 
 
     let existingItem = CART.find(i => 
       i.name === currentItem.name && i.size === sizeVal[0] && i.sugar === sugarVal && i.ice === iceVal && 
