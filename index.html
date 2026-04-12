@@ -434,9 +434,9 @@
     // THUẬT TOÁN TÍNH PHÍ GIAO HÀNG (2-5km: 5k | 5-7km: 7k)
     if (km > 7) {
       canOrder = false;
-    } else if (cartTotal < 100000) {
-      if (km > 2 && km <= 5) { fee = 5000; }
-      else if (km > 5 && km <= 7) { fee = 7000; }
+    } else if (cartTotal < 200000) {
+      if (km > 2.5 && km <= 4) { fee = 5000; }
+      else if (km > 4 && km <= 7) { fee = 7000; }
     }
 
     if (!canOrder) {
