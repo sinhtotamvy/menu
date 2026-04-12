@@ -62,8 +62,12 @@
 
     input, select, textarea { width: 100%; padding: 14px; border: 1px solid #ddd; border-radius: 12px; margin-bottom: 15px; box-sizing: border-box; font-family: inherit; font-size: 15px; background: #f9f9f9; outline: none; }
     input:focus, textarea:focus { border-color: var(--primary-solid); background: #fff; }
-    .btn-main { width: 100%; padding: 16px; background: var(--primary-gradient); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; margin-top: 10px; cursor: pointer; }
+    .btn-main { width: 100%; padding: 16px; background: var(--primary-gradient); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 16px; margin-top: 10px; cursor: pointer; display: block; text-align: center; }
     .btn-zalo { background: #0068FF; margin-bottom: 5px; }
+    .btn-vill { background: #FF5722; text-decoration: none; margin-bottom: 10px; }
+    .btn-shopee { background: #EE4D2D; text-decoration: none; }
+    .btn-check { background: var(--green); margin-bottom: 5px; }
+
     .radio-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed #eee; cursor: pointer; }
     .radio-row input { width: 20px; height: 20px; accent-color: var(--primary-solid); }
     .opt-header { font-weight: 700; font-size: 14px; color: var(--primary-solid); text-transform: uppercase; margin-bottom: 10px; display: block;}
@@ -146,30 +150,38 @@
   </div>
   <div id="cartItemsList" style="background:#f9f9f9; padding:15px; border-radius:12px; border:1px solid #eee;"></div>
   
-  <h4 style="margin:20px 0 10px 5px; color:#555;">Thông tin</h4>
-  <input type="text" id="cName" placeholder="Tên của bạn"><input type="tel" id="cPhone" placeholder="Số điện thoại"><input type="text" id="cAddress" placeholder="Địa chỉ giao hàng"><textarea id="cNote" rows="2" placeholder="Lời nhắn chung cho đơn hàng..."></textarea><input type="text" id="honeypot" style="display:none">
+  <h4 style="margin:20px 0 10px 5px; color:#555;">Thông tin nhận hàng</h4>
+  <input type="text" id="cName" placeholder="Tên của bạn"><input type="tel" id="cPhone" placeholder="Số điện thoại">
   
-  <h4 style="margin:10px 0 10px 5px; color:#555;">Thanh toán</h4>
-  <select id="cPayment" onchange="togglePayment()"><option value="COD">💵 Tiền mặt</option><option value="CK">🏦 Chuyển khoản (QR)</option><option value="ZALO">💬 Gửi qua Zalo</option></select>
+  <input type="text" id="cAddress" placeholder="Địa chỉ giao (VD: Phường 1...)" oninput="resetAddressCheck()">
+  <button id="btnCheckDistance" class="btn-main btn-check" onclick="checkDistance()">📍 Kiểm tra khoảng cách / Phí Ship</button>
+  <div id="distanceResult" style="margin-bottom:15px; font-size:14px; text-align:center;"></div>
+
+  <textarea id="cNote" rows="2" placeholder="Lời nhắn chung cho đơn hàng..."></textarea><input type="text" id="honeypot" style="display:none">
   
-  <div class="qr-box" id="qrArea">
-    <div style="font-weight:bold; color:var(--primary-solid); font-size:16px;">QUÉT MÃ QR</div>
-    <div style="font-size:13px; color:#666; margin:8px 0; background:#fff; padding:5px; border-radius:5px;">💡 Nhấn giữ QR để lưu ảnh</div>
-    <div style="font-size:13px; margin-bottom:5px;">Nội dung: <strong id="qrContent"></strong></div>
-    <img src="" id="qrImage" class="qr-img">
-    <div style="font-size:16px; margin-top:10px;">Số tiền: <strong id="qrAmount" style="color:var(--red);"></strong></div>
-    <div style="margin-top:8px; border-top:1px dashed #ccc; padding-top:8px;">
-      <div style="font-size:12px; color:#555;">Chủ tài khoản:</div>
-      <div style="font-weight:bold; color:#000; font-size:14px; text-transform: uppercase;" id="bankOwnerName"></div>
+  <div id="paymentBlock" style="display:none;">
+    <h4 style="margin:10px 0 10px 5px; color:#555;">Thanh toán</h4>
+    <select id="cPayment" onchange="togglePayment()"><option value="COD">💵 Tiền mặt</option><option value="CK">🏦 Chuyển khoản (QR)</option><option value="ZALO">💬 Gửi qua Zalo</option></select>
+    
+    <div class="qr-box" id="qrArea">
+      <div style="font-weight:bold; color:var(--primary-solid); font-size:16px;">QUÉT MÃ QR</div>
+      <div style="font-size:13px; color:#666; margin:8px 0; background:#fff; padding:5px; border-radius:5px;">💡 Nhấn giữ QR để lưu ảnh</div>
+      <div style="font-size:13px; margin-bottom:5px;">Nội dung: <strong id="qrContent"></strong></div>
+      <img src="" id="qrImage" class="qr-img">
+      <div style="font-size:16px; margin-top:10px;">Số tiền: <strong id="qrAmount" style="color:var(--red);"></strong></div>
+      <div style="margin-top:8px; border-top:1px dashed #ccc; padding-top:8px;">
+        <div style="font-size:12px; color:#555;">Chủ tài khoản:</div>
+        <div style="font-weight:bold; color:#000; font-size:14px; text-transform: uppercase;" id="bankOwnerName"></div>
+      </div>
     </div>
-  </div>
 
-  <label class="confirm-pay" id="confirmPayBox"><input type="checkbox" id="ckConfirm" onchange="checkConfirm()"><span>Tôi đã chuyển khoản thành công</span></label>
+    <label class="confirm-pay" id="confirmPayBox"><input type="checkbox" id="ckConfirm" onchange="checkConfirm()"><span>Tôi đã chuyển khoản thành công</span></label>
 
-  <div id="btnGroup"><button class="btn-main" id="btnOrder" onclick="submitOrder()">ĐẶT HÀNG NGAY</button></div>
-  <div id="zaloGroup" style="display:none; text-align:center">
-    <button class="btn-main btn-zalo" onclick="sendToZalo()">📋 SAO CHÉP & MỞ ZALO</button>
-    <div style="font-size:13px; color:#0068FF; margin-top:5px;">(Bấm nút trên để Copy, sau đó <b>DÁN</b> vào ô chat Zalo)</div>
+    <div id="btnGroup"><button class="btn-main" id="btnOrder" onclick="submitOrder()">ĐẶT HÀNG NGAY</button></div>
+    <div id="zaloGroup" style="display:none; text-align:center">
+      <button class="btn-main btn-zalo" onclick="sendToZalo()">📋 SAO CHÉP & MỞ ZALO</button>
+      <div style="font-size:13px; color:#0068FF; margin-top:5px;">(Bấm nút trên để Copy, sau đó <b>DÁN</b> vào ô chat Zalo)</div>
+    </div>
   </div>
   <div style="height:50px;"></div>
 </div>
@@ -185,21 +197,25 @@
 
 <script>
   // === CẤU HÌNH ===
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGxPAoxdj1E2ymMznZza5T61Zc20z3wZdzXPBFuJTb7-IAvsbxlGEdKEXCoY3LR3Uu7w/exec"; 
+  const SCRIPT_URL = "HÃY_DÁN_LINK_GOOGLE_SCRIPT_CỦA_BẠN_VÀO_ĐÂY"; 
   
   const FACEBOOK_URL = "https://www.facebook.com/sinhtotamvy";
   const LINK_INS = "https://www.instagram.com/sinhtotamvy";
   const LINK_TIK = "https://www.tiktok.com/@sinhtotamvyy";
   const LINK_MAP = "https://maps.app.goo.gl/yNun6CBDUosHE1HT8";
+  const LINK_VILL = "https://app.vill.vn/TBULtSZNu5";
+  const LINK_SHOPEE = "https://spf.shopee.vn/3fzgMplZV5";
+  
   const LOGO_URL = "https://storage.googleapis.com/menu-tamvy/IMG_0891.png"; 
   const BANK_ID = "ACB"; const BANK_ACC = "48031187"; const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; const ZALO_PHONE = "0775826565";
   
-  const CACHE_KEY = 'TAMVY_MENU_V22'; // Cập nhật Cache
+  const CACHE_KEY = 'TAMVY_MENU_V24'; 
   const NO_ICE_GROUPS = ["sinh tố", "đá xay", "đồ uống nóng", "nóng", "sinh to", "da xay"];
   const FOOD_GROUPS = ["món ăn", "bánh", "ăn vặt", "đồ ăn", "mon an", "banh"];
   
   let APP_DATA = {}, CART = [], currentItem = null, IS_OPEN = true, CURRENT_ORDER_ID = "";
   let modalQty = 1; 
+  let deliveryFee = 0; // Biến lưu phụ thu
 
   window.onload = function() {
     if(LOGO_URL) document.getElementById('shopLogo').src = LOGO_URL;
@@ -274,7 +290,6 @@
     
     modalQty = 1; updateModalQtyUI();
 
-    // DÙNG CHỮ "MẶC ĐỊNH" CHO CẢ SIZE VÀ HƯƠNG VỊ
     const sizeOpt = document.getElementById('sizeOptions'); sizeOpt.innerHTML = "";
     let html = `<label class="radio-row"><span><input type="radio" name="size" value="Mặc định|0" checked onchange="calcPrice()"> Mặc định</span> <span>+0đ</span></label>`;
     if(currentItem.sizes?.length) { 
@@ -336,7 +351,8 @@
     );
 
     if (existingItem) {
-      existingItem.qty += modalQty; existingItem.final += unitPrice * modalQty; 
+      existingItem.qty += modalQty; 
+      existingItem.final += unitPrice * modalQty; 
     } else {
       CART.push({ name: currentItem.name, final: unitPrice * modalQty, size: sizeVal[0], sugar: sugarVal, ice: iceVal, toppings: toppings, note: itemNote, qty: modalQty });
     }
@@ -356,7 +372,6 @@
     const list = document.getElementById('cartItemsList'); list.innerHTML = "";
     CART.forEach((item,idx) => {
         let opts = []; 
-        // Bỏ chữ mặc định đi cho gọn bill
         if(item.size && !item.size.includes('Mặc định') && !item.size.includes('Chuẩn')) opts.push(item.size);
         if (item.note) { opts.push(`"${item.note}"`); } 
         else {
@@ -367,19 +382,117 @@
         let optString = opts.length ? `(${opts.join(', ')})` : '';
         list.innerHTML += `<div style="display:flex;justify-content:space-between;margin-bottom:10px;border-bottom:1px dashed #eee;padding-bottom:5px"><div><b>${item.qty} x ${item.name}</b> <small>${optString}</small></div><div style="text-align:right"><div>${fmt(item.final)}</div><a href="#" onclick="removeCart(${idx})" style="color:red;font-size:12px">Xóa</a></div></div>`;
     });
-    document.getElementById('checkoutPage').style.display='block'; togglePayment();
+    
+    // Reset phần thanh toán mỗi khi mở giỏ hàng
+    resetAddressCheck();
+    document.getElementById('checkoutPage').style.display='block'; 
   }
+  
   function closeCheckout() { document.getElementById('checkoutPage').style.display='none'; }
   function removeCart(idx) { CART.splice(idx,1); updateCartUI(); if(!CART.length) closeCheckout(); else showCheckout(); }
 
+  // === LOGIC KIỂM TRA PHÍ SHIP MỚI ===
+  function resetAddressCheck() {
+    deliveryFee = 0;
+    document.getElementById('btnCheckDistance').innerText = "📍 Kiểm tra khoảng cách / Phí Ship";
+    document.getElementById('btnCheckDistance').style.display = 'block';
+    document.getElementById('distanceResult').innerHTML = "";
+    document.getElementById('paymentBlock').style.display = 'none'; // Khóa thanh toán
+  }
+
+  function checkDistance() {
+    const addr = document.getElementById('cAddress').value;
+    if (!addr || addr.length < 5) {
+      alert("Vui lòng nhập địa chỉ cụ thể để tính khoảng cách (Ví dụ: 123 Lê Lợi).");
+      return;
+    }
+    
+    document.getElementById('btnCheckDistance').innerText = "Đang tính toán khoảng cách...";
+    
+    fetch(SCRIPT_URL + "?action=checkDistance&address=" + encodeURIComponent(addr))
+    .then(res => res.json())
+    .then(res => {
+      document.getElementById('btnCheckDistance').innerText = "📍 Kiểm tra khoảng cách / Phí Ship";
+      if (res.success) {
+        processDistance(res.distance);
+      } else {
+        document.getElementById('distanceResult').innerHTML = `<span style="color:red; font-weight:bold">❌ ${res.msg}</span>`;
+      }
+    })
+    .catch(err => {
+      document.getElementById('btnCheckDistance').innerText = "📍 Kiểm tra khoảng cách / Phí Ship";
+      alert("Lỗi mạng! Vui lòng thử lại.");
+    });
+  }
+
+  function processDistance(km) {
+    const cartTotal = CART.reduce((sum,i)=>sum+i.final,0);
+    let fee = 0;
+    let msg = `<span style="color:#333">Khoảng cách: <b>${km.toFixed(1)} km</b>. </span>`;
+    let canOrder = true;
+
+    // THUẬT TOÁN TÍNH PHÍ GIAO HÀNG (2-5km: 5k | 5-7km: 7k)
+    if (km > 7) {
+      canOrder = false;
+    } else if (cartTotal < 100000) {
+      if (km > 2 && km <= 5) { fee = 5000; }
+      else if (km > 5 && km <= 7) { fee = 7000; }
+    }
+
+    if (!canOrder) {
+      // TRÊN 7KM: CHẶN VÀ HIỆN APP VILL / SHOPEE
+      document.getElementById('distanceResult').innerHTML = `
+        <div style="color:red; font-weight:bold; margin-bottom:15px; font-size:15px">
+          ❌ Khoảng cách vượt quá 7km, xin lỗi quán không thể giao hàng trực tiếp. Quý khách vui lòng đặt hàng trên các ứng dụng sau:
+        </div>
+        <a href="${LINK_VILL}" target="_blank" class="btn-main btn-vill">🛵 Mở App VILL</a>
+        <a href="${LINK_SHOPEE}" target="_blank" class="btn-main btn-shopee">🛵 Mở ShopeeFood</a>
+      `;
+      document.getElementById('btnCheckDistance').style.display = 'none';
+      document.getElementById('paymentBlock').style.display = 'none';
+    } else {
+      if (fee > 0) {
+        // HỎI KHÁCH PHỤ THU
+        let confirmFee = confirm(`Khoảng cách là ${km.toFixed(1)}km. Phí giao hàng là ${fmt(fee)}. Bạn có đồng ý phụ thu vào đơn hàng không?`);
+        if (confirmFee) {
+          deliveryFee = fee;
+          msg += `<br><span style="color:var(--primary-solid); font-weight:bold">Phụ thu phí ship: ${fmt(fee)} (Đã đồng ý)</span>`;
+          unlockPayment(msg);
+        } else {
+          msg += `<br><span style="color:red; font-weight:bold">Đã hủy vì không đồng ý phí ship.</span>`;
+          document.getElementById('distanceResult').innerHTML = msg;
+          document.getElementById('paymentBlock').style.display = 'none';
+        }
+      } else {
+        // FREESHIP
+        msg += `<span style="color:var(--green); font-weight:bold">Miễn phí ship!</span>`;
+        deliveryFee = 0;
+        unlockPayment(msg);
+      }
+    }
+  }
+
+  function unlockPayment(msgHTML) {
+    document.getElementById('distanceResult').innerHTML = msgHTML;
+    document.getElementById('btnCheckDistance').style.display = 'none';
+    document.getElementById('paymentBlock').style.display = 'block';
+    togglePayment(); // Refresh payment UI
+  }
+
   function togglePayment() {
-    const m = document.getElementById('cPayment').value; const total = CART.reduce((sum,i)=>sum+i.final,0); const phone = document.getElementById('cPhone').value;
-    document.getElementById('btnGroup').style.display = (m==='ZALO')?'none':'block'; document.getElementById('zaloGroup').style.display = (m==='ZALO')?'block':'none';
+    const m = document.getElementById('cPayment').value; 
+    const cartTotal = CART.reduce((sum,i)=>sum+i.final,0);
+    const finalTotal = cartTotal + deliveryFee; // CỘNG PHÍ SHIP
+    const phone = document.getElementById('cPhone').value;
+
+    document.getElementById('btnGroup').style.display = (m==='ZALO')?'none':'block'; 
+    document.getElementById('zaloGroup').style.display = (m==='ZALO')?'block':'none';
+    
     if(m==='CK') {
       document.getElementById('qrArea').style.display='block'; document.getElementById('confirmPayBox').style.display='flex';
-      document.getElementById('qrAmount').innerText = fmt(total); document.getElementById('bankOwnerName').innerText = BANK_NAME;
+      document.getElementById('qrAmount').innerText = fmt(finalTotal); document.getElementById('bankOwnerName').innerText = BANK_NAME;
       const content = "TT " + CURRENT_ORDER_ID + " " + phone; document.getElementById('qrContent').innerText = content;
-      document.getElementById('qrImage').src = `https://img.vietqr.io/image/${BANK_ID}-${BANK_ACC}-compact.jpg?amount=${total}&addInfo=${encodeURIComponent(content)}&accountName=${encodeURIComponent(BANK_NAME)}`;
+      document.getElementById('qrImage').src = `https://img.vietqr.io/image/${BANK_ID}-${BANK_ACC}-compact.jpg?amount=${finalTotal}&addInfo=${encodeURIComponent(content)}&accountName=${encodeURIComponent(BANK_NAME)}`;
       document.getElementById('btnOrder').disabled = true; document.getElementById('ckConfirm').checked = false;
     } else { document.getElementById('qrArea').style.display='none'; document.getElementById('confirmPayBox').style.display='none'; document.getElementById('btnOrder').disabled = false; }
   }
@@ -398,34 +511,38 @@
         }
         details += `- ${i.qty} x ${i.name} (${opts.join(', ')})\n`;
     });
+    
     const totalQty = CART.reduce((sum,i)=>sum+i.qty,0);
-    details += `------------------\nTỔNG CỘNG: ${totalQty} MÓN`;
+    details += `------------------\nTỔNG MÓN: ${totalQty}`;
+    if (deliveryFee > 0) details += `\nPHÍ SHIP: ${fmt(deliveryFee)}`;
     return details;
   }
 
   function submitOrder() {
     const name = document.getElementById('cName').value, phone = document.getElementById('cPhone').value, addr = document.getElementById('cAddress').value;
-    if(!name || !phone || !addr) return alert("Thiếu thông tin!");
+    if(!name || !phone || !addr) return alert("Thiếu thông tin nhận hàng!");
     document.getElementById('btnOrder').innerText = "ĐANG GỬI..."; document.getElementById('btnOrder').disabled = true;
     
-    const total = CART.reduce((sum,i)=>sum+i.final,0);
+    const cartTotal = CART.reduce((sum,i)=>sum+i.final,0);
+    const finalTotal = cartTotal + deliveryFee; // Tổng + Ship
     const details = generateBillDetails(); 
 
-    const orderData = { orderId: CURRENT_ORDER_ID, name: name, phone: phone, address: addr, note: document.getElementById('cNote').value, paymentMethod: document.getElementById('cPayment').value, details: details, total: total, honey: document.getElementById('honeypot').value };
+    const orderData = { orderId: CURRENT_ORDER_ID, name: name, phone: phone, address: addr, note: document.getElementById('cNote').value, paymentMethod: document.getElementById('cPayment').value, details: details, total: finalTotal, honey: document.getElementById('honeypot').value };
     fetch(SCRIPT_URL + "?action=submitOrder", { method: "POST", body: JSON.stringify(orderData) }).then(res => res.json()).then(res => {
       if(res.success) {
         document.getElementById('checkoutPage').style.display = 'none'; document.getElementById('successPage').style.display = 'block';
-        document.getElementById('billContent').innerHTML = `MÃ: ${CURRENT_ORDER_ID}<br>KH: ${name}<br>Đ/C: ${addr}<br>----------------<br>${details.replace(/\n/g,'<br>')}<br>----------------<br>TỔNG TIỀN: ${fmt(total)}`;
-        CART=[];
+        document.getElementById('billContent').innerHTML = `MÃ: ${CURRENT_ORDER_ID}<br>KH: ${name}<br>Đ/C: ${addr}<br>----------------<br>${details.replace(/\n/g,'<br>')}<br>----------------<br>TỔNG THANH TOÁN: <strong style="color:var(--primary-solid)">${fmt(finalTotal)}</strong>`;
+        CART=[]; deliveryFee=0;
       } else { alert("Lỗi: "+res.msg); document.getElementById('btnOrder').disabled=false; }
     }).catch(err => { alert("Lỗi mạng! Vui lòng thử lại."); document.getElementById('btnOrder').disabled=false; });
   }
 
   function sendToZalo() {
-    const total = CART.reduce((sum,i)=>sum+i.final,0); 
+    const cartTotal = CART.reduce((sum,i)=>sum+i.final,0); 
+    const finalTotal = cartTotal + deliveryFee;
     let msg = `🥑 ĐƠN MỚI\n`; 
     msg += generateBillDetails();
-    msg += `\n💰 ${fmt(total)}\n👤 ${document.getElementById('cName').value} - ${document.getElementById('cPhone').value}\n📍 ${document.getElementById('cAddress').value}`;
+    msg += `\n💰 TỔNG TIỀN: ${fmt(finalTotal)}\n👤 ${document.getElementById('cName').value} - ${document.getElementById('cPhone').value}\n📍 ${document.getElementById('cAddress').value}`;
     navigator.clipboard.writeText(msg).then(() => { alert("Đã COPY! Đang mở Zalo..."); window.open(`https://zalo.me/${ZALO_PHONE}`); }).catch(() => alert("Lỗi copy."));
   }
   function fmt(n) { return n.toLocaleString('vi-VN') + 'đ'; }
