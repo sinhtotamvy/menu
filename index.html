@@ -22,7 +22,7 @@
     .app-container { width: 100%; max-width: 480px; background: var(--bg); min-height: 100vh; position: relative; padding-bottom: 100px; box-shadow: 0 0 25px rgba(0,0,0,0.1); }
     
     /* === GEE ĐÃ CẬP NHẬT BACKGROUND CHÌM TRÁI CÂY Ở ĐÂY === */
-    /* === UPDATE THEO THIẾT KẾ MỚI === */
+   /* === UPDATE GIAO DIỆN CHÌM MỜ & DÀY ĐẶC V26 === */
     .header-wrapper {
         margin: 10px 15px; 
         border-radius: 20px; 
@@ -31,13 +31,17 @@
         top: 10px; 
         z-index: 90;
         
-        /* MÀU SẮC MỚI: Gradient cam + Họa tiết Icon tự vẽ cách đều nhau */
+        /* MÀU SẮC MỚI: Gradient cam + 3 lớp Icon tự vẽ mờ, dày đặc, chồng lên nhau */
         background:
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' opacity='0.15'%3E%3Ctext x='20' y='30' font-size='24'%3E🥑%3C/text%3E%3Ctext x='90' y='30' font-size='24'%3E🍊%3C/text%3E%3Ctext x='55' y='65' font-size='24'%3E🍉%3C/text%3E%3Ctext x='125' y='65' font-size='24'%3E🥝%3C/text%3E%3Ctext x='20' y='100' font-size='24'%3E🍑%3C/text%3E%3Ctext x='90' y='100' font-size='24'%3E🍍%3C/text%3E%3Ctext x='55' y='135' font-size='24'%3E🍮%3C/text%3E%3Ctext x='125' y='135' font-size='24'%3E🥑%3C/text%3E%3C/svg%3E"),
+            /* LỚP 1 (TRÊN CÙNG - LẶP NHANH): 🥝🍑🍮🍉🥝 packed small */
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' opacity='0.15'%3E%3Ctext x='15' y='25' font-size='18'%3E🥝%3C/text%3E%3Ctext x='55' y='25' font-size='18'%3E🍑%3C/text%3E%3Ctext x='15' y='55' font-size='18'%3E🍮%3C/text%3E%3Ctext x='55' y='55' font-size='18'%3E🍉%3C/text%3E%3Ctext x='35' y='75' font-size='18'%3E🥝%3C/text%3E%3C/svg%3E"),
+            /* LỚP 2 (GIỮA - LẶP VỪA): 🥑🍊🍉🍍 packed densely */
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' opacity='0.15'%3E%3Ctext x='10' y='30' font-size='22'%3E🥑%3C/text%3E%3Ctext x='60' y='30' font-size='22'%3E🍊%3C/text%3E%3Ctext x='10' y='70' font-size='22'%3E🍉%3C/text%3E%3Ctext x='60' y='70' font-size='22'%3E🍍%3C/text%3E%3C/svg%3E"),
+            /* LỚP 3 (DƯỚI - MÀU NỀN): Gradient cam gốc */
             var(--primary-gradient);
             
-        background-blend-mode: normal; 
-        background-size: 140px 140px, cover; 
+        background-blend-mode: normal, normal, normal; 
+        background-size: 80px 80px, 100px 100px, cover; 
         background-repeat: repeat;
         
         box-shadow: 0 10px 20px rgba(255, 87, 34, 0.2);
