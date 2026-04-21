@@ -21,8 +21,7 @@
     body { font-family: 'Quicksand', sans-serif; background: #eee; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; color: var(--text); -webkit-tap-highlight-color: transparent; }
     .app-container { width: 100%; max-width: 480px; background: var(--bg); min-height: 100vh; position: relative; padding-bottom: 100px; box-shadow: 0 0 25px rgba(0,0,0,0.1); }
     
-    /* === GEE ĐÃ CẬP NHẬT BACKGROUND CHÌM TRÁI CÂY Ở ĐÂY === */
-   /* === UPDATE GIAO DIỆN CHÌM MỜ & DÀY ĐẶC V26 === */
+    /* === UPDATE GIAO DIỆN CHÌM MỜ & DÀY ĐẶC V26 === */
     .header-wrapper {
         margin: 10px 15px; 
         border-radius: 20px; 
@@ -30,32 +29,36 @@
         position: sticky;
         top: 10px; 
         z-index: 90;
-        
-        /* MÀU SẮC MỚI: Gradient cam + 3 lớp Icon tự vẽ mờ, dày đặc, chồng lên nhau */
         background:
-            /* LỚP 1 (TRÊN CÙNG - LẶP NHANH): 🥝🍑🍮🍉🥝 packed small */
             url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' opacity='0.15'%3E%3Ctext x='15' y='25' font-size='18'%3E🥝%3C/text%3E%3Ctext x='55' y='25' font-size='18'%3E🍑%3C/text%3E%3Ctext x='15' y='55' font-size='18'%3E🍮%3C/text%3E%3Ctext x='55' y='55' font-size='18'%3E🍉%3C/text%3E%3Ctext x='35' y='75' font-size='18'%3E🥝%3C/text%3E%3C/svg%3E"),
-            /* LỚP 2 (GIỮA - LẶP VỪA): 🥑🍊🍉🍍 packed densely */
             url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' opacity='0.15'%3E%3Ctext x='10' y='30' font-size='22'%3E🥑%3C/text%3E%3Ctext x='60' y='30' font-size='22'%3E🍊%3C/text%3E%3Ctext x='10' y='70' font-size='22'%3E🍉%3C/text%3E%3Ctext x='60' y='70' font-size='22'%3E🍍%3C/text%3E%3C/svg%3E"),
-            /* LỚP 3 (DƯỚI - MÀU NỀN): Gradient cam gốc */
             var(--primary-gradient);
-            
         background-blend-mode: normal, normal, normal; 
         background-size: 80px 80px, 100px 100px, cover; 
         background-repeat: repeat;
-        
         box-shadow: 0 10px 20px rgba(255, 87, 34, 0.2);
-    }
+    } /* <--- Dấu ngoặc nhọn này Lu làm rớt nè */
+
+    /* --- CSS RIÊNG CHO MENU SỮA HẠT HIỆN ĐẠI --- */
+    .nut-banner { margin: 0 15px 15px 15px; background: #fff; border-radius: 16px; padding: 15px; text-align: center; color: var(--primary-solid); font-weight: 700; font-size: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); cursor: pointer; border: 1px solid #ffe0d2; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
+    .nut-banner:active { transform: scale(0.98); }
+    .nut-schedule { display: flex; flex-direction: column; gap: 10px; }
+    .nut-day-card { background: #f8f9fa; border-radius: 12px; padding: 15px; display: flex; align-items: flex-start; gap: 12px; border: 1px solid #f0f0f0; }
+    .nut-day-badge { background: #333; color: white; font-size: 11px; font-weight: 800; padding: 5px 10px; border-radius: 8px; white-space: nowrap; letter-spacing: 0.5px; }
+    .nut-day-info { flex: 1; }
+    .nut-name { font-weight: 700; font-size: 15px; color: #333; margin-bottom: 2px; }
+    .nut-desc { font-size: 13px; color: var(--green); font-weight: 700; margin-bottom: 4px; }
+    .nut-micro { font-size: 12px; color: #666; line-height: 1.4; }
     /* ======================================================= */
 
     .header-top { display: flex; align-items: center; margin-bottom: 15px; }
     .shop-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid white; object-fit: cover; margin-right: 12px; background: white; }
-    .header-title { color: white; margin: 0; font-size: 20px; font-weight: 800; flex: 1; }
+    .header-title { color: white; margin: 0; font-size: 20px; font-weight: 800; flex: 1; text-transform: uppercase; text-align: center; }
     
     .search-box { position: relative; width: 100%; }
     .search-input { width: 100%; padding: 12px 15px 12px 45px; border: none; border-radius: 25px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); outline: none; background: white; color: #333; }
     .search-icon-svg { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; fill: none; stroke: #999; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-   .status-bar { background: #333; color: white; padding: 12px 10px; text-align: center; font-weight: bold; font-size: 14px; display: none; margin: 15px 15px 0 15px; z-index: 80; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .status-bar { background: #333; color: white; padding: 12px 10px; text-align: center; font-weight: bold; font-size: 14px; display: none; margin: 15px 15px 0 15px; z-index: 80; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     
     .menu-container { padding: 15px; padding-top: 10px; }
     .menu-group { margin-bottom: 15px; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
@@ -129,6 +132,100 @@
       <input type="text" id="searchKey" class="search-input" placeholder="Bạn muốn ăn gì?" onkeyup="filterMenu()">
     </div>
   </div>
+  
+  <div class="nut-banner" onclick="openNutMilkModal()">
+    🌱 Khám Phá Thực Đơn Sữa Hạt Dinh Dưỡng Tuần
+  </div>
+
+  <div class="modal-overlay" id="nutMilkModal">
+    <div class="sheet-modal" style="max-height: 90vh; padding: 0; display: flex; flex-direction: column; overflow: hidden;">
+      
+      <div style="padding: 20px 20px 15px 20px; border-bottom: 1px solid #f0f0f0; display:flex; justify-content:space-between; align-items:center; background: #fff; z-index: 10;">
+        <h3 style="margin:0; font-size:18px; color:#333; font-weight: 800;">🌱 Menu Sữa Hạt Tuần</h3>
+        <span onclick="closeNutMilkModal()" style="font-size:28px; cursor:pointer; color:#999; line-height: 1;">×</span>
+      </div>
+
+      <div style="padding: 20px; overflow-y: auto;">
+        
+        <img src="LINK_ANH_SUA_HAT" style="width:100%; border-radius:12px; margin-bottom:20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);" onerror="this.style.display='none'">
+
+        <div style="text-align: center; margin-bottom: 20px; color: #555; font-size: 14px; line-height: 1.5; background: #f0f8ff; padding: 12px; border-radius: 12px;">
+          Bổ sung vi chất thiết yếu (<b style="color:var(--primary-solid)">Ca, Fe, Mg, A, B, C</b>) giúp cơ thể khỏe mạnh, tăng đề kháng và tràn đầy năng lượng.
+        </div>
+
+        <div class="nut-schedule">
+          
+          <div class="nut-day-card">
+            <div class="nut-day-badge">THỨ 2</div>
+            <div class="nut-day-info">
+              <div class="nut-name">Sữa Mè Đen Táo Đỏ</div>
+              <div class="nut-desc">Bổ máu & Chắc xương</div>
+              <div class="nut-micro">Vi chất: Sắt (Fe), Canxi (Ca), Vitamin E</div>
+            </div>
+          </div>
+
+          <div class="nut-day-card">
+            <div class="nut-day-badge">THỨ 3</div>
+            <div class="nut-day-info">
+              <div class="nut-name">Sữa Đậu Đỏ Kỷ Tử</div>
+              <div class="nut-desc">Bổ máu & Tốt cho mắt</div>
+              <div class="nut-micro">Vi chất: Vitamin A, C, Sắt (Fe)</div>
+            </div>
+          </div>
+
+          <div class="nut-day-card">
+            <div class="nut-day-badge">THỨ 4</div>
+            <div class="nut-day-info">
+              <div class="nut-name">Sữa Đậu Đen Mè Đen</div>
+              <div class="nut-desc">Bổ thận & Chắc xương</div>
+              <div class="nut-micro">Vi chất: Magie (Mg), Kẽm (Zn), Anthocyanin</div>
+            </div>
+          </div>
+
+          <div class="nut-day-card">
+            <div class="nut-day-badge">THỨ 5</div>
+            <div class="nut-day-info">
+              <div class="nut-name">Sữa Đậu Xanh Hạt Sen</div>
+              <div class="nut-desc">Thanh nhiệt & An thần</div>
+              <div class="nut-micro">Vi chất: Vitamin B1, Folate B9, Kali (K)</div>
+            </div>
+          </div>
+
+          <div class="nut-day-card">
+            <div class="nut-day-badge">THỨ 6</div>
+            <div class="nut-day-info">
+              <div class="nut-name">Sữa Đậu Đỏ Yến Mạch</div>
+              <div class="nut-desc">Bổ máu & Cung cấp chất xơ</div>
+              <div class="nut-micro">Vi chất: Vitamin B-complex, Sắt (Fe), Chất xơ</div>
+            </div>
+          </div>
+
+          <div class="nut-day-card">
+            <div class="nut-day-badge">THỨ 7</div>
+            <div class="nut-day-info">
+              <div class="nut-name">Đậu Nành Mè Trắng</div>
+              <div class="nut-desc">Bổ tim mạch & Đẹp da</div>
+              <div class="nut-micro">Vi chất: Canxi (Ca), Protein, Omega-3</div>
+            </div>
+          </div>
+
+        </div>
+        
+        <div style="text-align: center; margin-top: 20px; font-size: 13px; color: #888; font-style: italic;">
+          * Nhận đặt trước menu sữa tuần giao tận nơi.<br>Hãy nhắn Zalo cho Tâm Vy nhé!
+        </div>
+      </div>
+
+      <div style="padding: 15px 20px; border-top: 1px solid #eee; background: #fff;">
+        <button class="btn-main btn-zalo" style="margin: 0; display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; border-radius: 14px;" onclick="orderNutMilkZalo()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          ĐẶT ZALO NGAY
+        </button>
+      </div>
+      
+    </div>
+  </div>
+  
   <div id="menu-list" class="menu-container"></div>
   <div class="shop-footer" id="footerInfo"></div>
   <div class="float-cart" id="cartBtn" onclick="showCheckout()"><span>🛒 <span id="cartCount">0</span></span><span id="cartTotal">0đ</span></div>
@@ -235,13 +332,13 @@
   const LOGO_URL = "https://storage.googleapis.com/menu-tamvy/IMG_0891.png"; 
   const BANK_ID = "ACB"; const BANK_ACC = "48031187"; const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; const ZALO_PHONE = "0775826565";
   
-  const CACHE_KEY = 'TAMVY_MENU_V24'; 
+  const CACHE_KEY = 'TAMVY_MENU_V27'; 
   const NO_ICE_GROUPS = ["sinh tố", "đá xay", "đồ uống nóng", "nóng", "sinh to", "da xay"];
   const FOOD_GROUPS = ["món ăn", "bánh", "ăn vặt", "đồ ăn", "mon an", "banh"];
   
   let APP_DATA = {}, CART = [], currentItem = null, IS_OPEN = true, CURRENT_ORDER_ID = "";
   let modalQty = 1; 
-  let deliveryFee = 0; // Biến lưu phụ thu
+  let deliveryFee = 0; 
 
   window.onload = function() {
     if(LOGO_URL) document.getElementById('shopLogo').src = LOGO_URL;
@@ -409,7 +506,6 @@
         list.innerHTML += `<div style="display:flex;justify-content:space-between;margin-bottom:10px;border-bottom:1px dashed #eee;padding-bottom:5px"><div><b>${item.qty} x ${item.name}</b> <small>${optString}</small></div><div style="text-align:right"><div>${fmt(item.final)}</div><a href="#" onclick="removeCart(${idx})" style="color:red;font-size:12px">Xóa</a></div></div>`;
     });
     
-    // Reset phần thanh toán mỗi khi mở giỏ hàng
     resetAddressCheck();
     document.getElementById('checkoutPage').style.display='block'; 
   }
@@ -417,13 +513,12 @@
   function closeCheckout() { document.getElementById('checkoutPage').style.display='none'; }
   function removeCart(idx) { CART.splice(idx,1); updateCartUI(); if(!CART.length) closeCheckout(); else showCheckout(); }
 
-  // === LOGIC KIỂM TRA PHÍ SHIP MỚI ===
   function resetAddressCheck() {
     deliveryFee = 0;
     document.getElementById('btnCheckDistance').innerText = "📍 Kiểm tra khoảng cách / Phí Ship";
     document.getElementById('btnCheckDistance').style.display = 'block';
     document.getElementById('distanceResult').innerHTML = "";
-    document.getElementById('paymentBlock').style.display = 'none'; // Khóa thanh toán
+    document.getElementById('paymentBlock').style.display = 'none'; 
   }
 
   function checkDistance() {
@@ -457,7 +552,6 @@
     let msg = `<span style="color:#333">Khoảng cách: <b>${km.toFixed(1)} km</b>. </span>`;
     let canOrder = true;
 
-    // THUẬT TOÁN TÍNH PHÍ GIAO HÀNG (2-5km: 5k | 5-7km: 7k)
     if (km > 7) {
       canOrder = false;
     } else if (cartTotal < 200000) {
@@ -466,7 +560,6 @@
     }
 
     if (!canOrder) {
-      // TRÊN 7KM: CHẶN VÀ HIỆN APP VILL / SHOPEE
       document.getElementById('distanceResult').innerHTML = `
         <div style="color:red; font-weight:bold; margin-bottom:15px; font-size:15px">
           ❌ Khoảng cách vượt quá 7km, xin lỗi quán không thể giao hàng trực tiếp. Quý khách vui lòng đặt hàng trên các ứng dụng sau:
@@ -478,7 +571,6 @@
       document.getElementById('paymentBlock').style.display = 'none';
     } else {
       if (fee > 0) {
-        // HỎI KHÁCH PHỤ THU
         let confirmFee = confirm(`Khoảng cách là ${km.toFixed(1)}km. Phí giao hàng là ${fmt(fee)}. Bạn có đồng ý phụ thu vào đơn hàng không?`);
         if (confirmFee) {
           deliveryFee = fee;
@@ -490,7 +582,6 @@
           document.getElementById('paymentBlock').style.display = 'none';
         }
       } else {
-        // FREESHIP
         msg += `<span style="color:var(--green); font-weight:bold">Miễn phí ship!</span>`;
         deliveryFee = 0;
         unlockPayment(msg);
@@ -502,13 +593,13 @@
     document.getElementById('distanceResult').innerHTML = msgHTML;
     document.getElementById('btnCheckDistance').style.display = 'none';
     document.getElementById('paymentBlock').style.display = 'block';
-    togglePayment(); // Refresh payment UI
+    togglePayment();
   }
 
   function togglePayment() {
     const m = document.getElementById('cPayment').value; 
     const cartTotal = CART.reduce((sum,i)=>sum+i.final,0);
-    const finalTotal = cartTotal + deliveryFee; // CỘNG PHÍ SHIP
+    const finalTotal = cartTotal + deliveryFee; 
     const phone = document.getElementById('cPhone').value;
 
     document.getElementById('btnGroup').style.display = (m==='ZALO')?'none':'block'; 
@@ -550,7 +641,7 @@
     document.getElementById('btnOrder').innerText = "ĐANG GỬI..."; document.getElementById('btnOrder').disabled = true;
     
     const cartTotal = CART.reduce((sum,i)=>sum+i.final,0);
-    const finalTotal = cartTotal + deliveryFee; // Tổng + Ship
+    const finalTotal = cartTotal + deliveryFee; 
     const details = generateBillDetails(); 
 
     const orderData = { orderId: CURRENT_ORDER_ID, name: name, phone: phone, address: addr, note: document.getElementById('cNote').value, paymentMethod: document.getElementById('cPayment').value, details: details, total: finalTotal, honey: document.getElementById('honeypot').value };
@@ -572,6 +663,12 @@
     navigator.clipboard.writeText(msg).then(() => { alert("Đã COPY! Đang mở Zalo..."); window.open(`https://zalo.me/${ZALO_PHONE}`); }).catch(() => alert("Lỗi copy."));
   }
   function fmt(n) { return n.toLocaleString('vi-VN') + 'đ'; }
+  function openNutMilkModal() { document.getElementById('nutMilkModal').classList.add('active'); }
+  function closeNutMilkModal() { document.getElementById('nutMilkModal').classList.remove('active'); }
+  function orderNutMilkZalo() {
+    const msg = encodeURIComponent("Mình muốn đặt sữa hạt");
+    window.open(`https://zalo.me/${ZALO_PHONE}?text=${msg}`);
+  }
 </script>
 </body>
 </html>
