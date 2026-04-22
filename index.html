@@ -18,10 +18,9 @@
       --primary-gradient: linear-gradient(135deg, #ff4b2b 0%, #ff9068 100%);
       --primary-solid: #ff5722; --bg: #f5f5f5; --white: #ffffff; --text: #333; --red: #d32f2f; --green: #4CAF50; --blue-fb: #1877F2;
     }
-    body { font-family: 'Quicksand', sans-serif; background: #eee; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; color: var(--text); -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Quicksand', sans-serif; background: #eee; margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; color: var(--text); -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
     .app-container { width: 100%; max-width: 480px; background: var(--bg); min-height: 100vh; position: relative; padding-bottom: 100px; box-shadow: 0 0 25px rgba(0,0,0,0.1); }
     
-    /* === UPDATE GIAO DIỆN CHÌM MỜ & DÀY ĐẶC V26 === */
     .header-wrapper {
         margin: 10px 15px; 
         border-radius: 20px; 
@@ -37,9 +36,8 @@
         background-size: 80px 80px, 100px 100px, cover; 
         background-repeat: repeat;
         box-shadow: 0 10px 20px rgba(255, 87, 34, 0.2);
-    } /* <--- Dấu ngoặc nhọn này Lu làm rớt nè */
+    }
 
-    /* --- CSS RIÊNG CHO MENU SỮA HẠT HIỆN ĐẠI --- */
     .nut-banner { margin: 0 15px 15px 15px; background: #fff; border-radius: 16px; padding: 15px; text-align: center; color: var(--primary-solid); font-weight: 700; font-size: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); cursor: pointer; border: 1px solid #ffe0d2; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
     .nut-banner:active { transform: scale(0.98); }
     .nut-schedule { display: flex; flex-direction: column; gap: 10px; }
@@ -49,7 +47,6 @@
     .nut-name { font-weight: 700; font-size: 15px; color: #333; margin-bottom: 2px; }
     .nut-desc { font-size: 13px; color: var(--green); font-weight: 700; margin-bottom: 4px; }
     .nut-micro { font-size: 12px; color: #666; line-height: 1.4; }
-    /* ======================================================= */
 
     .header-top { display: flex; align-items: center; margin-bottom: 15px; }
     .shop-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid white; object-fit: cover; margin-right: 12px; background: white; }
@@ -83,6 +80,12 @@
 
     .float-cart { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px; background: #333; color: white; padding: 12px 20px; border-radius: 50px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 95; cursor: pointer; display: none; }
     
+    /* CSS CHO NÚT CUỘN TRANG */
+    .scroll-nav { position: fixed; bottom: 85px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 85; }
+    .scroll-nav div { width: 40px; height: 40px; background: rgba(255,255,255,0.95); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); cursor: pointer; border: 1px solid #eee; backdrop-filter: blur(4px); transition: 0.2s; }
+    .scroll-nav div:active { transform: scale(0.9); }
+    .scroll-nav svg { width: 22px; height: 22px; fill: #666; }
+
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(2px); z-index: 200; display: none; justify-content: center; align-items: flex-end; }
     .modal-overlay.active { display: flex; }
     .sheet-modal { background: #fff; width: 100%; max-width: 480px; border-radius: 24px 24px 0 0; padding: 25px; max-height: 85vh; overflow-y: auto; animation: slideUp 0.3s; }
@@ -154,7 +157,6 @@
         </div>
 
         <div class="nut-schedule">
-          
           <div class="nut-day-card">
             <div class="nut-day-badge">THỨ 2</div>
             <div class="nut-day-info">
@@ -163,7 +165,6 @@
               <div class="nut-micro">Vi chất: Sắt (Fe), Canxi (Ca), Vitamin E</div>
             </div>
           </div>
-
           <div class="nut-day-card">
             <div class="nut-day-badge">THỨ 3</div>
             <div class="nut-day-info">
@@ -172,7 +173,6 @@
               <div class="nut-micro">Vi chất: Vitamin A, C, Sắt (Fe)</div>
             </div>
           </div>
-
           <div class="nut-day-card">
             <div class="nut-day-badge">THỨ 4</div>
             <div class="nut-day-info">
@@ -181,7 +181,6 @@
               <div class="nut-micro">Vi chất: Magie (Mg), Kẽm (Zn), Anthocyanin</div>
             </div>
           </div>
-
           <div class="nut-day-card">
             <div class="nut-day-badge">THỨ 5</div>
             <div class="nut-day-info">
@@ -190,7 +189,6 @@
               <div class="nut-micro">Vi chất: Vitamin B1, Folate B9, Kali (K)</div>
             </div>
           </div>
-
           <div class="nut-day-card">
             <div class="nut-day-badge">THỨ 6</div>
             <div class="nut-day-info">
@@ -199,7 +197,6 @@
               <div class="nut-micro">Vi chất: Vitamin B-complex, Sắt (Fe), Chất xơ</div>
             </div>
           </div>
-
           <div class="nut-day-card">
             <div class="nut-day-badge">THỨ 7</div>
             <div class="nut-day-info">
@@ -208,7 +205,6 @@
               <div class="nut-micro">Vi chất: Canxi (Ca), Protein, Omega-3</div>
             </div>
           </div>
-
         </div>
         
         <div style="text-align: center; margin-top: 20px; font-size: 13px; color: #888; font-style: italic;">
@@ -228,6 +224,12 @@
   
   <div id="menu-list" class="menu-container"></div>
   <div class="shop-footer" id="footerInfo"></div>
+  
+  <div class="scroll-nav">
+    <div onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><svg viewBox="0 0 24 24"><path d="M12 4l-8 8h6v8h4v-8h6z"/></svg></div>
+    <div onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})"><svg viewBox="0 0 24 24"><path d="M12 20l8-8h-6V4h-4v8H4z"/></svg></div>
+  </div>
+
   <div class="float-cart" id="cartBtn" onclick="showCheckout()"><span>🛒 <span id="cartCount">0</span></span><span id="cartTotal">0đ</span></div>
 </div>
 
@@ -332,7 +334,7 @@
   const LOGO_URL = "https://storage.googleapis.com/menu-tamvy/IMG_0891.png"; 
   const BANK_ID = "ACB"; const BANK_ACC = "48031187"; const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; const ZALO_PHONE = "0775826565";
   
-  const CACHE_KEY = 'TAMVY_MENU_V27'; 
+  const CACHE_KEY = 'TAMVY_MENU_V28'; 
   const NO_ICE_GROUPS = ["sinh tố", "đá xay", "đồ uống nóng", "nóng", "sinh to", "da xay"];
   const FOOD_GROUPS = ["món ăn", "bánh", "ăn vặt", "đồ ăn", "mon an", "banh"];
   
@@ -369,7 +371,11 @@
       items.forEach((item, idx) => { 
         let itemDiv = document.createElement('div'); itemDiv.className = 'item-card'; itemDiv.setAttribute('data-name', removeAccents(item.name.toLowerCase()));
         const btn = IS_OPEN ? `<button class="btn-plus" onclick="openItemByObj(this)" data-id="${item.id}">+</button>` : ``;
-        itemDiv.innerHTML = `<img src="${item.img}" class="item-img" onerror="this.src='https://via.placeholder.com/90'"><div class="item-content"><div><div class="item-title">${item.name}</div><div class="item-desc">${item.desc||''}</div></div><div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto"><div class="item-price">${fmt(item.price)}</div>${btn}</div></div>`;
+        
+        // HIỂN THỊ ĐÃ BÁN NẾU CÓ DỮ LIỆU
+        let soldBadge = item.sold ? `<div style="font-size: 12px; color: #777; margin-top: 4px; display: flex; align-items: center; gap: 4px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> ${item.sold} đã bán</div>` : '';
+
+        itemDiv.innerHTML = `<img src="${item.img}" class="item-img" onerror="this.src='https://via.placeholder.com/90'"><div class="item-content"><div><div class="item-title">${item.name}</div><div class="item-desc">${item.desc||''}</div>${soldBadge}</div><div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto"><div class="item-price">${fmt(item.price)}</div>${btn}</div></div>`;
         contentDiv.appendChild(itemDiv);
       });
     });
