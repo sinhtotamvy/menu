@@ -12,7 +12,8 @@
   <meta property="og:type" content="website" />
   <meta name="zalo:image" content="https://storage.googleapis.com/menu-tamvy/THUMNAIL%20T%C3%82M%20VY.png">
 
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <!-- GEE ĐÃ GỌI THÊM FONT COINY Ở ĐÂY -->
+  <link href="https://fonts.googleapis.com/css2?family=Coiny&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root { 
       --primary-gradient: linear-gradient(135deg, #ff4b2b 0%, #ff9068 100%);
@@ -50,7 +51,9 @@
 
     .header-top { display: flex; align-items: center; margin-bottom: 15px; }
     .shop-logo { width: 50px; height: 50px; border-radius: 50%; border: 2px solid white; object-fit: cover; margin-right: 12px; background: white; }
-    .header-title { color: white; margin: 0; font-size: 20px; font-weight: 800; flex: 1; text-transform: uppercase; text-align: center; }
+    
+    /* GEE ĐÃ CẬP NHẬT CSS CHO FONT COINY Ở ĐÂY */
+    .header-title { font-family: 'Coiny', cursive; color: white; margin: 0; font-size: 25px; font-weight: 400; flex: 1; text-transform: uppercase; text-align: center; letter-spacing: 1px; text-shadow: 1px 2px 4px rgba(0,0,0,0.15); }
     
     .search-box { position: relative; width: 100%; }
     .search-input { width: 100%; padding: 12px 15px 12px 45px; border: none; border-radius: 25px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); outline: none; background: white; color: #333; }
@@ -80,7 +83,6 @@
 
     .float-cart { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 440px; background: #333; color: white; padding: 12px 20px; border-radius: 50px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 95; cursor: pointer; display: none; }
     
-    /* CSS CHO NÚT CUỘN TRANG */
     .scroll-nav { position: fixed; bottom: 85px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 85; }
     .scroll-nav div { width: 40px; height: 40px; background: rgba(255,255,255,0.95); border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.15); cursor: pointer; border: 1px solid #eee; backdrop-filter: blur(4px); transition: 0.2s; }
     .scroll-nav div:active { transform: scale(0.9); }
@@ -222,9 +224,19 @@
     </div>
   </div>
   
+  <!-- POPUP QUẢNG CÁO TỰ ĐỘNG MỞ (WELCOME POPUP) -->
+  <div class="modal-overlay" id="promoModal" style="z-index: 1000; align-items: center;">
+    <div style="position: relative; width: 90%; max-width: 400px; animation: slideUp 0.4s ease-out;">
+      <div onclick="closePromoModal()" style="position: absolute; top: -15px; right: -15px; background: white; color: #333; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 10;">×</div>
+      <!-- DÁN LINK ẢNH BÁNH FLAN CỦA LU VÀO BÊN DƯỚI -->
+      <img src="https://storage.googleapis.com/menu-tamvy/popup_banh_flan.jpg" style="width: 100%; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: block;" onerror="this.style.display='none'">
+    </div>
+  </div>
+
   <div id="menu-list" class="menu-container"></div>
   <div class="shop-footer" id="footerInfo"></div>
   
+  <!-- NÚT CUỘN TRANG LÊN XUỐNG -->
   <div class="scroll-nav">
     <div onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><svg viewBox="0 0 24 24"><path d="M12 4l-8 8h6v8h4v-8h6z"/></svg></div>
     <div onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})"><svg viewBox="0 0 24 24"><path d="M12 20l8-8h-6V4h-4v8H4z"/></svg></div>
@@ -334,7 +346,7 @@
   const LOGO_URL = "https://storage.googleapis.com/menu-tamvy/IMG_0891.png"; 
   const BANK_ID = "ACB"; const BANK_ACC = "48031187"; const BANK_NAME = "HO KINH DOANH SINH TO TAM VY"; const ZALO_PHONE = "0775826565";
   
-  const CACHE_KEY = 'TAMVY_MENU_V28'; 
+  const CACHE_KEY = 'TAMVY_MENU_V30'; 
   const NO_ICE_GROUPS = ["sinh tố", "đá xay", "đồ uống nóng", "nóng", "sinh to", "da xay"];
   const FOOD_GROUPS = ["món ăn", "bánh", "ăn vặt", "đồ ăn", "mon an", "banh"];
   
@@ -353,6 +365,9 @@
       localStorage.setItem(CACHE_KEY, JSON.stringify(data));
       if (!cached) { initApp(data); document.getElementById('loadingOverlay').style.display = 'none'; }
     }).catch(err => { if(!cached) alert("Lỗi mạng! Hãy tải lại trang."); });
+
+    // GEE THÊM: TỰ ĐỘNG MỞ POPUP QUẢNG CÁO SAU KHI LOAD 0.5 GIÂY
+    setTimeout(() => { document.getElementById('promoModal').classList.add('active'); }, 500);
   };
 
   function initApp(data) { APP_DATA = data; checkStatus(data.shopConfig); renderMenu(); renderFooter(data.shopConfig); }
@@ -675,6 +690,9 @@
     const msg = encodeURIComponent("Mình muốn đặt sữa hạt");
     window.open(`https://zalo.me/${ZALO_PHONE}?text=${msg}`);
   }
+  
+  // GEE THÊM: HÀM ĐÓNG POPUP QUẢNG CÁO TỰ ĐỘNG
+  function closePromoModal() { document.getElementById('promoModal').classList.remove('active'); }
 </script>
 </body>
 </html>
